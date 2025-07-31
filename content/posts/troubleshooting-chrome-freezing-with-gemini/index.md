@@ -1,8 +1,9 @@
 +++
-date = '2025-07-28T17:07:26+09:00'
+date = '2025-07-12T05:25:26+09:00'
 draft = false
 title = ' 忍不了了！使用 Gemini 一次完整排查 Chrome 卡死并给官方提 Bug 的全过程 '
-showToc = true
+cover = '10x_KV_jplo2v.png'
+nolastmod = true
 +++
 
 ### 背景
@@ -471,8 +472,10 @@ srv*C:\symbols\*https://chromium-browser-symsrv.commondatastorage.googleapis.com
 >
 >我非常迷惑，因为我这个 pc 应该是默认打开空的启动页才对的
 >实际之前耗时 60 秒打开之后最终打开也是空的启动页
+>
 >>	Chrome 正拼尽全力地去渲染和排列你的标签页栏
->	所以最后他什么也没有渲染成功？
+>
+>所以最后他什么也没有渲染成功？
 
 然后他跟我从头到尾解释了一遍是什么工作原理，以及为什么正拼尽全力地去渲染和排列你的标签页栏之后什么也没有。
 
@@ -568,7 +571,7 @@ srv*C:\symbols\*https://chromium-browser-symsrv.commondatastorage.googleapis.com
 `No - I didn't.`
 
 ### **Steps to reproduce problem**
-```
+
 1. Use a Google account that has a large number of tabs and, crucially, complex Tab Groups synced from another device (e.g., a macOS device).
 2. On a Windows 10/11 machine, sign into Chrome Stable with this account.
 3. Disable ALL extensions via chrome://extensions to ensure they are not a factor.
@@ -576,7 +579,8 @@ srv*C:\symbols\*https://chromium-browser-symsrv.commondatastorage.googleapis.com
 5. In Chrome sync settings (chrome://settings/syncSetup), ensure that the "Tab groups" toggle is ON.
 6. Completely close Chrome, verifying in the Windows Task Manager that all chrome.exe processes have terminated.
 7. Relaunch Chrome.
-```
+
+
 ### **Please describe the problem**
 
 ```

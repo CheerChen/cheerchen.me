@@ -1,25 +1,39 @@
 # 网站的根地址，必须设置为您的域名
 baseURL = 'https://cheerchen.me/'
 # 网站的默认语言
+languageCode = 'zh-Hans'
 defaultContentLanguage = 'zh'
 # 网站的标题
 title = 'CheerChen 的博客'
+
 # 使用的主题
 theme = 'dream'
-lightTheme = "emerald"
-darkTheme = "forest"
+
+hasCJKLanguage = true
+enableRobotsTXT = true
 
 [params.advanced]
 customCSS = ["custom.css"]
 
 [params]
+headerTitle = "CheerChen's Blog"
+motto = "Summer Madness"
 # 您的作者名
 author = "CheerChen"
 # 您的头像，同样，请将图片放在项目根目录下的 static 文件夹里
 avatar = "/5109459.png"
 
-# -- 开启禅定模式 --
-zenMode = true
+lightTheme = "emerald"
+darkTheme = "forest"
 
-[params.article]
-showToc = true
+showTableOfContents = true
+showSummaryCoverInPost = true
+imageZoomableInPost = true
+showPrevNextPost = true
+
+# -- 开启禅定模式 --
+# zenMode = true
+
+[params.experimental]
+jsDate = true
+jsDateFormat = "yyyy年MM月dd日"
