@@ -1,0 +1,33 @@
+/* --- Gemini Shortcode 专用样式 --- */
+.gemini-response {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    margin: 2em 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    /* 添加一点阴影，更有立体感 */
+    overflow: hidden;
+    /* 防止子元素溢出圆角 */
+}
+
+.gemini-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* 图标和文字的间距 */
+    background-color: #f5f5f5;
+    /* 头部背景色 */
+    padding: 8px 16px;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.gemini-header svg {
+    color: #4a90e2;
+    /* 图标颜色 */
+}
+
+.gemini-content {
+    padding: 16px;
+}
