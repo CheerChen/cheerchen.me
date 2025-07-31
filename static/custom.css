@@ -1,33 +1,82 @@
-/* --- Gemini Shortcode 专用样式 --- */
+/* --- Gemini Shortcode 专用样式 (已优化暗黑模式) --- */
+
+/* 1. 使用 :root 定义可复用的 CSS 变量 (浅色模式为默认值) */
+:root {
+    --gemini-bg-color: #ffffff;
+    --gemini-border-color: #e0e0e0;
+    --gemini-header-bg-color: #f5f5f5;
+    --gemini-header-text-color: #333;
+    --gemini-content-text-color: #212121;
+    /* 为内容区单独设置颜色 */
+    --gemini-icon-color: #4a90e2;
+    --gemini-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* 2. 使用媒体查询，当用户的设备处于暗黑模式时，重写上面的变量 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* 这里是精心挑选的一套暗黑模式颜色 */
+        --gemini-bg-color: #282c34;
+        /* 深邃的炭灰色，而非纯黑 */
+        --gemini-border-color: #404552;
+        /* 一个更亮的灰色边框，形成对比 */
+        --gemini-header-bg-color: #333842;
+        /* 头部使用一个稍有区分的暗色 */
+        --gemini-header-text-color: #e2e2e2;
+        /* 柔和的白色文字 */
+        --gemini-content-text-color: #d1d1d1;
+        /* 内容区文字，比头部稍暗 */
+        --gemini-icon-color: #63a4ff;
+        /* 更明亮的蓝色图标，在暗色背景上更显眼 */
+        --gemini-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+        /* 阴影在暗色背景下需要更明显 */
+    }
+}
+
+/* 3. 在组件样式中，使用 var() 函数来调用我们定义的变量 */
 .gemini-response {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
+    background-color: var(--gemini-bg-color);
+    border: 1px solid var(--gemini-border-color);
+    box-shadow: var(--gemini-shadow);
     border-radius: 12px;
     margin: 2em 0;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    /* 添加一点阴影，更有立体感 */
     overflow: hidden;
-    /* 防止子元素溢出圆角 */
+    /* 通过 transition 让颜色切换更平滑 */
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .gemini-header {
     display: flex;
     align-items: center;
     gap: 8px;
-    /* 图标和文字的间距 */
-    background-color: #f5f5f5;
-    /* 头部背景色 */
+    background-color: var(--gemini-header-bg-color);
     padding: 8px 16px;
     font-weight: 600;
-    color: #333;
-    border-bottom: 1px solid #e0e0e0;
+    color: var(--gemini-header-text-color);
+    border-bottom: 1px solid var(--gemini-border-color);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .gemini-header svg {
-    color: #4a90e2;
-    /* 图标颜色 */
+    color: var(--gemini-icon-color);
+    transition: color 0.3s ease;
 }
 
 .gemini-content {
     padding: 16px;
+    color: var(--gemini-content-text-color);
+    transition: color 0.3s ease;
+}
+
+/* (可选) 优化内容区元素在暗黑模式下的显示效果 */
+.gemini-content a {
+    color: var(--gemini-icon-color);
+    /* 让链接颜色和图标颜色保持一致 */
+}
+
+.gemini-content code {
+    background-color: var(--gemini-header-bg-color);
+    /* 代码块背景和头部背景一致 */
+    padding: 2px 6px;
+    border-radius: 4px;
 }
