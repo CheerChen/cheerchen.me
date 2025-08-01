@@ -3,6 +3,7 @@ date = '2025-07-12T05:25:26+09:00'
 draft = false
 title = ' 忍不了了！使用 Gemini 一次完整排查 Chrome 卡死并给官方提 Bug 的全过程 '
 cover = '10x_KV_jplo2v.png'
+images = ['10x_KV_jplo2v.png']
 nolastmod = true
 +++
 

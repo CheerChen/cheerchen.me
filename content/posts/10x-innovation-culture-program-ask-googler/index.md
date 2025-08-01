@@ -3,6 +3,7 @@ date = '2025-07-29T15:25:26+09:00'
 draft = false
 title = ' 向 Googler 提问！How to Think 10X, not 10% '
 cover = 'unnamed.jpg'
+images = ['unnamed.jpg']
 nolastmod = true
 +++
 

@@ -37,3 +37,7 @@ showPrevNextPost = true
 [params.experimental]
 jsDate = true
 jsDateFormat = "yyyy年MM月dd日"
+
+[services]
+[services.googleAnalytics]
+ID = 'G-GVR7W9ZBBP'
