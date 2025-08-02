@@ -1,5 +1,5 @@
 +++
-date = '2025-06-26T07:00:26+09:00'
+date = '2025-06-25T12:00:26+09:00'
 draft = false
 title = ' JINS AI：实体行业的 AI 落地 - AWS Summit Japan 2025 会议回顾'
 cover = '250625_pressrelease.png'

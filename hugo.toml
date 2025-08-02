@@ -17,11 +17,11 @@ customCSS = ["custom.css"]
 
 [params]
 headerTitle = "CheerChen's Blog"
-motto = "Summer Madness"
+motto = "在日程序员的技术分享，杂谈和生活记录"
 # 您的作者名
 author = "CheerChen"
 # 您的头像，同样，请将图片放在项目根目录下的 static 文件夹里
-avatar = "/5109459.png"
+avatar = "3284997.png"
 
 lightTheme = "emerald"
 darkTheme = "forest"
@@ -30,6 +30,7 @@ showTableOfContents = true
 showSummaryCoverInPost = true
 imageZoomableInPost = true
 showPrevNextPost = true
+favicon = "favicon.ico"
 
 # -- 开启禅定模式 --
 # zenMode = true
