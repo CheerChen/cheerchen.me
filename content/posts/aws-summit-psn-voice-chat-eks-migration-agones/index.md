@@ -60,6 +60,8 @@ Kubernetes 这类云原生平台的设计初衷，更擅长管理无状态（sta
 
 ## 解决方案：Agones
 
+{{< figure src="picture_pc_cad71d7c7a06955477538efbf300c692.webp" >}}
+
 1. 一个为游戏服务器设计的、开源的 Kubernetes 扩展。
 2. 工作原理：通过自定义资源（CRD, Custom Resource Definition）和自定义控制器（Custom Controller）来扩展 K8s，让 K8s 能理解和管理“会话型、实时通信”应用（即 GameServer Pod）的生命周期。
 
