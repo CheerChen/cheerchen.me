@@ -2,9 +2,9 @@
 date = '2025-06-26T12:05:26+09:00'
 draft = false
 title = '「怪物猎人：荒野」支持跨平台联机的幕后故事 - AWS Summit Japan 2025 会议回顾'
-description = "深入解析卡普空怪物猎人荒野如何实现跨平台联机，探讨支撑百万级并发用户的网络架构设计，包括 EKS+Fargate 技术选型和全球分布式实时服务器架构"
+seo_description = "深入解析卡普空怪物猎人荒野如何实现跨平台联机，探讨支撑百万级并发用户的网络架构设计，包括 EKS+Fargate 技术选型和全球分布式实时服务器架构"
 keywords = ["怪物猎人", "跨平台游戏", "AWS EKS", "Fargate", "游戏架构", "实时通信", "网络架构", "卡普空"]
-tags = ["游戏开发", "AWS", "架构设计", "实时通信", "跨平台"]
+tags = ["游戏开发", "AWS", "架构设计", "实时通信", "跨平台", "AWS Summit Japan 2025"]
 categories = ["技术分享"]
 cover = 'ed78ce6023390efcfcb1f3c810962075-800-450.webp'
 images = ['ed78ce6023390efcfcb1f3c810962075-800-450.webp']

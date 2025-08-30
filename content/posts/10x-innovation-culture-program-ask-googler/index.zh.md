@@ -2,7 +2,7 @@
 date = '2025-07-29T15:25:26+09:00'
 draft = false
 title = ' 向 Googler 提问！How to Think 10X, not 10% '
-description = "分享参加 Google 10X 创新文化项目的心得，记录与 Googler 的问答交流，探讨如何实现 10 倍而非 10% 的思维突破，学习 Google 的管理哲学和创新文化"
+seo_description = "分享参加 Google 10X 创新文化项目的心得，记录与 Googler 的问答交流，探讨如何实现 10 倍而非 10% 的思维突破，学习 Google 的管理哲学和创新文化"
 keywords = ["Google", "10X创新", "管理哲学", "职业发展", "创新思维", "Googler", "团队管理"]
 tags = ["职业发展", "管理", "创新", "Google", "企业文化"]
 categories = ["职业心得"]

@@ -1,0 +1,141 @@
+{{ if site.Params.stickyNav }}
+<nav x-data="{ isSticky: false }"
+  x-init="window.addEventListener('scroll', () => { isSticky = window.scrollY > 30 })"
+  class="sticky top-0 z-30 mt-4 lg:mt-8 py-4"
+  :class="{ 'bg-base-100 shadow-lg dark:border-b dark:border-base-content/30': isSticky }">
+{{ else }}
+<nav class="mt-4 lg:mt-8 py-4">
+{{ end }}
+  {{ if site.Params.zenMode }}
+  <div class="container flex justify-between max-w-[65ch] mx-auto px-4 md:px-0">
+  {{ else }}
+  <div class="container flex justify-between px-4">
+  {{ end }}
+    <section class="flex items-center gap-4">
+      <div class="avatar cursor-pointer hover:avatar-online" @click="flip = !flip" title="{{ T "flip" }}">
+        <div class="h-10 rounded-full">
+          <img src="{{ site.Params.avatar | relURL }}" alt="{{ site.Params.headerTitle }}" />
+        </div>
+      </div>
+
+      {{ if or site.Params.headerTitle site.Params.motto }}
+      <div>
+        {{ if site.Params.headerTitle }}
+        <a href="{{ .Site.Home.RelPermalink }}" class="text-lg font-semibold cursor-pointer">
+          {{ site.Params.headerTitle }}
+        </a>
+        {{ end }}
+        {{ if site.Params.motto }}
+        <div class="text-base-content/60 text-sm">{{ site.Params.motto }}</div>
+        {{ end }}
+      </div>
+      {{ end }}
+    </section>
+
+    {{ $navItems := slice "about" "search" "rss" "posts" "categories" "tags" }}
+    {{ if site.Params.reorderNavItems }}
+      {{ $navItems = site.Params.reorderNavItems }}
+    {{ end }}
+
+    <div class="dropdown dropdown-end sm:hidden">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-square" aria-label="Select an option">
+        <ion-icon name="menu" class="text-2xl"></ion-icon>
+      </div>
+      <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-1 shadow-md">
+        {{ partial "navMobileMenu.html" (dict "navItems" $navItems) }}
+        {{ if gt (len .Site.Languages) 1 }}
+        <li class="menu-title">
+          <span>{{ i18n "languages" | default "Languages" }}</span>
+        </li>
+        {{ range $.Site.Home.AllTranslations }}
+        <li>
+          <a href="{{ .RelPermalink }}" {{ if eq .Language.Lang $.Site.Language.Lang }}class="active"{{ end }}>
+            {{ .Language.LanguageName }}
+          </a>
+        </li>
+        {{ end }}
+        {{ end }}
+      </ul>
+    </div>
+    <section class="hidden sm:flex sm:items-center sm:gap-2 md:gap-4">
+      {{ if not site.Params.collapseNavItems }}
+
+      {{ range $navItems }}
+      {{ partial "renderNavItem.html" . }}
+      {{ end }}
+
+      {{ with site.Params.navItems }}
+      {{ partial "navCustomItems.html" (dict "navItems" $navItems "mobile" false) }}
+      {{ end }}
+
+      {{ else }}
+
+      {{ $collapseNavItems := site.Params.collapseNavItems }}
+      {{ $items := complement $collapseNavItems $navItems }}
+      {{ range $items }}
+      {{ partial "renderNavItem.html" . }}
+      {{ end }}
+
+      <div class="dropdown dropdown-end dropdown-hover">
+        <div tabindex="0" role="button" class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" aria-label="Select an option">
+          <ion-icon class="group-hover:text-primary-content text-xl" name="menu"></ion-icon>
+        </div>
+        <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-1 shadow-md">
+          {{ range $collapseNavItems }}
+          {{ partial "renderNavItem.html" . }}
+          {{ end }}
+
+          {{ with site.Params.navItems }}
+          {{ partial "navCustomItems.html" (dict "navItems" . "mobile" false) }}
+          {{ end }}
+        </ul>
+      </div>
+
+      {{ end }}
+
+      <!-- 语言切换器 -->
+      {{ if gt (len .Site.Languages) 1 }}
+      <div class="dropdown dropdown-end dropdown-hover">
+        <div tabindex="0" role="button" class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" aria-label="Language Switcher">
+          <ion-icon class="group-hover:text-primary-content text-xl" name="language"></ion-icon>
+        </div>
+        <ul tabindex="0" class="dropdown-content menu w-40 bg-base-100 rounded-box z-1 shadow-md">
+          {{ if .IsTranslated }}
+            <!-- 如果当前页面有翻译版本，显示翻译页面链接 -->
+            {{ range .AllTranslations }}
+            <li>
+              <a href="{{ .RelPermalink }}" {{ if eq .Language.Lang $.Site.Language.Lang }}class="active"{{ end }}>
+                <span class="flex items-center gap-2">
+                  {{ if eq .Language.Lang "zh" }}
+                  <span class="text-lg"></span>
+                  {{ else if eq .Language.Lang "ja" }}
+                  <span class="text-lg"></span>
+                  {{ end }}
+                  {{ .Language.LanguageName }}
+                </span>
+              </a>
+            </li>
+            {{ end }}
+          {{ else }}
+            <!-- 如果当前页面没有翻译版本，显示各语言首页链接 -->
+            {{ range $.Site.Home.AllTranslations }}
+            <li>
+              <a href="{{ .RelPermalink }}" {{ if eq .Language.Lang $.Site.Language.Lang }}class="active"{{ end }}>
+                <span class="flex items-center gap-2">
+                  {{ if eq .Language.Lang "zh" }}
+                  <span class="text-lg"></span>
+                  {{ else if eq .Language.Lang "ja" }}
+                  <span class="text-lg"></span>
+                  {{ end }}
+                  {{ .Language.LanguageName }}
+                </span>
+              </a>
+            </li>
+            {{ end }}
+          {{ end }}
+        </ul>
+      </div>
+      {{ end }}
+    </section>
+  </div>
+</nav>

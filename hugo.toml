@@ -3,14 +3,41 @@ baseURL = 'https://cheerchen.me/'
 # 网站的默认语言
 languageCode = 'zh-Hans'
 defaultContentLanguage = 'zh'
+defaultContentLanguageInSubdir = false
 # 网站的标题
-title = 'CheerChen 的博客'
+title = "CheerChen's Blog"
 
 # 使用的主题
 theme = 'dream'
 
 hasCJKLanguage = true
 enableRobotsTXT = true
+
+# 多语言配置
+[languages]
+  [languages.zh]
+    languageCode = 'zh-Hans'
+    languageName = 'ZH'
+    title =  "CheerChen's Blog"
+    weight = 1
+    [languages.zh.params]
+      headerTitle = "CheerChen's Blog"
+      motto = "在日程序员的技术分享，杂谈和生活记录"
+      author = "CheerChen"
+      avatar = "3284997.png"
+      description = "CheerChen 的技术博客，专注于云原生、Kubernetes、AWS、AI 等前沿技术分享"
+      
+  [languages.ja]
+    languageCode = 'ja'
+    languageName = 'JP'
+    title =  "CheerChen's Blog"
+    weight = 2
+    [languages.ja.params]
+      headerTitle = "CheerChen's Blog"
+      motto = "クラウドネイティブ・AI、技術共有、雑談"
+      author = "CheerChen"
+      avatar = "3284997.png"
+      description = "クラウドネイティブ、Kubernetes、AWS、AI などなど"
 
 [markup]
 [markup.highlight]
@@ -26,18 +53,9 @@ tabWidth = 4
 customCSS = ["custom.css"]
 
 [params]
-headerTitle = "CheerChen's Blog"
-motto = "在日程序员的技术分享，杂谈和生活记录"
-# 您的作者名
-author = "CheerChen"
-# 您的头像，同样，请将图片放在项目根目录下的 static 文件夹里
-avatar = "3284997.png"
-
 customSyntaxHighlighting = true
-
 lightTheme = "emerald"
 darkTheme = "forest"
-
 showTableOfContents = true
 showSummaryCoverInPost = true
 imageZoomableInPost = true

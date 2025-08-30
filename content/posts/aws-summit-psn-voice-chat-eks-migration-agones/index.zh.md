@@ -1,10 +1,10 @@
 +++
 date = '2025-06-26T05:25:26+09:00'
 draft = false
-title = ' PlayStation™Network 语音聊天服务是如何迁移到了 Amazon EKS？'
-description = "深度解析索尼互动娱乐如何将 PSN 语音聊天这类长连接应用成功迁移到 Amazon EKS，利用 Agones 解决会话连续性和弹性伸缩的挑战，AWS Summit 技术分享总结"
+title = 'PlayStation™Network 语音聊天服务是如何迁移到了 Amazon EKS？ - AWS Summit Japan 2025 会议回顾'
+seo_description = "深度解析索尼互动娱乐如何将 PSN 语音聊天这类长连接应用成功迁移到 Amazon EKS，利用 Agones 解决会话连续性和弹性伸缩的挑战，AWS Summit 技术分享总结"
 keywords = ["AWS EKS", "Kubernetes", "Agones", "长连接", "PlayStation", "游戏服务器", "容器化", "云原生"]
-tags = ["AWS", "Kubernetes", "游戏开发", "云原生", "架构设计"]
+tags = ["AWS", "Kubernetes", "游戏开发", "云原生", "架构设计", "AWS Summit Japan 2025"]
 categories = ["技术分享"]
 cover = '460ed70d77d3d088c7577b2589f5ae8a.png'
 images = ['460ed70d77d3d088c7577b2589f5ae8a.png']
