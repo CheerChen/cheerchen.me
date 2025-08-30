@@ -2,6 +2,10 @@
 date = '2025-07-12T05:25:26+09:00'
 draft = false
 title = ' 忍不了了！使用 Gemini 一次完整排查 Chrome 卡死并给官方提 Bug 的全过程 '
+description = "详记使用 Gemini AI 助手从问题分析、工具选择到最终解决 Chrome 启动卡死问题的完整排查过程，包括使用 UIforETW 性能分析工具和 Chrome 官方 Bug 提交流程"
+keywords = ["Chrome卡死", "性能分析", "UIforETW", "Bug排查", "Gemini AI", "Chrome调试", "Windows性能"]
+tags = ["浏览器", "性能优化", "问题排查", "AI助手", "调试工具"]
+categories = ["问题解决"]
 cover = '10x_KV_jplo2v.png'
 images = ['10x_KV_jplo2v.png']
 nolastmod = true
@@ -279,7 +283,7 @@ nolastmod = true
 
 思路很清晰，但是他说的设置环境变量很显然解决不了 Chrome 的问题，Window 自己的目录下恐怕也不会有 Chrome 的符号文件，所以我这里需要做的是把他推荐的环境变量值稍作调整：
 
-```
+```text
 srv*C:\symbols\*https://chromium-browser-symsrv.commondatastorage.googleapis.com
 ```
 

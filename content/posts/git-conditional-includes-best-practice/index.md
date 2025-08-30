@@ -2,6 +2,10 @@
 date = '2025-08-29T02:00:00+09:00'
 draft = false
 title = '又提交错了！Git 多身份管理最佳实践：从错误提交到条件包含的完整解决方案'
+description = "解决 Git 多项目身份管理问题，详解如何修复错误的用户信息提交，以及使用 Git 条件包含 (conditional includes) 实现自动化身份切换的完整指南"
+keywords = ["Git", "多身份管理", "条件包含", "Git配置", "用户身份", "版本控制", "开发工具"]
+tags = ["Git", "开发工具", "最佳实践", "版本控制"]
+categories = ["开发技巧"]
 cover = 'git_identity.png'
 images = ['git_identity.png']
 nolastmod = true

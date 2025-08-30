@@ -12,6 +12,16 @@ theme = 'dream'
 hasCJKLanguage = true
 enableRobotsTXT = true
 
+[markup]
+[markup.highlight]
+noClasses = false
+lineNos = true
+lineNumbersInTable = false
+anchorLineNos = false
+codeFences = true
+guessSyntax = true
+tabWidth = 4
+
 [params.advanced]
 customCSS = ["custom.css"]
 
@@ -22,6 +32,8 @@ motto = "在日程序员的技术分享，杂谈和生活记录"
 author = "CheerChen"
 # 您的头像，同样，请将图片放在项目根目录下的 static 文件夹里
 avatar = "3284997.png"
+
+customSyntaxHighlighting = true
 
 lightTheme = "emerald"
 darkTheme = "forest"
@@ -38,6 +50,16 @@ favicon = "favicon.ico"
 [params.experimental]
 jsDate = true
 jsDateFormat = "yyyy年MM月dd日"
+
+# Sitemap 配置
+[sitemap]
+changefreq = "weekly"
+priority = 0.8
+filename = "sitemap.xml"
+
+# 允许 HTML 标签，用于结构化数据
+[markup.goldmark.renderer]
+unsafe = true
 
 [services]
 [services.googleAnalytics]
