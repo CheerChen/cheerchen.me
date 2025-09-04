@@ -153,7 +153,7 @@ Kubernetes 这类云原生平台的设计初衷，更擅长管理无状态（sta
 
 {{< figure src="20250802_174533(15).jpg" >}}
 
-- Scheduled (已调度) -> Ready (就绪，等待分配) -> Allocated (已分配，正在服务会话) -> Shutdown (关闭中) -> Pod删除。
+- Scheduled (已调度) -> Ready (就绪，等待分配) -> Allocated (已分配，正在服务会话) -> Shutdown (关闭中) -> Pod 删除。
 
 - 扩容（Scale-out）发生在会话开始时（Ready -> Allocated），缩容（Scale-in）则发生在会话结束后。
 

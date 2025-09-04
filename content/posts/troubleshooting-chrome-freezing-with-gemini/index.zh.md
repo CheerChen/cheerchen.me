@@ -35,7 +35,6 @@ nolastmod = true
 
 {{< gemini >}}
 
-
 ### 第一阶段：常规排查，轻松解决常见问题
 
 在深入技术细节之前，我们可以先从最常见、最容易解决的问题入手。这通常能解决大部分用户的烦恼。
@@ -108,7 +107,7 @@ nolastmod = true
 
 紧接着继续请教他：
 
->你看我使用 UIforETW 捕获的内容，显示了从捕获开始 1 秒后我启动 chrome，长达 60 秒时间内 cpu 占用，但是我看不出他在做什么事情
+> 你看我使用 UIforETW 捕获的内容，显示了从捕获开始 1 秒后我启动 chrome，长达 60 秒时间内 cpu 占用，但是我看不出他在做什么事情
 
 {{< figure src="unnamed.png" title="UIforETW 捕获的内容">}}
 
@@ -182,14 +181,13 @@ nolastmod = true
 
 看到具体的函数名后，我就可以给你更精确的建议，例如是该禁用某个扩展、清理特定的数据，还是检查某个第三方软件了。
 
-
 {{< /gemini >}}
 
 其实这个地方已经初见端倪，说明跟加载我的账户资料有关，（那是当然：全新启动的 Chrome 是正常的，登陆了之后才会卡死）
 
 我乘胜追击，展开并截图发给他继续追问：
 
->我有两个信息
+> 我有两个信息
 >
 >1 火焰图我 filter by chrome.exe（random wait analysis） 以后查看到图 1 但是都指向 chrome.dll!<SYMBOLS DISABLED>
 >
@@ -249,9 +247,9 @@ nolastmod = true
     
     - 在 Windows 搜索框中搜索“编辑系统环境变量”并打开。
         
-    - 在“系统属性”窗口中，点击“环境变量...”。
+    - 在“系统属性”窗口中，点击“环境变量。..”。
         
-    - 在“系统变量”区域，点击“新建...”。
+    - 在“系统变量”区域，点击“新建。..”。
         
     - **变量名**: `_NT_SYMBOL_PATH`
         
@@ -287,9 +285,9 @@ nolastmod = true
 srv*C:\symbols\*https://chromium-browser-symsrv.commondatastorage.googleapis.com
 ```
 
-然后告诉他:
+然后告诉他：
 
->我现在搞定了chrome.EXE.的符号显示，教我怎么看火焰图，我需要去哪里找到罪魁祸首
+> 我现在搞定了 chrome.EXE. 的符号显示，教我怎么看火焰图，我需要去哪里找到罪魁祸首
 
 一如既往他的回答还是非常高情绪，我严重怀疑谷歌在后训练 Gemini 的时候要求他始终维持这样的人设。
 
@@ -381,7 +379,7 @@ srv*C:\symbols\*https://chromium-browser-symsrv.commondatastorage.googleapis.com
 
 果然：
 
->我有两个发现
+> 我有两个发现
 >
 >1 我的火焰图没有你说的一个很宽的方块，而是几个方块合在一起构成了这个 60 秒，是不是说明他这个卡死的中间确实在做各种不同的事情？
 >
@@ -469,7 +467,7 @@ srv*C:\symbols\*https://chromium-browser-symsrv.commondatastorage.googleapis.com
 
 我拿着结果又去确认了一遍：
 
->我确实秒开了！ 关键设置是 同步中的 同步标签分组 我关闭了
+> 我确实秒开了！ 关键设置是 同步中的 同步标签分组 我关闭了
 >
 >1 我有多个 chrome 终端，我仅仅在 windows 的 chrome 上复现了此问题（我可能在某个 mac 的终端上有不少标签页和分组没有退出）
 >
@@ -496,9 +494,9 @@ srv*C:\symbols\*https://chromium-browser-symsrv.commondatastorage.googleapis.com
 
 当 Chrome 启动时，它会同时做几件事：
 
-1. **前台显示 (给你看的)**：严格执行你的命令，为你准备一个空白的新标签页。这是你看得见的部分。
+1. **前台显示 （给你看的）**：严格执行你的命令，为你准备一个空白的新标签页。这是你看得见的部分。
     
-2. **后台工作 (你看不到的)**：为了让你在不同设备间无缝切换，Chrome 会立即启动核心服务，其中最重要的就是**同步服务 (Sync Service)**。
+2. **后台工作 （你看不到的）**：为了让你在不同设备间无缝切换，Chrome 会立即启动核心服务，其中最重要的就是**同步服务 (Sync Service)**。
 
 现在，我们可以完整地重构那致命 60 秒内发生的故事了：
 
@@ -522,7 +520,7 @@ srv*C:\symbols\*https://chromium-browser-symsrv.commondatastorage.googleapis.com
 
 ——是的，对于你的屏幕来说，它最终什么都没渲染，因为它最终的任务就是显示一个空白页。但它在后台为了处理同步数据，已经进行了一场你看不见的、极其昂贵的渲染计算。
 
-### 这也完美解释了你的另外两个发现：
+### 这也完美解释了你的另外两个发现
 
 1. **为什么只在 Windows 上复现**：很可能是因为 `AutoGroup Tabs` 这个扩展在 Windows 和 Mac 上的行为有细微差异，或者它与 Windows 版 Chrome 的同步客户端之间存在一个 Bug。当 Mac 上的“干净”Chrome 把一个庞大的状态同步给安装了“有潜在问题”扩展的 Windows Chrome 时，问题就爆发了。
     
