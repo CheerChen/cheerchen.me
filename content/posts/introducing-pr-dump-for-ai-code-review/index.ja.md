@@ -1,5 +1,5 @@
 +++
-date = '2025-09-19T12:00:00+09:00'
+date = '2025-09-18T12:00:00+09:00'
 draft = false
 title = 'PR のコンテキストを AI に投入！自作 CLI ツール「pr-dump」の紹介'
 seo_description = "GitHub プルリクエストの全コンテキスト（メタデータ、コメント、コード差分）を単一テキストファイルに集約し、AI レビューを効率化する自作 CLI ツール「pr-dump」の開発背景、機能、具体的な使用例を詳細に解説します。"
@@ -25,7 +25,65 @@ PR の概要、開発者との議論が交わされたコメントスレッド�
 
 このツールの核心的な価値は、**GitHub 上に散在する多元情報を「フラットな」単一テキストに変換し、AI が最も理解しやすい形で提供する**点にあります。
 
-- **GitHub Repository**: [https://github.com/CheerChen/pr-dump](https://github.com/CheerChen/pr-dump)
+## 🛠️ インストールと使い方
+
+**Homebrew (macOS/Linux)** を使えば簡単にインストールできます。
+
+```bash
+# Formula をタップ
+brew tap CheerChen/pr-dump
+
+# インストール
+brew install pr-dump
+```
+
+その他のインストール方法は [GitHub リポジトリ](https://github.com/CheerChen/pr-dump) をご覧ください。
+
+### 使い方
+
+**⚠️ 重要：事前に GitHub CLI へのログインが必須です 。**
+
+```bash
+# 1. レビューしたい PR があるリポジトリに移動
+cd /path/to/your/repository
+
+# 2. PR 番号を指定して実行
+pr-dump 123
+
+# これだけで、カレントディレクトリに review.txt のようなファイルが生成されます。
+```
+
+### 出力サンプル
+
+生成されるファイルは以下のような構成になっています。
+
+```plaintext
+################################################################################
+# PULL REQUEST CONTEXT: #42
+################################################################################
+
+--- METADATA ---
+PR Title: Add user authentication system
+PR Body: This PR implements JWT-based authentication...
+
+--- ALL COMMENTS ---
+## Timeline Comments ##
+- Timeline comment from @developer1:
+  Looks good, but consider adding rate limiting...
+
+## Code Review Comments ##
+- Code comment from @reviewer on `auth.go` (line 25):
+  This function should handle edge cases...
+
+--- GIT DIFF ---
+diff --git a/auth.go b/auth.go
+new file mode 100644
+index 0000000..abc1234
++++ b/auth.go
+@@ -0,0 +1,45 @@
++package auth
+...
+```
 
 ### 主な機能
 
@@ -89,8 +147,9 @@ This sentence translates to:
 "If you would like to organize this table by adding columns such as 'Description' or 'Priority', I can do that. Shall I add them?"
 
 In short, the author is offering to improve the table in the PR description by adding more informational columns, such as:
-* Description: To explain what each notification is for.
-* Priority: To indicate the urgency of each notification.
+
+- Description: To explain what each notification is for.
+- Priority: To indicate the urgency of each notification.
 
 The author is asking the reviewer whether they think this enhancement is needed to make the table clearer and more organized.
 
@@ -111,66 +170,6 @@ The author is asking the reviewer whether they think this enhancement is needed 
 3. **リリースノートやドキュメントの自動生成**:
     マージされた PR のコンテキストを元に、「この変更に関するリリースノートの草案を書いて」と AI に依頼すれば、ドキュメント作成の手間が大幅に削減されます。
 
-## 🛠️ インストールと使い方
-
-**Homebrew (macOS/Linux)** を使えば簡単にインストールできます。
-
-```bash
-# Formula をタップ
-brew tap CheerChen/pr-dump
-
-# インストール
-brew install pr-dump
-```
-
-その他のインストール方法は [GitHub リポジトリ](https://github.com/CheerChen/pr-dump) をご覧ください。
-
-### 使い方
-
-**⚠️ 重要：事前に GitHub CLI へのログインが必須です 。**
-
-```bash
-# 1. レビューしたい PR があるリポジトリに移動
-cd /path/to/your/repository
-
-# 2. PR 番号を指定して実行
-pr-dump 123
-
-# これだけで、カレントディレクトリに pr_123.txt のようなファイルが生成されます。
-```
-
-### 出力サンプル
-
-生成されるファイルは以下のような構成になっています。
-
-```plaintext
-################################################################################
-# PULL REQUEST CONTEXT: #42
-################################################################################
-
---- METADATA ---
-PR Title: Add user authentication system
-PR Body: This PR implements JWT-based authentication...
-
---- ALL COMMENTS ---
-## Timeline Comments ##
-- Timeline comment from @developer1:
-  Looks good, but consider adding rate limiting...
-
-## Code Review Comments ##
-- Code comment from @reviewer on `auth.go` (line 25):
-  This function should handle edge cases...
-
---- GIT DIFF ---
-diff --git a/auth.go b/auth.go
-new file mode 100644
-index 0000000..abc1234
-+++ b/auth.go
-@@ -0,0 +1,45 @@
-+package auth
-...
-```
-
 ## 類似ツールとの比較
 
 GitHub エコシステムには他にも優れた AI ツールが存在します。それぞれのツールの思想と目的を理解することで、より効果的に活用できます。
@@ -181,7 +180,6 @@ GitHub エコシステムには他にも優れた AI ツールが存在します
 | **実行環境** | ローカル CLI | GitHub Actions (CI/CD) | GitHub の PR ページ |
 | **コンテキスト範囲** | PR 全体（メタデータ、全コメント、差分） | 主に PR のコード差分 | PR 内のコード差分（Copilot が自動で取得する範囲） |
 | **最適な用途** | 複雑な PR のレビュー補助、AI への詳細な質問 | 定型的な PR のレビュー自動化、説明文の自動生成 | PR のコード差分に関する具体的な質問、レビューコメントの提案 |
-| **カスタマイズ性** | シンプルな CLI オプション | 豊富な設定ファイルでプロンプト等を柔軟に調整可能 | 限定的 |
 | **コスト** | 無料（OSS） | 無料（OSS だが、裏側で OpenAI 等の API キーが必要） | GitHub Copilot のサブスクリプションが必要 |
 
 他のツールと競合するのではなく、**開発者が AI を主体的に活用するための「素材」を提供する**という点で、ユニークなポジションを築いています。
