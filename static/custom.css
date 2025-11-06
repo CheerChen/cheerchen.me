@@ -8,6 +8,14 @@
     --gemini-content-text-color: #212121;
     --gemini-icon-color: #4a90e2;
     --gemini-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+    /* Ask Shortcode 专用样式 */
+    --ask-border-color: #ffd700;
+    --ask-header-bg-color: #fff8dc;
+    --ask-header-text-color: #8b4513;
+    --ask-content-text-color: #333;
+    --ask-icon-color: #ff8c00;
+    --ask-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 /* 2. 使用媒体查询，为其他变量重写暗黑模式的值 */
@@ -22,6 +30,14 @@
         --gemini-content-text-color: #d1d1d1;
         --gemini-icon-color: #63a4ff;
         --gemini-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+
+        /* Ask Shortcode 暗黑模式颜色 */
+        --ask-border-color: #b8860b;
+        --ask-header-bg-color: #3a3420;
+        --ask-header-text-color: #ffd700;
+        --ask-content-text-color: #e2e2e2;
+        --ask-icon-color: #ffa500;
+        --ask-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
     }
 }
 
@@ -64,6 +80,48 @@
 }
 
 .gemini-content code {
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* --- Ask Shortcode 专用样式 --- */
+.ask-response {
+    border: 1px solid var(--ask-border-color);
+    box-shadow: var(--ask-shadow);
+    border-radius: 12px;
+    margin: 2em 0;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.ask-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--ask-header-bg-color);
+    padding: 8px 16px;
+    font-weight: 600;
+    color: var(--ask-header-text-color);
+    border-bottom: 1px solid var(--ask-border-color);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.ask-header svg {
+    color: var(--ask-icon-color);
+    transition: color 0.3s ease;
+}
+
+.ask-content {
+    padding: 16px;
+    color: var(--ask-content-text-color);
+    transition: color 0.3s ease;
+}
+
+.ask-content a {
+    color: var(--ask-icon-color);
+}
+
+.ask-content code {
     padding: 2px 6px;
     border-radius: 4px;
 }
