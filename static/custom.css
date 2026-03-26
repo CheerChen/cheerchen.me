@@ -2,43 +2,56 @@
 
 /* 1. 定义可复用的 CSS 变量 (不再定义背景色) */
 :root {
-    --gemini-border-color: #e0e0e0;
-    --gemini-header-bg-color: #f5f5f5;
-    --gemini-header-text-color: #333;
+    /* Gemini - 蓝紫色调 (Google Blue) */
+    --gemini-border-color: #d3d8f0;
+    --gemini-header-bg-color: #eef1ff;
+    --gemini-header-text-color: #4a5aba;
     --gemini-content-text-color: #212121;
-    --gemini-icon-color: #4a90e2;
+    --gemini-icon-color: #4285F4;
     --gemini-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 
-    /* Ask Shortcode 专用样式 */
+    /* Ask Shortcode - 金色调 */
     --ask-border-color: #ffd700;
     --ask-header-bg-color: #fff8dc;
     --ask-header-text-color: #8b4513;
     --ask-content-text-color: #333;
     --ask-icon-color: #ff8c00;
     --ask-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+    /* ChatGPT - 青绿色调 (OpenAI Teal) */
+    --chatgpt-border-color: #c8e6df;
+    --chatgpt-header-bg-color: #f0f7f4;
+    --chatgpt-header-text-color: #0d8a6a;
+    --chatgpt-content-text-color: #212121;
+    --chatgpt-icon-color: #10a37f;
+    --chatgpt-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
-/* 2. 使用媒体查询，为其他变量重写暗黑模式的值 */
-@media (prefers-color-scheme: dark) {
-    :root {
-        /* 这里是精心挑选的一套暗黑模式颜色 */
-        --gemini-bg-color: #282c34;
-        /* 深邃的炭灰色，而非纯黑 */
-        --gemini-border-color: #404552;
-        --gemini-header-bg-color: #333842;
-        --gemini-header-text-color: #e2e2e2;
-        --gemini-content-text-color: #d1d1d1;
-        --gemini-icon-color: #63a4ff;
-        --gemini-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+/* 2. 暗黑模式变量覆盖 (dream 主题用 .dark class 切换) */
+.dark {
+    /* Gemini 暗黑模式 - 蓝紫色调 */
+    --gemini-border-color: #4a5280;
+    --gemini-header-bg-color: #2a2f45;
+    --gemini-header-text-color: #a8b4ff;
+    --gemini-content-text-color: #c8cce8;
+    --gemini-icon-color: #7cacff;
+    --gemini-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 
-        /* Ask Shortcode 暗黑模式颜色 */
-        --ask-border-color: #b8860b;
-        --ask-header-bg-color: #3a3420;
-        --ask-header-text-color: #ffd700;
-        --ask-content-text-color: #e2e2e2;
-        --ask-icon-color: #ffa500;
-        --ask-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
-    }
+    /* Ask 暗黑模式 - 金色调 */
+    --ask-border-color: #8a7430;
+    --ask-header-bg-color: #352e18;
+    --ask-header-text-color: #ffd966;
+    --ask-content-text-color: #e8dcc0;
+    --ask-icon-color: #ffb833;
+    --ask-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+    /* ChatGPT 暗黑模式 - 青绿色调 */
+    --chatgpt-border-color: #2d6b5a;
+    --chatgpt-header-bg-color: #1a3330;
+    --chatgpt-header-text-color: #5ee8c0;
+    --chatgpt-content-text-color: #c0e8dc;
+    --chatgpt-icon-color: #3dd9a0;
+    --chatgpt-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* 3. 在组件样式中，移除对背景色的应用 */
@@ -73,6 +86,10 @@
 .gemini-content {
     padding: 16px;
     transition: color 0.3s ease;
+}
+
+.gemini-content strong {
+    color: inherit;
 }
 
 .gemini-content a {
@@ -117,11 +134,61 @@
     transition: color 0.3s ease;
 }
 
+.ask-content strong {
+    color: inherit;
+}
+
 .ask-content a {
     color: var(--ask-icon-color);
 }
 
 .ask-content code {
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* --- ChatGPT Shortcode 专用样式 --- */
+.chatgpt-response {
+    border: 1px solid var(--chatgpt-border-color);
+    box-shadow: var(--chatgpt-shadow);
+    border-radius: 12px;
+    margin: 2em 0;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.chatgpt-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--chatgpt-header-bg-color);
+    padding: 8px 16px;
+    font-weight: 600;
+    color: var(--chatgpt-header-text-color);
+    border-bottom: 1px solid var(--chatgpt-border-color);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.chatgpt-header svg {
+    color: var(--chatgpt-icon-color);
+    transition: color 0.3s ease;
+}
+
+.chatgpt-content {
+    padding: 16px;
+    color: var(--chatgpt-content-text-color);
+    transition: color 0.3s ease;
+}
+
+.chatgpt-content strong {
+    color: inherit;
+}
+
+.chatgpt-content a {
+    color: var(--chatgpt-icon-color);
+}
+
+.chatgpt-content code {
     padding: 2px 6px;
     border-radius: 4px;
 }
