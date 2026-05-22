@@ -1,32 +1,34 @@
 {{ with site.Params.favicon }}
-  {{ if hasPrefix . "<link" }}
-    {{ . | safeHTML }}
+{{ if hasPrefix . "<link" }}
+  {{ . | safeHTML }}
   {{ else }}
-    <link href="{{ . | relURL }}" rel="icon" type="image/x-icon" />
-  {{ end }}
+  <link href="{{ . | relURL }}" rel="icon" type="image/x-icon" />
+{{ end }}
 {{ end }}
 
 <link rel="canonical" href="{{ .Permalink }}" />
 
 {{ if eq .Type "posts" }}
 <!-- Page Author & Description -->
-<meta name="author" content="{{ if isset .Params "author" }}{{ .Params.author }}{{ else }}{{ site.Params.author }}{{ end }}" />
-<meta name="description" content="{{ (or .Params.seo_description .Summary) | plainify }}" />
+<meta name="author" content="{{ if isset .Params "author" }}{{ .Params.author
+  }}{{ else }}{{ site.Params.author }}{{ end }}" />
+<meta name="description"
+  content="{{ (or .Params.seo_description .Summary) | plainify }}" />
 
 <!-- Keywords -->
 {{- $keywords := slice }}
 {{- with .Keywords }}
-  {{- $keywords = . }}
+{{- $keywords = . }}
 {{- else }}
-  {{- range .GetTerms "tags" }}
-    {{- $keywords = $keywords | append .Title }}
-  {{- else }}
-    {{- range $taxonomy, $_ := site.Taxonomies }}
-      {{- range $.GetTerms $taxonomy }}
-        {{- $keywords = $keywords | append .Title }}
-      {{- end }}
-    {{- end }}
-  {{- end }}
+{{- range .GetTerms "tags" }}
+{{- $keywords = $keywords | append .Title }}
+{{- else }}
+{{- range $taxonomy, $_ := site.Taxonomies }}
+{{- range $.GetTerms $taxonomy }}
+{{- $keywords = $keywords | append .Title }}
+{{- end }}
+{{- end }}
+{{- end }}
 {{- end }}
 <meta name="keywords" content="{{ delimit $keywords `,` }}">
 {{ else }}
@@ -45,10 +47,12 @@
 {{ template "_internal/twitter_cards.html" . }}
 
 {{ $outputCss := resources.Get "css/output.css" }}
+{{ if $outputCss }}
 {{ if hugo.IsProduction }}
-  {{ $outputCss = $outputCss | minify }}
+{{ $outputCss = $outputCss | minify }}
 {{ end }}
 <link rel="stylesheet" href="{{ $outputCss.RelPermalink }}" />
+{{ end }}
 
 {{ if or site.Params.backgroundImage site.Params.backgroundImageDark }}
 <style>

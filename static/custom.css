@@ -10,12 +10,12 @@
     --gemini-icon-color: #4285F4;
     --gemini-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 
-    /* Ask Shortcode - 金色调 */
-    --ask-border-color: #ffd700;
-    --ask-header-bg-color: #fff8dc;
-    --ask-header-text-color: #8b4513;
+    /* Ask Shortcode - 中性灰色调 */
+    --ask-border-color: #d4d4d4;
+    --ask-header-bg-color: #f5f5f5;
+    --ask-header-text-color: #525252;
     --ask-content-text-color: #333;
-    --ask-icon-color: #ff8c00;
+    --ask-icon-color: #737373;
     --ask-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 
     /* ChatGPT - 青绿色调 (OpenAI Teal) */
@@ -25,6 +25,14 @@
     --chatgpt-content-text-color: #212121;
     --chatgpt-icon-color: #10a37f;
     --chatgpt-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+    /* Claude - 珊瑚橙调 (Anthropic Brand) */
+    --claude-border-color: #f0c4b0;
+    --claude-header-bg-color: #fdf3ef;
+    --claude-header-text-color: #9c4a2e;
+    --claude-content-text-color: #212121;
+    --claude-icon-color: #D97757;
+    --claude-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 /* 2. 暗黑模式变量覆盖 (dream 主题用 .dark class 切换) */
@@ -37,12 +45,12 @@
     --gemini-icon-color: #7cacff;
     --gemini-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 
-    /* Ask 暗黑模式 - 金色调 */
-    --ask-border-color: #8a7430;
-    --ask-header-bg-color: #352e18;
-    --ask-header-text-color: #ffd966;
-    --ask-content-text-color: #e8dcc0;
-    --ask-icon-color: #ffb833;
+    /* Ask 暗黑模式 - 中性灰色调 */
+    --ask-border-color: #404040;
+    --ask-header-bg-color: #262626;
+    --ask-header-text-color: #a3a3a3;
+    --ask-content-text-color: #d4d4d4;
+    --ask-icon-color: #737373;
     --ask-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 
     /* ChatGPT 暗黑模式 - 青绿色调 */
@@ -52,6 +60,14 @@
     --chatgpt-content-text-color: #c0e8dc;
     --chatgpt-icon-color: #3dd9a0;
     --chatgpt-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+    /* Claude 暗黑模式 - 珊瑚橙调 */
+    --claude-border-color: #7a3d28;
+    --claude-header-bg-color: #3d2018;
+    --claude-header-text-color: #f4a882;
+    --claude-content-text-color: #e8cfc4;
+    --claude-icon-color: #f08060;
+    --claude-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* 3. 在组件样式中，移除对背景色的应用 */
@@ -189,6 +205,52 @@
 }
 
 .chatgpt-content code {
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* --- Claude Shortcode 专用样式 --- */
+.claude-response {
+    border: 1px solid var(--claude-border-color);
+    box-shadow: var(--claude-shadow);
+    border-radius: 12px;
+    margin: 2em 0;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.claude-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--claude-header-bg-color);
+    padding: 8px 16px;
+    font-weight: 600;
+    color: var(--claude-header-text-color);
+    border-bottom: 1px solid var(--claude-border-color);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.claude-header svg {
+    color: var(--claude-icon-color);
+    transition: color 0.3s ease;
+}
+
+.claude-content {
+    padding: 16px;
+    color: var(--claude-content-text-color);
+    transition: color 0.3s ease;
+}
+
+.claude-content strong {
+    color: inherit;
+}
+
+.claude-content a {
+    color: var(--claude-icon-color);
+}
+
+.claude-content code {
     padding: 2px 6px;
     border-radius: 4px;
 }
