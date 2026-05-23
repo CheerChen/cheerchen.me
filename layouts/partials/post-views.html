@@ -1,0 +1,13 @@
+{{- /* Render the view count for a post, when available.
+
+  page_key is the article bundle directory, e.g. "posts/foo".
+  Data source: data/views.json, generated at build time from
+  Google Analytics (scripts/ga-preview-views.py). Hidden when the key
+  is missing or the count is 0 (Hugo treats 0 as falsy in `with`).
+*/ -}}
+{{- with .File -}}
+  {{- $pageKey := strings.TrimSuffix "/" .Dir -}}
+  {{- with index site.Data.views $pageKey -}}
+    <span>{{ . }}{{ T "views" | default " views" }}</span>
+  {{- end -}}
+{{- end -}}

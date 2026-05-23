@@ -54,6 +54,10 @@
 
           | <span>{{ .ReadingTime }}{{ T "minuteRead" .ReadingTime }}</span>
 
+          {{ with (partial "post-views.html" .) }}
+            | {{ . | safeHTML }}
+          {{ end }}
+
           {{ if ne .Params.nolastmod true }}
           | <span>{{ T "updatedAt" }}
             {{ if site.Params.Experimental.jsDate }}
