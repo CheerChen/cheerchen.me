@@ -1,0 +1,46 @@
+name: Refresh post views
+
+on:
+  schedule:
+    # Weekly, Monday 04:00 UTC (13:00 JST)
+    - cron: '0 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-views
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Write GA OAuth credentials
+        env:
+          ADC_JSON: ${{ secrets.GA_ADC_JSON }}
+        run: |
+          mkdir -p "$HOME/.config/gcloud"
+          printf '%s' "$ADC_JSON" > "$HOME/.config/gcloud/application_default_credentials.json"
+
+      - name: Fetch latest views from GA
+        env:
+          GA4_PROPERTY_ID: '499292123'
+        run: uv run scripts/ga-preview-views.py --output-json data/views.json
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet data/views.json; then
+            echo "No changes to data/views.json."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/views.json
+          git commit -m "chore(views): refresh from GA [skip ci]"
+          git push
