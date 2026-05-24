@@ -3,11 +3,10 @@ date = '2026-05-22T22:00:00+09:00'
 draft = false
 title = '当 AI 反问你：从一道误读的算法题，看 Claude 与 Codex 的对齐哲学'
 seo_description = "同一道东大创造情报学的图算法题、同一个我误读的 prompt，Codex 顺着我做下去，Claude 反过来 quote 题目原文质疑我的起点假设。这不是谁更聪明的问题，而是两家公司对齐目标的不同——一篇关于 prompt 忠诚 vs 题意忠诚的实证记录。"
-keywords = ["Claude", "Codex", "AI 协作", "Prompt 工程", "对齐", "LLM", "多模型交叉验证", "AI 助手"]
-tags = ["AI", "Claude", "Codex", "Prompt 工程", "对齐"]
+tags = ["AI", "Claude", "Codex"]
 categories = ["AI 协作"]
-cover = 'download.svg'
-images = ['download.svg']
+cover = 'Gemini_Generated_Image_w38fstw38fstw38f.jpg'
+images = ['Gemini_Generated_Image_w38fstw38fstw38f.jpg']
 nolastmod = true
 +++
 
