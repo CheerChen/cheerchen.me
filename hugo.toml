@@ -13,6 +13,9 @@ theme = 'dream'
 hasCJKLanguage = true
 enableRobotsTXT = true
 
+[pagination]
+pagerSize = 20
+
 # 多语言配置
 [languages]
 [languages.zh]
