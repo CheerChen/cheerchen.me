@@ -254,3 +254,29 @@
     padding: 2px 6px;
     border-radius: 4px;
 }
+
+/* === Background glow (inspired by nana.live.acc) ===
+   Two radial gradients at opposite corners, painted on the theme's fixed
+   full-viewport layer (#dream-global-bg, z-index:-1) so the glow sits behind
+   all content and stays put while scrolling. Colors follow the active daisyUI
+   theme through color-mix(), so they adapt to emerald/forest automatically. */
+#dream-global-bg {
+    background-image:
+        radial-gradient(ellipse 70% 55% at 85% 5%,
+            color-mix(in oklch, var(--color-primary) 10%, transparent),
+            transparent 60%),
+        radial-gradient(ellipse 60% 50% at 8% 92%,
+            color-mix(in oklch, var(--color-secondary) 8%, transparent),
+            transparent 65%);
+}
+
+/* Dark mode: bump intensity slightly so the glow reads against the dark base */
+.dark #dream-global-bg {
+    background-image:
+        radial-gradient(ellipse 70% 55% at 85% 5%,
+            color-mix(in oklch, var(--color-primary) 16%, transparent),
+            transparent 60%),
+        radial-gradient(ellipse 60% 50% at 8% 92%,
+            color-mix(in oklch, var(--color-secondary) 12%, transparent),
+            transparent 65%);
+}

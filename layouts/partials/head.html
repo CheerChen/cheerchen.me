@@ -1,3 +1,7 @@
+<!-- Preconnect to jsDelivr: site pulls ionicons / masonry / imagesloaded / luxon from this CDN -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
 {{ with site.Params.favicon }}
 {{ if hasPrefix . "<link" }}
   {{ . | safeHTML }}
