@@ -93,47 +93,22 @@
 
       {{ end }}
 
-      <!-- 语言切换器 -->
+      <!-- 语言切换器：两个语言并排 + 细竖线分隔，仿 nana.live.acc -->
       {{ if gt (len .Site.Languages) 1 }}
-      <div class="dropdown dropdown-end dropdown-hover">
-        <div tabindex="0" role="button" class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" aria-label="Language Switcher">
-          <ion-icon class="group-hover:text-primary-content text-xl" name="language"></ion-icon>
-        </div>
-        <ul tabindex="0" class="dropdown-content menu w-40 bg-base-100 rounded-box z-1 shadow-md">
-          {{ if .IsTranslated }}
-            <!-- 如果当前页面有翻译版本，显示翻译页面链接 -->
-            {{ range .AllTranslations }}
-            <li>
-              <a href="{{ .RelPermalink }}" {{ if eq .Language.Lang $.Site.Language.Lang }}class="active"{{ end }}>
-                <span class="flex items-center gap-2">
-                  {{ if eq .Language.Lang "zh" }}
-                  <span class="text-lg"></span>
-                  {{ else if eq .Language.Lang "ja" }}
-                  <span class="text-lg"></span>
-                  {{ end }}
-                  {{ .Language.LanguageName }}
-                </span>
-              </a>
-            </li>
-            {{ end }}
-          {{ else }}
-            <!-- 如果当前页面没有翻译版本，显示各语言首页链接 -->
-            {{ range $.Site.Home.AllTranslations }}
-            <li>
-              <a href="{{ .RelPermalink }}" {{ if eq .Language.Lang $.Site.Language.Lang }}class="active"{{ end }}>
-                <span class="flex items-center gap-2">
-                  {{ if eq .Language.Lang "zh" }}
-                  <span class="text-lg"></span>
-                  {{ else if eq .Language.Lang "ja" }}
-                  <span class="text-lg"></span>
-                  {{ end }}
-                  {{ .Language.LanguageName }}
-                </span>
-              </a>
-            </li>
-            {{ end }}
-          {{ end }}
-        </ul>
+      {{ $labels := dict "zh" "中" "ja" "JA" }}
+      {{ $translations := .AllTranslations }}
+      {{ if not .IsTranslated }}{{ $translations = $.Site.Home.AllTranslations }}{{ end }}
+      <div role="group" aria-label="language" class="flex items-center gap-2.5 text-sm font-semibold tracking-wider">
+        {{ range $i, $t := $translations }}
+        {{ if gt $i 0 }}<span aria-hidden="true" class="w-px h-2.5 bg-base-content/20"></span>{{ end }}
+        {{ $active := eq $t.Language.Lang $.Site.Language.Lang }}
+        <a href="{{ $t.RelPermalink }}"
+          aria-label="Switch language to {{ upper $t.Language.Lang }}"
+          {{ if $active }}aria-current="true"{{ end }}
+          class="transition-colors {{ if $active }}text-primary{{ else }}text-base-content/60 hover:text-base-content{{ end }}">
+          {{ index $labels $t.Language.Lang | default (upper $t.Language.Lang) }}
+        </a>
+        {{ end }}
       </div>
       {{ end }}
     </section>
