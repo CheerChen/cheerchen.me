@@ -280,3 +280,77 @@
             color-mix(in oklch, var(--color-secondary) 12%, transparent),
             transparent 65%);
 }
+
+/* --- Problem Shortcode 专用样式 (学术蓝灰调) --- */
+:root {
+    --problem-border-color: #c5cfe8;
+    --problem-header-bg-color: #edf0fb;
+    --problem-header-text-color: #3d4f99;
+    --problem-content-text-color: #212121;
+    --problem-icon-color: #5468c4;
+    --problem-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --problem-content-bg: #f8f9fe;
+}
+
+.dark {
+    --problem-border-color: #3a4470;
+    --problem-header-bg-color: #1e2440;
+    --problem-header-text-color: #9aaaf0;
+    --problem-content-text-color: #c8cce8;
+    --problem-icon-color: #8090e0;
+    --problem-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    --problem-content-bg: #161a2e;
+}
+
+.problem-block {
+    border: 1px solid var(--problem-border-color);
+    box-shadow: var(--problem-shadow);
+    border-radius: 12px;
+    margin: 2em 0;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.problem-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+    background-color: var(--problem-header-bg-color);
+    padding: 8px 16px;
+    font-weight: 600;
+    color: var(--problem-header-text-color);
+    border-bottom: 1px solid var(--problem-border-color);
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.problem-block:not([open]) .problem-header {
+    border-bottom: none;
+}
+
+.problem-header::marker,
+.problem-header::-webkit-details-marker {
+    display: none;
+}
+
+.problem-header svg {
+    color: var(--problem-icon-color);
+    flex-shrink: 0;
+    transition: color 0.3s ease;
+}
+
+.problem-content {
+    padding: 16px 20px;
+    background-color: var(--problem-content-bg);
+    color: var(--problem-content-text-color);
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.problem-content strong {
+    color: inherit;
+}
+
+.problem-content a {
+    color: var(--problem-icon-color);
+}
