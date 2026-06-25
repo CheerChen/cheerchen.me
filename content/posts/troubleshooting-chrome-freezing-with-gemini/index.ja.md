@@ -115,7 +115,7 @@ srv*C:\symbols\*https://chromium-browser-symsrv.commondatastorage.googleapis.com
 - **`views::View`**: Chrome の UI 要素（ボタン、タブ等）の描画に関する処理であることを示唆しています。
 - **`ReorderChildView` / `ReorderChildLayers`**: UI 要素の順序や階層を再計算・再描画していることを意味します。
 
-コールスタックには`TabStrip`や`TabGroupBar`といった文字列も散見され、これらを総合すると、**「Chrome が起動時にタブ、特にタブグループの UI をレンダリング・再配置するために膨大な計算を行っている」**という仮説が浮かび上がりました。
+コールスタックには`TabStrip`や`TabGroupBar`といった文字列も散見されました。これらを総合すると、Chrome が起動時にタブ、特にタブグループの UI をレンダリング・再配置するために膨大な計算を行っている、という仮説が立てられます。
 
 ## 原因の特定と検証
 
