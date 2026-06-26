@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Lambda scaling examples</title>
+  <desc id="desc">Examples comparing 0.1 second and 0.05 second Lambda functions under different request rates.</desc>
+  <rect width="1200" height="675" fill="#fbfbf8"/>
+  <text x="72" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="34" fill="#365f52">（参考）AWS Lambda のスケーリング</text>
+  <text x="1070" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="40" font-weight="700" fill="#33426f">TBS</text>
+  <line x1="72" y1="98" x2="1060" y2="98" stroke="#c8d0ca" stroke-width="3"/>
+  <text x="92" y="145" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="22" fill="#4b5853">短時間で終了するリクエストを多数受け取る場合、スケーリングレートに注意が必要</text>
+  <g font-family="Avenir, Helvetica, Arial, sans-serif" font-size="22" fill="#4b5853">
+    <text x="92" y="215">例）同時実行数のクォータが </text>
+    <text x="382" y="215" fill="#d45542" font-weight="700">1,000</text>
+    <text x="445" y="215"> の場合</text>
+    <line x1="382" y1="222" x2="434" y2="222" stroke="#d45542" stroke-width="3"/>
+    <text x="92" y="280">関数実行時間 0.1 秒、秒間リクエスト数 10,000 の場合</text>
+    <text x="120" y="326">• 同時実行数 = 10,000 × 0.1 = 1,000</text>
+    <text x="690" y="326" fill="#2f9b50" font-weight="700">→ OK</text>
+    <text x="120" y="364">• スケーリングレート: 10,000 req/s</text>
+    <text x="690" y="364" fill="#2f9b50" font-weight="700">→ OK</text>
+    <text x="92" y="450">関数実行時間 0.05 秒、秒間リクエスト数 20,000 の場合</text>
+    <text x="120" y="496">• 同時実行数 = 20,000 × 0.05 = 1,000</text>
+    <text x="690" y="496" fill="#2f9b50" font-weight="700">→ OK</text>
+    <text x="120" y="534">• スケーリングレート: 20,000 req/s</text>
+    <text x="690" y="534" fill="#d45542" font-weight="700">→ NG</text>
+  </g>
+  <rect x="790" y="300" width="245" height="58" rx="4" fill="#3766d6"/>
+  <text x="912" y="336" text-anchor="middle" font-family="Avenir" font-size="21" fill="white" font-weight="700">デフォルトで OK</text>
+  <rect x="790" y="472" width="245" height="58" rx="4" fill="#f16b6f"/>
+  <text x="912" y="508" text-anchor="middle" font-family="Avenir" font-size="21" fill="white" font-weight="700">2000 に緩和する</text>
+  <g font-family="Avenir" font-size="20" fill="#4b5853">
+    <text x="92" y="602">• 短時間で終了する関数に多数のリクエストを実行する場合、</text>
+    <text x="120" y="634">スケーリングレート</text>
+    <line x1="120" y1="641" x2="298" y2="641" stroke="#d45542" stroke-width="3"/>
+    <text x="304" y="634">が原因で Throttling する可能性がある</text>
+  </g>
+</svg>

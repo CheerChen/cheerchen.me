@@ -1,0 +1,19 @@
+%%{init: {"theme": "base", "themeVariables": {"background": "#ffffff", "mainBkg": "#ffffff", "secondBkg": "#f8fafc", "tertiaryBkg": "#eef2ff", "primaryColor": "#ffffff", "primaryTextColor": "#1f2937", "primaryBorderColor": "#94a3b8", "lineColor": "#64748b", "textColor": "#1f2937", "clusterBkg": "#f8fafc", "clusterBorder": "#cbd5e1", "edgeLabelBackground": "#ffffff"}}}%%
+flowchart LR
+  user["Viewer"]
+  app["Kustamie App"]
+  ivsChat["Amazon IVS Chat\nmessage fan-out"]
+  firehose["Data Firehose\nstream / buffer"]
+  table["DynamoDB-like working table\nmessage + moderation status"]
+  stream["DynamoDB Streams\nor stream trigger"]
+  modLambda["AWS Lambda\nmoderation worker"]
+  bedrock["Amazon Bedrock\nNova Micro"]
+  status["Status update\npass / violation"]
+  deleteReq["Delete message request"]
+
+  user -->|"post chat"| app -->|"WebSocket"| ivsChat
+  ivsChat -->|"all messages"| firehose --> table --> stream --> modLambda
+  modLambda -->|"batched JSON messages"| bedrock
+  bedrock -->|"categories + language"| modLambda
+  modLambda --> status --> table
+  modLambda -->|"if violation"| deleteReq --> ivsChat

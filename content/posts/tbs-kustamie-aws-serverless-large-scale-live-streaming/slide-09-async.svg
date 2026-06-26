@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">API performance improvement with async processing</title>
+  <desc id="desc">Synchronous path uses API Gateway, Lambda, and Step Functions; delayed processing is separated through SQS, Lambda, and ECS.</desc>
+  <rect width="1200" height="675" fill="#fbfbf8"/>
+  <text x="72" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="34" fill="#365f52">API のパフォーマンス改善：非同期化</text>
+  <text x="1070" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="40" font-weight="700" fill="#33426f">TBS</text>
+  <line x1="72" y1="98" x2="1060" y2="98" stroke="#c8d0ca" stroke-width="3"/>
+  <g font-family="Avenir" font-size="20" fill="#4b5853">
+    <text x="85" y="140">アクセスが集中した時でも Lambda の実行時間を短くするため、</text><rect x="645" y="114" width="445" height="34" fill="#fff06a"/><text x="655" y="140" font-weight="700">後回しできる処理を Amazon SQS で分けた</text>
+  </g>
+  <g transform="translate(80 190)" font-family="Avenir" font-size="15" text-anchor="middle">
+    <rect x="0" y="70" width="100" height="64" rx="8" fill="#e73f76"/><text x="50" y="107" fill="white" font-weight="700">API Gateway</text>
+    <rect x="135" y="70" width="100" height="64" rx="8" fill="#f48120"/><text x="185" y="107" fill="white" font-weight="700">Lambda</text>
+    <rect x="270" y="35" width="300" height="134" rx="8" fill="#fff" stroke="#e58aa0" stroke-width="2"/>
+    <text x="420" y="63" fill="#d45542" font-weight="700">AWS Step Functions</text>
+    <rect x="300" y="88" width="75" height="38" rx="4" fill="#f7f7f7" stroke="#aaa"/><text x="337" y="112" fill="#4b5853">UserID</text>
+    <rect x="390" y="88" width="90" height="38" rx="4" fill="#f7f7f7" stroke="#aaa"/><text x="435" y="112" fill="#4b5853">IVS Token</text>
+    <rect x="495" y="88" width="55" height="38" rx="4" fill="#f7f7f7" stroke="#aaa"/><text x="522" y="112" fill="#4b5853">SQS</text>
+    <rect x="645" y="70" width="100" height="64" rx="8" fill="#e73f76"/><text x="695" y="107" fill="white" font-weight="700">SQS</text>
+    <rect x="790" y="70" width="100" height="64" rx="8" fill="#f48120"/><text x="840" y="107" fill="white" font-weight="700">Lambda</text>
+    <rect x="935" y="70" width="100" height="64" rx="8" fill="#f48120"/><text x="985" y="107" fill="white" font-weight="700">ECS</text>
+    <path d="M100 102H135M235 102H270M570 102H645M745 102H790M890 102H935" fill="none" stroke="#77857f" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M5 178H570" stroke="#4568ca" stroke-width="3" fill="none"/><text x="287" y="205" fill="#56627a">同期処理（~100 ms）</text>
+    <path d="M645 178H1035" stroke="#4568ca" stroke-width="3" fill="none"/><text x="840" y="205" fill="#56627a">非同期処理（~10000 ms）</text>
+  </g>
+  <g font-family="Avenir" font-size="21" fill="#4b5853">
+    <text x="94" y="465">• IVS Realtime Token は、</text><rect x="352" y="439" width="260" height="34" fill="#fff06a"/><text x="362" y="465" font-weight="700">AWS Lambda 関数で直接発行</text><text x="620" y="465">して実行時間を短縮する</text>
+    <text x="124" y="498">• IVS の API コールレート: 50 TPS（緩和不可）</text>
+    <text x="94" y="538">• AWS Step Functions は </text><rect x="347" y="512" width="210" height="34" fill="#fff06a"/><text x="357" y="538" font-weight="700">Express ワークフロー</text><text x="565" y="538">を利用</text>
+  </g>
+  <rect x="275" y="590" width="240" height="55" rx="4" fill="#3766d6"/><text x="395" y="624" text-anchor="middle" font-family="Avenir" font-size="22" fill="white" font-weight="700">従来 最大 12000 ms</text>
+  <path d="M535 618H655" stroke="#888" stroke-width="8" marker-end="url(#arrowBig)"/>
+  <rect x="690" y="590" width="260" height="55" rx="4" fill="#f28a16"/><text x="820" y="624" text-anchor="middle" font-family="Avenir" font-size="22" fill="white" font-weight="700">更新後 平均 150 ms 程度</text>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#77857f"/></marker><marker id="arrowBig" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#888"/></marker></defs>
+</svg>

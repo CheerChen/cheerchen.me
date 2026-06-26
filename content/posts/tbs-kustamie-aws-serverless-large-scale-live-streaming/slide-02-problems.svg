@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Problems in the initial API design</title>
+  <desc id="desc">Slide showing cache assumptions, regional API Gateway, internal call overhead, and 12 second response times.</desc>
+  <rect width="1200" height="675" fill="#fbfbf8"/>
+  <text x="74" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="36" fill="#365f52">問題点</text>
+  <text x="1070" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="40" font-weight="700" fill="#33426f">TBS</text>
+  <line x1="74" y1="98" x2="1060" y2="98" stroke="#c8d0ca" stroke-width="3"/>
+  <g font-family="Avenir, Helvetica, Arial, sans-serif" font-size="21" fill="#4b5853">
+    <text x="92" y="150">大規模配信を行う上で、クライアント API の従来構成には以下の問題があった</text>
+    <text x="102" y="210" fill="#d45542" font-weight="700">• キャッシュを前提とした構成となっていないため、高負荷に耐えられない</text>
+    <text x="130" y="244">• Amazon API Gateway のエンドポイントタイプは</text>
+    <rect x="610" y="221" width="170" height="30" fill="#fff06a"/>
+    <text x="620" y="244" font-weight="700">リージョンタイプ</text>
+    <text x="130" y="276">• 本来はエッジ最適化タイプの方がベター</text>
+    <text x="102" y="342" fill="#d45542" font-weight="700">• 配信参加時の API レスポンスに最長で 12 秒程度かかっていた</text>
+    <text x="130" y="376">• 多数の内部 API コールがあり、サーバー間通信のオーバーヘッドが大きかった</text>
+    <text x="130" y="408">• 今まで負荷テストを実施していなかったので、高負荷時の挙動が不明だった</text>
+  </g>
+  <rect x="150" y="475" width="900" height="120" rx="6" fill="#f0f1ee" stroke="#c8c8c0"/>
+  <line x1="600" y1="485" x2="600" y2="585" stroke="#d0d0c8" stroke-width="2"/>
+  <text x="300" y="510" text-anchor="middle" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="22" fill="#5c6b63">エッジ最適化タイプ</text>
+  <text x="825" y="510" text-anchor="middle" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="22" fill="#5c6b63">リージョンタイプ</text>
+  <text x="188" y="548" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="17" fill="#5d6662">AWS リージョン全体からのアクセスを</text>
+  <text x="188" y="574" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="17" fill="#5d6662">CloudFront の PoP へ分散</text>
+  <text x="650" y="548" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="17" fill="#5d6662">指定リージョンにデプロイされ</text>
+  <text x="650" y="574" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="17" fill="#5d6662">リージョンごとに異なるドメインを発行</text>
+</svg>

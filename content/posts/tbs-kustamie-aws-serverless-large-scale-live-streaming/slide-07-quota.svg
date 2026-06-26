@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Load test and quota increase</title>
+  <desc id="desc">E2E load test showed 4xx errors above 600,000 requests per minute, leading to API Gateway and Lambda quota increases.</desc>
+  <rect width="1200" height="675" fill="#fbfbf8"/>
+  <text x="72" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="34" fill="#365f52">負荷試験と上限緩和</text>
+  <text x="1070" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="40" font-weight="700" fill="#33426f">TBS</text>
+  <line x1="72" y1="98" x2="1060" y2="98" stroke="#c8d0ca" stroke-width="3"/>
+  <text x="92" y="145" font-family="Avenir" font-size="22" fill="#4b5853">Amazon API Gateway と AWS Lambda を組み合わせた E2E の負荷試験</text>
+  <g font-family="Avenir" font-size="21" fill="#4b5853">
+    <rect x="110" y="190" width="585" height="82" fill="#fff" stroke="#e07474" stroke-width="2"/>
+    <text x="150" y="226">毎分 </text><rect x="205" y="202" width="220" height="32" fill="#fff06a"/><text x="215" y="226" font-weight="700">600,000 リクエスト</text><text x="440" y="226">を超えると</text>
+    <text x="210" y="258">400 番台エラーが増えた（平均 10,000 RPS）</text>
+    <path d="M390 275v52" stroke="#888" stroke-width="4" marker-end="url(#arrow)"/>
+    <rect x="110" y="335" width="585" height="92" fill="#fff" stroke="#5aa96b" stroke-width="2"/>
+    <text x="150" y="370">AWS Lambda 側にエラーは観測されなかったため、</text>
+    <rect x="150" y="386" width="465" height="30" fill="#fff06a"/>
+    <text x="160" y="409" font-weight="700">API Gateway レベルでスロットリングが発生</text>
+    <path d="M390 432v52" stroke="#888" stroke-width="4" marker-end="url(#arrow)"/>
+    <rect x="110" y="492" width="585" height="96" fill="#fff" stroke="#5aa96b" stroke-width="2"/>
+    <text x="145" y="528">Amazon API Gateway Throttle Rate</text><rect x="500" y="505" width="125" height="32" fill="#fff06a"/><text x="510" y="528" font-weight="700">30,000 RPS</text>
+    <text x="145" y="565">AWS Lambda Concurrent Executions</text><rect x="515" y="542" width="95" height="32" fill="#fff06a"/><text x="525" y="565" font-weight="700">50,000</text>
+  </g>
+  <g transform="translate(790 190)">
+    <rect width="330" height="310" rx="6" fill="#fff" stroke="#d2d8e8"/>
+    <line x1="42" y1="260" x2="300" y2="260" stroke="#999"/><line x1="42" y1="30" x2="42" y2="260" stroke="#999"/>
+    <path d="M48 256 C100 250 150 218 190 150 C220 95 245 48 275 38" fill="none" stroke="#c46855" stroke-width="4"/>
+    <path d="M60 252 C130 252 235 252 275 252" fill="none" stroke="#e08b2d" stroke-width="4"/>
+    <path d="M230 252 C250 150 278 200 286 252" fill="none" stroke="#945c9c" stroke-width="4"/>
+    <text x="70" y="292" font-family="Avenir" font-size="15" fill="#555">赤線: API 呼び出し回数</text>
+    <text x="70" y="315" font-family="Avenir" font-size="15" fill="#555">紫線: 400 番台エラー</text>
+  </g>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#888"/></marker></defs>
+</svg>

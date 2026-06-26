@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Multi-tier cache for API performance</title>
+  <desc id="desc">Three cache layers: API Gateway stage cache, Lambda global variables, and ECS with ElastiCache Valkey.</desc>
+  <rect width="1200" height="675" fill="#fbfbf8"/>
+  <text x="72" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="34" fill="#365f52">API のパフォーマンス改善：多段キャッシュの利用</text>
+  <text x="1070" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="40" font-weight="700" fill="#33426f">TBS</text>
+  <line x1="72" y1="98" x2="1060" y2="98" stroke="#c8d0ca" stroke-width="3"/>
+  <g font-family="Avenir" font-size="20" fill="#4b5853">
+    <text x="82" y="142">API の各所にキャッシュを設定することで、</text><rect x="430" y="116" width="520" height="34" fill="#fff06a"/><text x="440" y="142" font-weight="700">関数実行・後段の API コールを省略できるようにした</text>
+    <text x="92" y="182">① Amazon API Gateway ステージキャッシュで直接レスポンス（GET 系のみ）</text>
+    <text x="92" y="214">② AWS Lambda 関数のグローバル変数は、ホットスタート時に再利用される</text>
+    <text x="92" y="246">③ Amazon ECS に Amazon ElastiCache（Valkey）を併用し、Amazon RDS よりも応答性能を改善</text>
+  </g>
+  <g transform="translate(75 335)" font-family="Avenir" font-size="16" text-anchor="middle">
+    <circle cx="35" cy="110" r="22" fill="none" stroke="#6c8d7d" stroke-width="3"/><path d="M0 160c8-35 60-35 70 0" fill="none" stroke="#6c8d7d" stroke-width="3"/>
+    <text x="35" y="195" fill="#5b6762">Many Requests</text><text x="35" y="217" fill="#5b6762">~12,000 RPS</text>
+    <rect x="150" y="0" width="280" height="250" rx="8" fill="#fff" stroke="#d9d9d0" stroke-width="2"/>
+    <text x="290" y="28" fill="#5b6762">Amazon API Gateway</text>
+    <rect x="185" y="55" width="210" height="60" rx="4" fill="#d7e7f7" stroke="#9fb7d2"/>
+    <text x="290" y="84" fill="#4b5853">① API Cache</text><text x="290" y="106" fill="#4b5853">GET 系のみ</text>
+    <rect x="185" y="160" width="210" height="58" rx="4" fill="#f6f8fa" stroke="#aeb8bf"/>
+    <text x="290" y="195" fill="#4b5853">Stage</text>
+    <rect x="495" y="0" width="270" height="250" rx="8" fill="#fff" stroke="#d9d9d0" stroke-width="2"/>
+    <text x="630" y="28" fill="#5b6762">AWS Lambda Function</text>
+    <rect x="535" y="52" width="190" height="58" rx="4" fill="#f6f8fa" stroke="#aeb8bf"/><text x="630" y="88" fill="#4b5853">Compute Environment</text>
+    <rect x="535" y="135" width="190" height="85" rx="4" fill="#d7e7f7" stroke="#9fb7d2"/>
+    <text x="630" y="163" fill="#4b5853">② Global Variables</text><text x="630" y="191" fill="#4b5853" font-family="Menlo, monospace" font-size="13">ttl: 1778662763</text>
+    <rect x="835" y="92" width="110" height="68" rx="8" fill="#f48120"/><text x="890" y="132" fill="white" font-weight="700">ECS</text>
+    <rect x="990" y="35" width="125" height="62" rx="8" fill="#b547c8"/><text x="1052" y="65" fill="white" font-weight="700">③ Valkey</text><text x="1052" y="87" fill="white">ElastiCache</text>
+    <rect x="990" y="155" width="125" height="62" rx="8" fill="#b547c8"/><text x="1052" y="191" fill="white" font-weight="700">RDS</text>
+    <path d="M70 185H185M395 188H535M725 178H835M945 126H990M945 126C970 145 970 170 990 186" fill="none" stroke="#77857f" stroke-width="3" marker-end="url(#arrow)"/>
+  </g>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#77857f"/></marker></defs>
+</svg>

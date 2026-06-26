@@ -1,0 +1,22 @@
+%%{init: {"theme": "base", "themeVariables": {"background": "#ffffff", "mainBkg": "#ffffff", "secondBkg": "#f8fafc", "tertiaryBkg": "#eef2ff", "primaryColor": "#ffffff", "primaryTextColor": "#1f2937", "primaryBorderColor": "#94a3b8", "lineColor": "#64748b", "textColor": "#1f2937", "clusterBkg": "#f8fafc", "clusterBorder": "#cbd5e1", "edgeLabelBackground": "#ffffff"}}}%%
+flowchart LR
+  client["Many clients\n~12,000 RPS"]
+  apigw["Amazon API Gateway"]
+  stageCache{{"1. Stage Cache\nGET only"}}
+  lambda["AWS Lambda"]
+  globals{{"2. Lambda globals\nhot-start cache + TTL"}}
+  ecs["Amazon ECS\nApplication services"]
+  valkey{{"3. ElastiCache for Valkey\napplication cache"}}
+  rds["Amazon RDS\nAurora Serverless v2"]
+
+  client --> apigw
+  apigw --> stageCache
+  stageCache -->|"cache hit"| client
+  stageCache -->|"miss"| lambda
+  lambda --> globals
+  globals -->|"hit"| lambda
+  globals -->|"miss / backend call"| ecs
+  ecs --> valkey
+  valkey -->|"hit"| ecs
+  valkey -->|"miss"| rds
+  rds --> ecs --> lambda --> apigw --> client

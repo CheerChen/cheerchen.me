@@ -1,0 +1,32 @@
+%%{init: {"theme": "base", "themeVariables": {"background": "#ffffff", "mainBkg": "#ffffff", "secondBkg": "#f8fafc", "tertiaryBkg": "#eef2ff", "primaryColor": "#ffffff", "primaryTextColor": "#1f2937", "primaryBorderColor": "#94a3b8", "lineColor": "#64748b", "textColor": "#1f2937", "clusterBkg": "#f8fafc", "clusterBorder": "#cbd5e1", "edgeLabelBackground": "#ffffff"}}}%%
+flowchart LR
+  client["Client\nBrowser / App"]
+
+  subgraph eventPath["Path A: イベント情報 / API"]
+    apigw["Amazon API Gateway\nRegional endpoint"]
+    lambdaA["AWS Lambda\nAuth / validation / BFF"]
+    lambdaB["AWS Lambda\nLight orchestration"]
+    ecs["Amazon ECS\nApplication services"]
+    cache["Amazon ElastiCache\nValkey"]
+    rds["Amazon RDS\nAurora Serverless v2"]
+  end
+
+  subgraph realtimePath["Path B: 映像音声・リアルタイムデータ"]
+    ivsChat["Amazon IVS Chat\nWebSocket / comments"]
+    ivsVideo["Amazon IVS\nLow-Latency / Real-Time video"]
+    metadata["Interactive data\nTimed metadata"]
+  end
+
+  client -->|"イベント情報 GET / 参加 API"| apigw
+  apigw --> lambdaA
+  apigw --> lambdaB
+  lambdaA --> ecs
+  lambdaB --> ecs
+  ecs --> cache
+  ecs --> rds
+  cache -. "hot reads" .-> ecs
+
+  client -->|"WebSocket"| ivsChat
+  client -->|"Video playback"| ivsVideo
+  ecs -->|"PutMetadata / interactive data"| metadata
+  metadata --> ivsVideo

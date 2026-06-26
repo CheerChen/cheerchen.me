@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">High-speed moderation with Amazon Nova Micro</title>
+  <desc id="desc">Batch JSON input, Amazon Bedrock Nova Micro moderation prompt, and structured JSON output with 1.6 second latency.</desc>
+  <rect width="1200" height="675" fill="#fbfbf8"/>
+  <text x="72" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="34" fill="#365f52">Amazon Nova を使った高速モデレーション</text>
+  <text x="1070" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="40" font-weight="700" fill="#33426f">TBS</text>
+  <line x1="72" y1="98" x2="1060" y2="98" stroke="#c8d0ca" stroke-width="3"/>
+  <text x="90" y="150" font-family="Avenir" font-size="23" fill="#4b5853">Amazon Nova Micro を使って、多言語対応の高速モデレーションを実現</text>
+  <g transform="translate(105 210)">
+    <rect x="0" y="0" width="360" height="350" fill="#fff" stroke="#8797c7" stroke-width="2"/>
+    <text x="22" y="36" font-family="Menlo, monospace" font-size="15" fill="#4b5853">[</text>
+    <text x="42" y="66" font-family="Menlo, monospace" font-size="15" fill="#4b5853">{ "message_id": "78b8...",</text>
+    <text x="42" y="90" font-family="Menlo, monospace" font-size="15" fill="#4b5853">  "content": "質問があります..." },</text>
+    <text x="42" y="128" font-family="Menlo, monospace" font-size="15" fill="#4b5853">{ "message_id": "29d5...",</text>
+    <text x="42" y="152" font-family="Menlo, monospace" font-size="15" fill="#4b5853">  "content": "とても良いアイディアです" },</text>
+    <text x="42" y="190" font-family="Menlo, monospace" font-size="15" fill="#4b5853">{ "message_id": "4daf...",</text>
+    <text x="42" y="214" font-family="Menlo, monospace" font-size="15" fill="#d45542">  "content": "死んでください" },</text>
+    <text x="42" y="252" font-family="Menlo, monospace" font-size="15" fill="#4b5853">{ "message_id": "2722...",</text>
+    <text x="42" y="276" font-family="Menlo, monospace" font-size="15" fill="#4b5853">  "content": "パチパチ" }</text>
+    <text x="22" y="314" font-family="Menlo, monospace" font-size="15" fill="#4b5853">]</text>
+  </g>
+  <g transform="translate(510 250)">
+    <rect x="10" y="0" width="260" height="86" rx="24" fill="#8cc563"/>
+    <path d="M112 82l28 44 20-44" fill="#8cc563"/>
+    <text x="140" y="30" text-anchor="middle" font-family="Avenir" font-size="18" fill="#365f52" font-weight="700">ペルソナ</text>
+    <text x="140" y="56" text-anchor="middle" font-family="Avenir" font-size="15" fill="#365f52">有害なコンテンツではないかを</text>
+    <text x="140" y="78" text-anchor="middle" font-family="Avenir" font-size="15" fill="#365f52">確認するプロです...</text>
+    <rect x="88" y="140" width="105" height="80" rx="8" fill="#19a690"/>
+    <text x="140" y="175" text-anchor="middle" font-family="Avenir" font-size="18" fill="white" font-weight="700">Bedrock</text>
+    <text x="140" y="200" text-anchor="middle" font-family="Avenir" font-size="16" fill="white">Nova Micro</text>
+    <path d="M-40 180H88M193 180H310" stroke="#566ed1" stroke-width="3" marker-end="url(#arrow)" fill="none"/>
+    <path d="M30 260H250" stroke="#566ed1" stroke-width="3" fill="none"/>
+    <text x="140" y="292" text-anchor="middle" font-family="Avenir" font-size="20" fill="#4b5853">レイテンシー 1.6 秒</text>
+  </g>
+  <g transform="translate(850 210)">
+    <rect x="0" y="0" width="250" height="350" fill="#fff" stroke="#8797c7" stroke-width="2"/>
+    <text x="28" y="46" font-family="Menlo, monospace" font-size="15" fill="#4b5853">[</text>
+    <text x="50" y="78" font-family="Menlo, monospace" font-size="15" fill="#4b5853">{ "categories": [],</text><text x="70" y="102" font-family="Menlo, monospace" font-size="15" fill="#4b5853">"language": "ja" },</text>
+    <text x="50" y="142" font-family="Menlo, monospace" font-size="15" fill="#4b5853">{ "categories": [],</text><text x="70" y="166" font-family="Menlo, monospace" font-size="15" fill="#4b5853">"language": "ja" },</text>
+    <text x="50" y="206" font-family="Menlo, monospace" font-size="15" fill="#4b5853">{ "categories":</text><text x="70" y="230" font-family="Menlo, monospace" font-size="15" fill="#d45542">["self-harm"],</text><text x="70" y="254" font-family="Menlo, monospace" font-size="15" fill="#4b5853">"language": "ja" },</text>
+    <text x="50" y="294" font-family="Menlo, monospace" font-size="15" fill="#4b5853">{ "categories": [],</text><text x="70" y="318" font-family="Menlo, monospace" font-size="15" fill="#4b5853">"language": "ja" }</text>
+    <text x="28" y="342" font-family="Menlo, monospace" font-size="15" fill="#4b5853">]</text>
+  </g>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#566ed1"/></marker></defs>
+</svg>

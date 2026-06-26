@@ -1,0 +1,27 @@
+%%{init: {"theme": "base", "themeVariables": {"background": "#ffffff", "mainBkg": "#ffffff", "secondBkg": "#f8fafc", "tertiaryBkg": "#eef2ff", "primaryColor": "#ffffff", "primaryTextColor": "#1f2937", "primaryBorderColor": "#94a3b8", "lineColor": "#64748b", "textColor": "#1f2937", "clusterBkg": "#f8fafc", "clusterBorder": "#cbd5e1", "edgeLabelBackground": "#ffffff"}}}%%
+flowchart LR
+  client["Client"]
+  apigw["Amazon API Gateway"]
+  entryLambda["AWS Lambda\nentry point"]
+
+  subgraph sync["同期処理: user-visible path ~150ms"]
+    sfn["Step Functions Express"]
+    userId["Generate UserID"]
+    token["Issue IVS Realtime Token\nlocal JWT signing"]
+    enqueue["Send message to SQS"]
+  end
+
+  subgraph async["非同期処理: delayed path ~10s"]
+    sqs["Amazon SQS\nspike buffer"]
+    workerLambda["AWS Lambda\nbackground worker"]
+    ecs["Amazon ECS\nremaining business logic"]
+    datastore["RDS / ElastiCache\nstate update"]
+  end
+
+  client --> apigw --> entryLambda --> sfn
+  sfn --> userId --> token --> enqueue
+  enqueue -->|"respond after enqueue"| client
+  enqueue --> sqs --> workerLambda --> ecs --> datastore
+
+  ivsLimit["IVS API rate limit\n50 TPS / not relaxable"]
+  token -. "avoid control-plane API call" .-> ivsLimit
