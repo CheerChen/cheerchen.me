@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <style>text{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans CJK JP',sans-serif;fill:#1f2937}.tag{font-size:22px;fill:#475569;text-decoration:underline}.title{font-size:52px;font-weight:800}.p{font-size:28px}.sub{font-size:26px;fill:#475569}.bullet{fill:#e11d48}</style>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="1070" y="80" class="tag">システム構成</text>
+  <text x="90" y="155" class="title">採用技術：WebRTC</text>
+  <g transform="translate(110 240)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">WebRTC (Web Real-Time Communication)</text></g>
+  <g transform="translate(170 290)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">メディア（音声 / 映像）データのリアルタイム通信技術</text></g>
+  <g transform="translate(170 340)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">UDP パケット通信</text></g>
+  <g transform="translate(170 390)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">P2P 方式やサーバー転送方式 (SFU: Selective Forwarding Unit) がある</text></g>
+</svg>

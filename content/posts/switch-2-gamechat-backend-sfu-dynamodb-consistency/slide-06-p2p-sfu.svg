@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <style>text{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans CJK JP',sans-serif;fill:#1f2937}.tag{font-size:22px;fill:#475569;text-decoration:underline}.title{font-size:50px;font-weight:800}.h{font-size:26px;font-weight:700}.p{font-size:24px;fill:#334155}.cell{fill:#fff;stroke:#cbd5e1;stroke-width:2}.head{fill:#f1f5f9}</style>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="1070" y="60" class="tag">システム構成</text>
+  <text x="80" y="130" class="title">採用技術：WebRTC</text>
+  <rect x="70" y="170" width="280" height="380" class="head"/>
+  <rect x="350" y="170" width="420" height="380" class="cell"/>
+  <rect x="770" y="170" width="360" height="380" class="cell"/>
+  <line x1="70" y1="220" x2="1130" y2="220" stroke="#cbd5e1" stroke-width="2"/>
+  <line x1="70" y1="290" x2="1130" y2="290" stroke="#cbd5e1" stroke-width="2"/>
+  <line x1="70" y1="350" x2="1130" y2="350" stroke="#cbd5e1" stroke-width="2"/>
+  <line x1="70" y1="410" x2="1130" y2="410" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="160" y="205" class="h">方式名</text>
+  <text x="495" y="205" class="h">P2P</text>
+  <text x="920" y="205" class="h">SFU</text>
+  <text x="140" y="270" class="h">通信方法</text>
+  <text x="370" y="270" class="p">クライアント間直接通信</text><text x="395" y="305" class="p">(最も遅延しない)</text>
+  <text x="790" y="270" class="p">サーバー経由通信</text><text x="810" y="305" class="p">(の分遅延する)</text>
+  <text x="135" y="385" class="h">ストリーム数</text>
+  <text x="540" y="385" class="p">大</text>
+  <text x="940" y="385" class="p">小</text>
+  <text x="98" y="448" class="h">エンコード・デコード数</text>
+  <text x="540" y="448" class="p">大</text>
+  <text x="940" y="448" class="p">小</text>
+  <text x="180" y="510" class="h">図</text>
+  <g transform="translate(380 430)">
+    <rect x="0" y="0" width="40" height="24" fill="#1f2937"/><rect x="120" y="0" width="40" height="24" fill="#1f2937"/>
+    <rect x="0" y="80" width="40" height="24" fill="#1f2937"/><rect x="120" y="80" width="40" height="24" fill="#1f2937"/>
+    <line x1="40" y1="12" x2="120" y2="12" stroke="#3b82f6" stroke-width="2"/>
+    <line x1="40" y1="92" x2="120" y2="92" stroke="#3b82f6" stroke-width="2"/>
+    <line x1="20" y1="24" x2="20" y2="80" stroke="#22c55e" stroke-width="2"/>
+    <line x1="140" y1="24" x2="140" y2="80" stroke="#22c55e" stroke-width="2"/>
+    <line x1="40" y1="24" x2="120" y2="80" stroke="#94a3b8" stroke-width="1.5"/>
+    <line x1="120" y1="24" x2="40" y2="80" stroke="#94a3b8" stroke-width="1.5"/>
+  </g>
+  <g transform="translate(840 430)">
+    <rect x="80" y="40" width="40" height="36" fill="#64748b"/>
+    <text x="78" y="92" font-size="14" fill="#475569">サーバー</text>
+    <rect x="0" y="0" width="30" height="20" fill="#1f2937"/><rect x="170" y="0" width="30" height="20" fill="#1f2937"/>
+    <rect x="0" y="76" width="30" height="20" fill="#1f2937"/><rect x="170" y="76" width="30" height="20" fill="#1f2937"/>
+    <line x1="30" y1="10" x2="80" y2="50" stroke="#3b82f6" stroke-width="2"/>
+    <line x1="170" y1="10" x2="120" y2="50" stroke="#3b82f6" stroke-width="2"/>
+    <line x1="30" y1="86" x2="80" y2="60" stroke="#22c55e" stroke-width="2"/>
+    <line x1="170" y1="86" x2="120" y2="60" stroke="#22c55e" stroke-width="2"/>
+  </g>
+</svg>

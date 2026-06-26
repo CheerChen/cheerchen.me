@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <style>text{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans CJK JP',sans-serif;fill:#1f2937}.tag{font-size:22px;fill:#475569;text-decoration:underline}.title{font-size:50px;font-weight:800}.p{font-size:30px}.sub{font-size:26px;fill:#475569}.bullet{fill:#e11d48}</style>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="1020" y="80" class="tag">マルチリージョン運用</text>
+  <text x="90" y="155" class="title">選択的なリージョン運用</text>
+  <g transform="translate(110 240)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">マルチリージョン</text></g>
+  <g transform="translate(170 295)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">SFU サーバー</text></g>
+  <g transform="translate(110 390)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">シングルリージョン</text></g>
+  <g transform="translate(170 445)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">グループサーバー、SFU インスタンスマネージャー</text></g>
+</svg>

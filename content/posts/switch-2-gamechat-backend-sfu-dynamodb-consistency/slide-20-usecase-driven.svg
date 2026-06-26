@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <style>text{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans CJK JP',sans-serif;fill:#1f2937}.tag{font-size:22px;fill:#475569;text-decoration:underline}.title{font-size:50px;font-weight:800}.p{font-size:28px}.bullet{fill:#e11d48}</style>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="900" y="80" class="tag">設計時に意識していたポイント</text>
+  <text x="90" y="155" class="title">ユースケース主導</text>
+  <g transform="translate(110 235)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">今回とった手法</text></g>
+  <text x="170" y="305" class="p">1. 暫定の RDB 向けのデータモデルの設計</text>
+  <text x="170" y="360" class="p">2. API の設計</text>
+  <text x="170" y="415" class="p">3. ユースケースの洗い出し</text>
+  <text x="170" y="470" class="p">4. ユースケースからアクセスパターンの洗い出し</text>
+  <text x="170" y="525" class="p">5. アクセスパターンに合わせたキー決定と facet の設計</text>
+</svg>

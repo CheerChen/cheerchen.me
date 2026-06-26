@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrg" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#16a34a"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, 'Noto Sans CJK JP', sans-serif; fill: #1f2937; }
+    .tag { font-size: 22px; fill: #475569; text-decoration: underline; text-anchor: end; }
+    .title { font-size: 42px; font-weight: 800; }
+    .st { font-size: 22px; font-weight: 700; }
+    .lbl { font-size: 21px; font-weight: 700; fill: #15803d; }
+    .arrow { stroke: #94a3b8; stroke-width: 3; fill: none; marker-end: url(#arr); }
+    .garrow { stroke: #16a34a; stroke-width: 3; fill: none; marker-end: url(#arrg); }
+    .base { fill: #fff; stroke: #94a3b8; stroke-width: 2; }
+    .frame { animation-duration: 12s; animation-iteration-count: infinite; animation-timing-function: linear; }
+    @keyframes f0 { 0%, 22% { opacity: 1 } 25%, 100% { opacity: 0 } }
+    @keyframes f1 { 0%, 22% { opacity: 0 } 25%, 47% { opacity: 1 } 50%, 100% { opacity: 0 } }
+    @keyframes f2 { 0%, 47% { opacity: 0 } 50%, 72% { opacity: 1 } 75%, 100% { opacity: 0 } }
+    @keyframes f3 { 0%, 72% { opacity: 0 } 75%, 97% { opacity: 1 } 100% { opacity: 0 } }
+    @keyframes prog { 0%, 22% { transform: scaleX(.08) } 25%, 47% { transform: scaleX(.33) } 50%, 72% { transform: scaleX(.66) } 75%, 100% { transform: scaleX(1) } }
+    .frame-0 { animation-name: f0 }
+    .frame-1 { animation-name: f1 }
+    .frame-2 { animation-name: f2 }
+    .frame-3 { animation-name: f3 }
+    .progbar { transform-origin: 0 0; animation: prog 12s infinite linear; fill: #16a34a; }
+    @media (prefers-reduced-motion: reduce) {
+      .frame, .progbar { animation: none; }
+      .frame-0 { opacity: 1 }
+      .frame-1, .frame-2, .frame-3 { opacity: 0 }
+      .progbar { transform: scaleX(0); }
+    }
+  </style>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+
+  <text x="1110" y="80" class="tag">開発事例紹介</text>
+
+  <g class="frame frame-0"><text x="90" y="145" class="title">ゲームチャットの開始フロー</text></g>
+  <g class="frame frame-1"><text x="90" y="145" class="title">フレンド選択からチャット予約</text></g>
+  <g class="frame frame-2"><text x="90" y="145" class="title">接続済みへの状態変更</text></g>
+  <g class="frame frame-3"><text x="90" y="145" class="title">非同期な通知送信</text></g>
+
+  <rect x="80" y="330" width="170" height="70" rx="8" class="base"/>
+  <text x="105" y="375" class="st">フレンド選択</text>
+  <line x1="250" y1="365" x2="305" y2="365" class="arrow"/>
+  <circle cx="370" cy="365" r="60" class="base"/>
+  <text x="320" y="373" class="st">予約済み</text>
+  <line x1="430" y1="365" x2="495" y2="365" class="arrow"/>
+  <circle cx="560" cy="365" r="60" class="base"/>
+  <text x="510" y="373" class="st">認証済み</text>
+  <line x1="620" y1="365" x2="685" y2="365" class="arrow"/>
+  <circle cx="750" cy="365" r="60" class="base"/>
+  <text x="700" y="373" class="st">接続済み</text>
+  <line x1="810" y1="365" x2="935" y2="365" class="arrow"/>
+  <rect x="940" y="330" width="180" height="70" rx="8" class="base"/>
+  <text x="980" y="375" class="st">通知送信</text>
+
+  <g class="frame frame-1">
+    <rect x="80" y="330" width="170" height="70" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="3"/>
+    <text x="105" y="375" class="st">フレンド選択</text>
+    <rect x="305" y="265" width="135" height="200" rx="14" fill="none" stroke="#16a34a" stroke-width="3" stroke-dasharray="8 6"/>
+    <text x="295" y="252" class="lbl">グループサーバー</text>
+    <rect x="80" y="500" width="170" height="100" rx="14" class="base"/>
+    <text x="115" y="558" class="st">Switch 2</text>
+    <line x1="165" y1="500" x2="165" y2="402" class="garrow"/>
+    <text x="180" y="460" class="lbl">メンバー情報を送信</text>
+  </g>
+
+  <g class="frame frame-2">
+    <circle cx="560" cy="365" r="65" fill="#dcfce7" stroke="#22c55e" stroke-width="3"/>
+    <text x="510" y="373" class="st">認証済み</text>
+    <rect x="305" y="265" width="510" height="200" rx="14" fill="none" stroke="#16a34a" stroke-width="3" stroke-dasharray="8 6"/>
+    <text x="480" y="252" class="lbl">グループサーバー</text>
+    <rect x="500" y="500" width="180" height="100" rx="14" class="base"/>
+    <text x="525" y="558" class="st">SFU サーバー</text>
+    <line x1="590" y1="500" x2="590" y2="432" class="garrow"/>
+    <text x="600" y="475" class="lbl">情報更新</text>
+  </g>
+
+  <g class="frame frame-3">
+    <circle cx="750" cy="365" r="65" fill="#dcfce7" stroke="#22c55e" stroke-width="3"/>
+    <text x="700" y="373" class="st">接続済み</text>
+    <rect x="940" y="330" width="180" height="70" rx="8" fill="#dcfce7" stroke="#22c55e" stroke-width="3"/>
+    <text x="980" y="375" class="st">通知送信</text>
+    <rect x="80" y="500" width="170" height="100" rx="14" class="base"/>
+    <text x="125" y="558" class="st">Host</text>
+    <rect x="950" y="500" width="180" height="100" rx="14" class="base"/>
+    <text x="985" y="558" class="st">Invitee</text>
+    <line x1="370" y1="425" x2="250" y2="500" class="arrow"/>
+    <text x="110" y="485" class="lbl">チャット接続完了</text>
+    <line x1="1030" y1="400" x2="1030" y2="500" class="garrow"/>
+    <text x="965" y="490" class="lbl">通知が届く</text>
+  </g>
+
+  <rect x="90" y="635" width="1020" height="6" rx="3" fill="#e2e8f0"/>
+  <rect x="90" y="635" width="1020" height="6" rx="3" class="progbar"/>
+  <text x="90" y="625" font-size="14" fill="#94a3b8">フレンド選択 → 予約済み → 認証済み → 接続済み → 通知送信</text>
+</svg>

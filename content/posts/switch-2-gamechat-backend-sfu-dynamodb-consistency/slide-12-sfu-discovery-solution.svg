@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <style>text{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans CJK JP',sans-serif;fill:#1f2937}.tag{font-size:22px;fill:#475569;text-decoration:underline}.title{font-size:48px;font-weight:800}.p{font-size:28px}.sub{font-size:25px;fill:#475569}.bullet{fill:#e11d48}</style>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="1020" y="80" class="tag">マルチリージョン運用</text>
+  <text x="90" y="155" class="title">SFU サーバーのディスカバリー</text>
+  <g transform="translate(110 230)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">SFU インスタンスマネージャー</text></g>
+  <g transform="translate(170 285)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">インスタンスのモニター</text></g>
+  <g transform="translate(170 330)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">一極管理 DynamoDB へ更新</text></g>
+  <g transform="translate(110 405)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">グループサーバー</text></g>
+  <g transform="translate(170 460)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">同 DynamoDB を参照</text></g>
+  <g transform="translate(170 505)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">インスタンス選定</text></g>
+  <g transform="translate(170 550)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">接続先としてインスタンス返却</text></g>
+</svg>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#16a34a"/></marker></defs>
+  <style>text{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans CJK JP',sans-serif;fill:#1f2937}.tag{font-size:22px;fill:#475569;text-decoration:underline}.title{font-size:50px;font-weight:800}.p{font-size:26px}.adopt{font-size:30px;font-weight:800;fill:#dc2626;text-decoration:underline}.bullet{fill:#e11d48}.az{fill:#fff;stroke:#94a3b8;stroke-width:2}.lbl{font-size:20px;font-weight:700;fill:#15803d}.line{stroke:#16a34a;stroke-width:3;marker-end:url(#a)}</style>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="860" y="80" class="tag">追加招待の読み込み不整合とその対応例</text>
+  <text x="90" y="145" class="title">Consistent Read</text>
+  <g transform="translate(110 200)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">設定する事で『強い整合』の読み取りが行なえる</text></g>
+  <g transform="translate(110 250)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">確実に整合性が取れるが消費する Capacity Unit は増加する</text></g>
+  <g transform="translate(110 300)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">今回は、設計の工夫で結果整合を許容できたため</text></g>
+  <text x="600" y="368" class="adopt">採用せず</text>
+  <g transform="translate(160 430)">
+    <rect width="180" height="120" rx="12" class="az"/>
+    <text x="70" y="70" class="lbl">AZ1</text>
+  </g>
+  <g transform="translate(410 430)">
+    <rect width="180" height="120" rx="12" class="az"/>
+    <text x="70" y="70" class="lbl">AZ2</text>
+  </g>
+  <g transform="translate(660 430)">
+    <rect width="180" height="120" rx="12" class="az"/>
+    <text x="70" y="70" class="lbl">AZ3</text>
+  </g>
+  <line x1="250" y1="425" x2="250" y2="395" class="line"/>
+  <text x="215" y="415" class="lbl">強整合</text>
+</svg>
