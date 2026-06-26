@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <style>text{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans CJK JP',sans-serif;fill:#1f2937}.tag{font-size:22px;fill:#475569;text-decoration:underline}.title{font-size:46px;font-weight:800}.p{font-size:28px}.sub{font-size:25px;fill:#475569}.sub2{font-size:22px;fill:#64748b}.bullet{fill:#e11d48}</style>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="1020" y="80" class="tag">マルチリージョン運用</text>
+  <text x="90" y="150" class="title">AWS X-Ray によるトレーサビリティー</text>
+  <g transform="translate(110 215)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">トレース ID 生成</text></g>
+  <g transform="translate(170 265)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">グループサーバー</text></g>
+  <g transform="translate(220 310)"><polygon points="0,0 10,7 0,14" class="bullet"/><text x="20" y="14" class="sub2">言語：Go</text></g>
+  <g transform="translate(220 345)"><polygon points="0,0 10,7 0,14" class="bullet"/><text x="20" y="14" class="sub2">ADOT (AWS Distro for OpenTelemetry) SDK</text></g>
+  <g transform="translate(170 395)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">SFU サーバー</text></g>
+  <g transform="translate(220 440)"><polygon points="0,0 10,7 0,14" class="bullet"/><text x="20" y="14" class="sub2">Envoy プロキシー</text></g>
+  <g transform="translate(110 500)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">収集</text></g>
+  <g transform="translate(170 550)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">各種 AWS リソース上</text></g>
+  <g transform="translate(170 595)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">OtelCollector コンテナー</text></g>
+</svg>

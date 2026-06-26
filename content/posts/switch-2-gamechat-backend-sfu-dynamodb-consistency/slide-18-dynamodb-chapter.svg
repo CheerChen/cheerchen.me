@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <style>text{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans CJK JP',sans-serif;fill:#1f2937}.title{font-size:48px;font-weight:800}.p{font-size:28px}.sub{font-size:25px;fill:#475569}.bullet{fill:#e11d48}</style>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="90" y="135" class="title">Amazon DynamoDB 開発事例紹介</text>
+  <g transform="translate(110 200)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">設計時に意識していたポイント</text></g>
+  <g transform="translate(170 250)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">コスト効率を意識した設計</text></g>
+  <g transform="translate(170 295)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">ユースケース主導</text></g>
+  <g transform="translate(170 340)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">非正規化</text></g>
+  <g transform="translate(110 400)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">開発事例紹介</text></g>
+  <g transform="translate(170 450)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">ゲームチャットの開始フロー</text></g>
+  <g transform="translate(170 495)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">状態遷移と結果整合</text></g>
+  <g transform="translate(170 540)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">追加招待の読み込み不整合とその対応例</text></g>
+  <g transform="translate(110 600)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">所感</text></g>
+</svg>

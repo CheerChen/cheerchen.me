@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <style>text{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans CJK JP',sans-serif;fill:#1f2937}.tag{font-size:22px;fill:#475569;text-decoration:underline}.title{font-size:50px;font-weight:800}.p{font-size:28px}.note{font-size:18px;fill:#64748b}.bullet{fill:#e11d48}</style>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="1020" y="80" class="tag">マルチリージョン運用</text>
+  <text x="90" y="155" class="title">なぜマルチリージョン運用をするか？</text>
+  <g transform="translate(110 230)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">リアルタイム性の追求には、低レイテンシーなサーバー通信が必要</text></g>
+  <g transform="translate(110 290)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">複数 AWS リージョンに SFU サーバーを配置（マルチリージョン）</text></g>
+  <g transform="translate(230 400)">
+    <rect width="280" height="110" rx="14" fill="#fee2e2" stroke="#ef4444" stroke-width="3"/>
+    <text x="60" y="55" font-size="26" font-weight="700" fill="#b91c1c">単一リージョン</text>
+    <text x="80" y="92" font-size="32" font-weight="800" fill="#b91c1c">往復 500ms</text>
+  </g>
+  <text x="540" y="475" font-size="40" fill="#94a3b8">›</text>
+  <g transform="translate(610 400)">
+    <rect width="280" height="110" rx="14" fill="#dcfce7" stroke="#22c55e" stroke-width="3"/>
+    <text x="50" y="55" font-size="26" font-weight="700" fill="#15803d">マルチリージョン</text>
+    <text x="80" y="92" font-size="32" font-weight="800" fill="#15803d">往復 50ms</text>
+  </g>
+  <text x="90" y="625" class="note">※ 地図上のサーバー位置やレイテンシーの数値はイメージです。実際のデータセンター位置や計測レイテンシーを明示するものではありません。</text>
+</svg>

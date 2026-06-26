@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <style>text{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans CJK JP',sans-serif;fill:#1f2937}.tag{font-size:22px;fill:#475569;text-decoration:underline}.title{font-size:46px;font-weight:800}.p{font-size:27px}.sub{font-size:24px;fill:#475569}.bullet{fill:#e11d48}</style>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="1090" y="80" class="tag">所感</text>
+  <text x="90" y="145" class="title">DynamoDB を用いた開発で得た所感</text>
+  <g transform="translate(110 215)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">よかった点</text></g>
+  <g transform="translate(170 270)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">DynamoDB に適した設計を行なうことで、最初から</text></g>
+  <text x="194" y="316" class="sub">期待したパフォーマンスとスケーラビリティーを確保できた</text>
+  <g transform="translate(110 380)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">注意点</text></g>
+  <g transform="translate(170 435)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">ユースケースが変化し、処理順序や表示情報が変更されると、</text></g>
+  <text x="194" y="481" class="sub">再設計が必要になる事もある</text>
+  <g transform="translate(170 525)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">UX の試行錯誤が必要なフェーズには向かない</text></g>
+  <g transform="translate(110 605)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">適切なデータベースを選択することが重要</text></g>
+</svg>

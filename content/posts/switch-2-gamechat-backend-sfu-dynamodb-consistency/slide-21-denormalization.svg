@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <style>text{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans CJK JP',sans-serif;fill:#1f2937}.tag{font-size:22px;fill:#475569;text-decoration:underline}.title{font-size:50px;font-weight:800}.p{font-size:26px}.sub{font-size:23px;fill:#334155}.bullet{fill:#e11d48}.cell{fill:#fff;stroke:#cbd5e1;stroke-width:2}.head{fill:#f1f5f9;stroke:#cbd5e1;stroke-width:2}</style>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="900" y="80" class="tag">設計時に意識していたポイント</text>
+  <text x="90" y="140" class="title">非正規化</text>
+  <g transform="translate(110 195)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">正規化を行なわず、リスト情報などをあえてそのままアイテム内に持つ</text></g>
+  <g transform="translate(110 245)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">1 度のクエリで必要な情報を取得できるよう構成する</text></g>
+  <g transform="translate(110 320)">
+    <rect x="0" y="0" width="200" height="50" class="head"/>
+    <rect x="200" y="0" width="200" height="50" class="head"/>
+    <rect x="400" y="0" width="540" height="50" class="head"/>
+    <text x="30" y="34" class="sub" font-weight="700">Partition Key</text>
+    <text x="265" y="34" class="sub" font-weight="700">Value</text>
+    <text x="630" y="34" class="sub" font-weight="700">List</text>
+    <rect x="0" y="50" width="200" height="100" class="cell"/>
+    <rect x="200" y="50" width="200" height="100" class="cell"/>
+    <rect x="400" y="50" width="540" height="100" class="cell"/>
+    <text x="60" y="108" class="sub">Key01</text>
+    <text x="245" y="108" class="sub">Value01</text>
+    <text x="420" y="85" class="sub">User01 - Mario</text>
+    <text x="420" y="115" class="sub">User02 - Bowser</text>
+    <text x="420" y="145" class="sub">User03 - Yoshi</text>
+    <rect x="0" y="150" width="200" height="80" class="cell"/>
+    <rect x="200" y="150" width="200" height="80" class="cell"/>
+    <rect x="400" y="150" width="540" height="80" class="cell"/>
+    <text x="60" y="198" class="sub">Key02</text>
+    <text x="245" y="198" class="sub">Value02</text>
+    <text x="420" y="180" class="sub">User01 - Mario</text>
+    <text x="420" y="210" class="sub">User02 - Bowser</text>
+  </g>
+</svg>

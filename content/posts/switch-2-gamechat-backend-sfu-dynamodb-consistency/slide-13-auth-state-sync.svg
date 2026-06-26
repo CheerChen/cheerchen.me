@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <style>text{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans CJK JP',sans-serif;fill:#1f2937}.tag{font-size:22px;fill:#475569;text-decoration:underline}.title{font-size:50px;font-weight:800}.p{font-size:28px}.sub{font-size:25px;fill:#475569}.bullet{fill:#e11d48}</style>
+  <rect width="1200" height="675" fill="#f8fafc"/>
+  <text x="1020" y="80" class="tag">マルチリージョン運用</text>
+  <text x="90" y="155" class="title">認証・状態同期</text>
+  <g transform="translate(110 230)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">入室時の認証処理</text></g>
+  <g transform="translate(170 285)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">接続先インスタンスチェック</text></g>
+  <g transform="translate(170 330)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">グループ所属チェック</text></g>
+  <g transform="translate(170 375)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">アクセストークン検証</text></g>
+  <g transform="translate(110 445)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">ユーザーの状態変化をグループサーバーへ同期</text></g>
+  <g transform="translate(170 500)"><polygon points="0,0 12,8 0,16" class="bullet"/><text x="24" y="16" class="sub">入室、退室、瞬断、復帰…</text></g>
+  <g transform="translate(110 570)"><polygon points="0,0 14,9 0,18" class="bullet"/><text x="28" y="18" class="p">DynamoDB 更新</text></g>
+</svg>
