@@ -1,0 +1,32 @@
+%%{init: {"theme": "base", "themeVariables": {"background": "#ffffff", "mainBkg": "#ffffff", "secondBkg": "#f8fafc", "tertiaryBkg": "#eef2ff", "primaryColor": "#ffffff", "primaryTextColor": "#1f2937", "primaryBorderColor": "#94a3b8", "lineColor": "#64748b", "textColor": "#1f2937", "clusterBkg": "#f8fafc", "clusterBorder": "#cbd5e1", "edgeLabelBackground": "#ffffff"}}}%%
+flowchart LR
+  subgraph local["中規模テスト"]
+    pc["Local PC\n100 - 5,000 VU"]
+  end
+
+  subgraph loadAccount["負荷テストアカウント"]
+    manager["Management EC2\nt3.medium"]
+    worker1["k6 Worker EC2\nc6i.2xlarge"]
+    worker2["k6 Worker EC2\nc6i.2xlarge"]
+    workerN["k6 Worker EC2\nscale-out workers"]
+  end
+
+  subgraph kustamieAccount["Kustamie アカウント"]
+    apigw["Amazon API Gateway"]
+    lambda["AWS Lambda"]
+    backend["Backend services"]
+    metrics["CloudWatch / k6 output\nduration, failed, max, VU"]
+  end
+
+  pc -. "small / local scenario" .-> apigw
+  manager -->|"coordinate scenarios"| worker1
+  manager -->|"coordinate scenarios"| worker2
+  manager -->|"coordinate scenarios"| workerN
+  worker1 -->|"HTTP load"| apigw
+  worker2 -->|"HTTP load"| apigw
+  workerN -->|"HTTP load"| apigw
+  apigw --> lambda --> backend
+  apigw --> metrics
+  worker1 --> metrics
+  worker2 --> metrics
+  workerN --> metrics

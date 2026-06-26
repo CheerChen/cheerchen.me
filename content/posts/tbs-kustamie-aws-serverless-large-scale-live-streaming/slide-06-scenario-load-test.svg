@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Scenario load test</title>
+  <desc id="desc">Load test scenario where VU count increases exponentially during the 30-minute waiting stream.</desc>
+  <rect width="1200" height="675" fill="#fbfbf8"/>
+  <text x="72" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="34" fill="#365f52">シナリオ負荷試験</text>
+  <text x="1070" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="40" font-weight="700" fill="#33426f">TBS</text>
+  <line x1="72" y1="98" x2="1060" y2="98" stroke="#c8d0ca" stroke-width="3"/>
+  <text x="110" y="150" font-family="Avenir" font-size="22" fill="#4b5853">実際にユーザーが利用するときを想定して、VU 数が変化するシナリオを用意した</text>
+  <g transform="translate(225 215)">
+    <line x1="100" y1="300" x2="760" y2="300" stroke="#777" stroke-width="2" marker-end="url(#arrow)"/>
+    <line x1="100" y1="300" x2="100" y2="30" stroke="#777" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="76" y="24" font-family="Avenir" font-size="18" fill="#555">アクセス数</text>
+    <text x="770" y="305" font-family="Avenir" font-size="18" fill="#555">t</text>
+    <line x1="100" y1="65" x2="760" y2="65" stroke="#e29b36" stroke-width="3"/>
+    <line x1="100" y1="265" x2="760" y2="265" stroke="#e29b36" stroke-width="3"/>
+    <text x="0" y="72" font-family="Avenir" font-size="18" fill="#777">最大 VU</text>
+    <text x="-40" y="271" font-family="Avenir" font-size="18" fill="#777">最大 VU の 10%</text>
+    <path d="M100 265 C240 260 405 252 510 220 C615 185 635 105 660 65 L760 65" fill="none" stroke="#536edb" stroke-width="4"/>
+    <line x1="205" y1="30" x2="205" y2="330" stroke="#d66" stroke-width="2" stroke-dasharray="8 8"/>
+    <line x1="650" y1="30" x2="650" y2="330" stroke="#b77" stroke-width="2" stroke-dasharray="8 8"/>
+    <text x="132" y="342" font-family="Avenir" font-size="19" fill="#777">待機配信前</text>
+    <text x="383" y="342" font-family="Avenir" font-size="19" fill="#777">待機配信中</text>
+    <text x="407" y="370" font-family="Avenir" font-size="19" fill="#777">（30 分間）</text>
+    <text x="678" y="342" font-family="Avenir" font-size="19" fill="#777">本編配信中</text>
+  </g>
+  <g font-family="Avenir" font-size="21" fill="#4b5853">
+    <text x="140" y="585">• 待機配信開始時に、最大 VU 数の 10% が参加する</text>
+    <text x="140" y="620">• その後は開始時間前に参加数が急増するように、</text><rect x="695" y="594" width="250" height="34" fill="#fff06a"/><text x="705" y="620" font-weight="700">VU 数が指数的に増加する</text>
+  </g>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#777"/></marker></defs>
+</svg>

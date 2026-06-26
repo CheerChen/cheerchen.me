@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Comparison with other moderation services</title>
+  <desc id="desc">Comparison among Amazon Comprehend Trust and Safety, Bedrock third-party models, and Amazon Nova Micro.</desc>
+  <rect width="1200" height="675" fill="#fbfbf8"/>
+  <text x="72" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="34" fill="#365f52">他サービスとの比較</text>
+  <text x="1070" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="40" font-weight="700" fill="#33426f">TBS</text>
+  <line x1="72" y1="98" x2="1060" y2="98" stroke="#c8d0ca" stroke-width="3"/>
+  <text x="90" y="150" font-family="Avenir" font-size="22" fill="#4b5853">実装時に他サービスとの比較を行ったが、応答速度と柔軟性の面から Amazon Nova Micro を選択した</text>
+  <g font-family="Avenir" font-size="19" fill="#4b5853">
+    <rect x="100" y="205" width="470" height="150" fill="#fff" stroke="#e3ad54" stroke-width="2"/>
+    <text x="125" y="242" font-size="22" text-decoration="underline">候補①: Amazon Comprehend - Trust and Safety</text>
+    <text x="130" y="282">• 複数観点で確認する</text>
+    <text x="130" y="316">• 学習済みのデータを用いるためレスポンスが早い</text>
+    <text x="130" y="350">• 対応言語が</text><text x="255" y="350" fill="#315bd6" font-weight="700">英語のみ</text><text x="345" y="350">（2025/10 現在）</text>
+    <rect x="100" y="405" width="470" height="150" fill="#fff" stroke="#e3ad54" stroke-width="2"/>
+    <text x="125" y="442" font-size="22" text-decoration="underline">候補②: Amazon Bedrock Third Party Models</text>
+    <text x="130" y="482">• 生成 AI で不適切コンテンツを確認する</text>
+    <text x="130" y="516">• 多言語対応</text>
+    <text x="130" y="550">• サードパーティモデルは</text><text x="370" y="550" fill="#315bd6" font-weight="700">レスポンスが遅い</text>
+    <rect x="700" y="205" width="390" height="150" fill="#fff" stroke="#5aa96b" stroke-width="2"/>
+    <text x="725" y="242" font-size="22" text-decoration="underline">Amazon Nova Micro</text>
+    <text x="735" y="282">• サードパーティモデルと比べて</text><text x="1008" y="282" fill="#d45542" font-weight="700">速い</text>
+    <text x="735" y="316">• 未学習の不適切な単語も識別可能</text>
+    <text x="735" y="350">• </text><text x="755" y="350" fill="#d45542" font-weight="700">200 以上の言語</text><text x="890" y="350">に対応</text>
+  </g>
+  <rect x="715" y="425" width="350" height="135" rx="4" fill="#2a2540"/>
+  <text x="735" y="458" font-family="Avenir" font-size="22" fill="white" font-weight="700">Amazon Nova</text>
+  <text x="735" y="482" font-family="Avenir" font-size="20" fill="white">foundation models</text>
+  <g font-family="Avenir" font-size="13" fill="white" text-anchor="middle">
+    <rect x="735" y="505" width="44" height="42" fill="#579ad7"/><text x="757" y="530">Micro</text>
+    <rect x="785" y="505" width="44" height="42" fill="#579ad7"/><text x="807" y="530">Lite</text>
+    <rect x="835" y="505" width="44" height="42" fill="#7e5fe0"/><text x="857" y="530">Pro</text>
+    <rect x="885" y="505" width="54" height="42" fill="#8e48d6"/><text x="912" y="530">Premier</text>
+    <rect x="945" y="505" width="54" height="42" fill="#9a3ee3"/><text x="972" y="530">Canvas</text>
+    <rect x="1005" y="505" width="44" height="42" fill="#9a3ee3"/><text x="1027" y="530">Reel</text>
+  </g>
+</svg>

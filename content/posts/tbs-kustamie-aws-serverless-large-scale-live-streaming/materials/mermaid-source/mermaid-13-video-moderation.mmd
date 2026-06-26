@@ -1,0 +1,16 @@
+%%{init: {"theme": "base", "themeVariables": {"background": "#ffffff", "mainBkg": "#ffffff", "secondBkg": "#f8fafc", "tertiaryBkg": "#eef2ff", "primaryColor": "#ffffff", "primaryTextColor": "#1f2937", "primaryBorderColor": "#94a3b8", "lineColor": "#64748b", "textColor": "#1f2937", "clusterBkg": "#f8fafc", "clusterBorder": "#cbd5e1", "edgeLabelBackground": "#ffffff"}}}%%
+flowchart LR
+  ivs["Amazon IVS\nLive video stream"]
+  sampler["Snapshot sampler\nperiodic frame capture"]
+  frame["Composite frame\ngame / face cam / text overlay"]
+  prompt["Moderation prompt\ncontext + policy"]
+  nova["Amazon Bedrock\nNova Lite multimodal"]
+  result["Structured result\ncategories / confidence"]
+  notify["Notify organizer\nhuman-in-the-loop"]
+
+  ivs --> sampler --> frame --> nova
+  prompt --> nova
+  nova --> result --> notify
+
+  tradeoff["Sampling trade-off\nhigher frequency = higher cost\nlower frequency = higher miss risk"]
+  sampler -.-> tradeoff

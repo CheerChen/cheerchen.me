@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Kustamie summary</title>
+  <desc id="desc">Summary of serverless architecture, IVS, multi-tier cache, async processing, Nova moderation, and beta schedule.</desc>
+  <rect width="1200" height="675" fill="#fbfbf8"/>
+  <text x="72" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="34" fill="#365f52">まとめ</text>
+  <text x="1070" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="40" font-weight="700" fill="#33426f">TBS</text>
+  <line x1="72" y1="98" x2="1060" y2="98" stroke="#c8d0ca" stroke-width="3"/>
+  <g font-family="Avenir" font-size="22" fill="#4b5853">
+    <text x="90" y="150">Kustamie は AWS のサーバーレスサービスをフル活用して、</text>
+    <text x="270" y="194" fill="#d45542" font-weight="700">数万人規模の大規模配信</text><line x1="270" y1="201" x2="545" y2="201" stroke="#d45542" stroke-width="3"/><text x="560" y="194">を行うことができた</text>
+    <text x="118" y="255">• Amazon IVS を使って、</text><text x="360" y="255" fill="#d45542" font-weight="700">安定した映像配信・機能提供</text><line x1="360" y1="262" x2="648" y2="262" stroke="#d45542" stroke-width="3"/><text x="665" y="255">を実現</text>
+    <text x="118" y="310">• API Gateway、Lambda、ElastiCache を組み合わせた</text><text x="675" y="310" fill="#d45542" font-weight="700">多段キャッシュ</text><line x1="675" y1="317" x2="812" y2="317" stroke="#d45542" stroke-width="3"/>
+    <text x="118" y="365">• 時間的コストの高い処理の</text><text x="395" y="365" fill="#d45542" font-weight="700">非同期化</text><line x1="395" y1="372" x2="493" y2="372" stroke="#d45542" stroke-width="3"/><text x="510" y="365">で、API 全体のパフォーマンスを向上</text>
+    <text x="90" y="425">また、AWS の生成 AI サービスが安心・安全なプラットフォーム構築に寄与している</text>
+    <text x="118" y="480">• Amazon Nova モデルを使って、</text><text x="435" y="480" fill="#d45542" font-weight="700">高速なモデレーション</text><line x1="435" y1="487" x2="645" y2="487" stroke="#d45542" stroke-width="3"/><text x="665" y="480">を提供</text>
+  </g>
+  <text x="290" y="610" font-family="Avenir" font-size="42" font-weight="700" fill="#51704f">Kustamie</text>
+  <text x="505" y="610" font-family="Avenir" font-size="24" fill="#4b5853">は、</text>
+  <text x="555" y="610" font-family="Avenir" font-size="24" fill="#d45542">2026 年秋のベータ版提供開始</text>
+  <text x="870" y="610" font-family="Avenir" font-size="24" fill="#4b5853">を予定しています！</text>
+</svg>

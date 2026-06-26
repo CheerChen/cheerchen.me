@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">AI chat moderation in Kustamie</title>
+  <desc id="desc">Chat moderation pipeline using IVS Chat, Firehose, DynamoDB Streams, Lambda, and Amazon Bedrock Nova Micro.</desc>
+  <rect width="1200" height="675" fill="#fbfbf8"/>
+  <text x="72" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="34" fill="#365f52">Kustamie における AI 活用</text>
+  <text x="1070" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="40" font-weight="700" fill="#33426f">TBS</text>
+  <line x1="72" y1="98" x2="1060" y2="98" stroke="#c8d0ca" stroke-width="3"/>
+  <text x="90" y="150" font-family="Avenir" font-size="23" fill="#4b5853" text-decoration="underline">チャットモデレーションの自動化</text>
+  <text x="90" y="192" font-family="Avenir" font-size="21" fill="#4b5853">配信中に投稿されるチャットの内容を効率的にチェックするため、Amazon Nova Micro モデルを活用</text>
+  <g transform="translate(250 260)" font-family="Avenir" font-size="15" text-anchor="middle">
+    <rect x="0" y="0" width="700" height="320" rx="8" fill="#fff" stroke="#b9c2bf" stroke-width="2"/>
+    <text x="350" y="34" font-size="24" fill="#4b5853" font-weight="700">Kustamie</text>
+    <rect x="75" y="90" width="105" height="64" rx="8" fill="#f48120"/><text x="128" y="126" fill="white" font-weight="700">ECS</text>
+    <rect x="75" y="210" width="105" height="64" rx="8" fill="#f48120"/><text x="128" y="246" fill="white" font-weight="700">Lambda</text>
+    <rect x="250" y="95" width="110" height="64" rx="8" fill="#f48120"/><text x="305" y="124" fill="white" font-weight="700">IVS Chat</text>
+    <rect x="250" y="195" width="110" height="64" rx="8" fill="#8e53d3"/><text x="305" y="224" fill="white" font-weight="700">Data</text><text x="305" y="245" fill="white">Firehose</text>
+    <rect x="250" y="285" width="110" height="64" rx="8" fill="#b547c8"/><text x="305" y="314" fill="white" font-weight="700">DynamoDB</text>
+    <rect x="445" y="285" width="105" height="64" rx="8" fill="#f48120"/><text x="498" y="321" fill="white" font-weight="700">Lambda</text>
+    <rect x="585" y="285" width="105" height="64" rx="8" fill="#19a690"/><text x="638" y="314" fill="white" font-weight="700">Bedrock</text><text x="638" y="335" fill="white">Nova Micro</text>
+    <path d="M180 122H250M180 242H250M305 159V195M305 259V285M360 317H445M550 317H585" fill="none" stroke="#77857f" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M498 285C498 250 455 225 360 225" fill="none" stroke="#77857f" stroke-width="3" marker-end="url(#arrow)"/>
+    <path d="M640 285C665 180 505 128 360 128" fill="none" stroke="#77857f" stroke-width="3" marker-end="url(#arrow)"/>
+    <text x="492" y="246" fill="#6b716d">Status Update</text>
+    <text x="515" y="118" fill="#6b716d">Delete Message Request</text>
+  </g>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#77857f"/></marker></defs>
+</svg>

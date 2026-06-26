@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Load testing method with k6</title>
+  <desc id="desc">Distributed k6 load test architecture using a load test account and Kustamie account.</desc>
+  <rect width="1200" height="675" fill="#fbfbf8"/>
+  <text x="72" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="34" fill="#365f52">負荷試験の方法</text>
+  <text x="1070" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="40" font-weight="700" fill="#33426f">TBS</text>
+  <line x1="72" y1="98" x2="1060" y2="98" stroke="#c8d0ca" stroke-width="3"/>
+  <g font-family="Avenir, Helvetica, Arial, sans-serif" font-size="20" fill="#4b5853">
+    <text x="90" y="145">オープンソースの</text><rect x="240" y="120" width="210" height="32" fill="#fff06a"/><text x="250" y="145" font-weight="700">負荷試験ツール k6</text><text x="462" y="145">を利用</text>
+    <text x="112" y="182">• シナリオは JavaScript / TypeScript で記述可能</text>
+    <text x="112" y="220">• 中規模（100〜5,000 VU）→ ローカル PC で実施</text>
+    <text x="112" y="256">• 大規模（5,000〜60,000 VU）→ EC2 ワーカーを立ち上げて実施</text>
+  </g>
+  <g transform="translate(92 340)" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="16" text-anchor="middle">
+    <rect x="0" y="0" width="360" height="210" rx="8" fill="#fff" stroke="#e5b7b7" stroke-width="2"/>
+    <text x="180" y="28" fill="#d45542" font-weight="700">負荷テストアカウント</text>
+    <rect x="50" y="75" width="105" height="58" rx="8" fill="#f48120"/>
+    <text x="102" y="100" fill="white" font-weight="700">EC2</text><text x="102" y="120" fill="white">t3.medium</text>
+    <rect x="205" y="50" width="105" height="58" rx="8" fill="#f48120"/>
+    <text x="258" y="75" fill="white" font-weight="700">EC2</text><text x="258" y="95" fill="white">c6i.2xlarge</text>
+    <rect x="205" y="130" width="105" height="58" rx="8" fill="#f48120"/>
+    <text x="258" y="155" fill="white" font-weight="700">EC2</text><text x="258" y="175" fill="white">Workers</text>
+    <rect x="440" y="0" width="280" height="210" rx="8" fill="#fff" stroke="#e5b7b7" stroke-width="2"/>
+    <text x="580" y="28" fill="#d45542" font-weight="700">Kustamie アカウント</text>
+    <rect x="500" y="72" width="105" height="58" rx="8" fill="#e73f76"/>
+    <text x="552" y="104" fill="white" font-weight="700" font-size="15">APIGW</text>
+    <rect x="615" y="72" width="80" height="58" rx="8" fill="#f48120"/>
+    <text x="655" y="104" fill="white" font-weight="700">Lambda</text>
+    <path d="M155 104H205M310 78C370 78 430 94 500 101M310 158C370 158 430 124 500 101M605 101H615" fill="none" stroke="#77857f" stroke-width="3" marker-end="url(#arrow)"/>
+  </g>
+  <g transform="translate(835 205)">
+    <polygon points="95,0 185,165 5,165" fill="#7b4de2"/>
+    <text x="95" y="116" text-anchor="middle" font-family="Avenir" font-size="64" font-weight="700" fill="white">k6</text>
+  </g>
+  <rect x="825" y="455" width="280" height="128" rx="4" fill="#36362f"/>
+  <text x="842" y="485" font-family="Menlo, monospace" font-size="13" fill="#d7f3d0">http_req_duration avg=9.09ms</text>
+  <text x="842" y="512" font-family="Menlo, monospace" font-size="13" fill="#d7f3d0">http_req_failed.. 0.00%</text>
+  <text x="842" y="539" font-family="Menlo, monospace" font-size="13" fill="#d7f3d0">iteration_max... 16.36s</text>
+  <text x="842" y="566" font-family="Menlo, monospace" font-size="13" fill="#d7f3d0">vus_max......... 30000</text>
+  <text x="965" y="433" text-anchor="middle" font-family="Avenir" font-size="18" fill="#4b5853">テスト結果表示例</text>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#77857f"/></marker></defs>
+</svg>
