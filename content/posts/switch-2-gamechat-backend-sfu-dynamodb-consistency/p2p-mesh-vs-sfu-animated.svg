@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
+  <title id="title">P2P mesh vs SFU: connection topology</title>
+  <desc id="desc">Animated comparison. In a 4-client room, P2P mesh requires every client to maintain bidirectional streams with every other client, producing 6 bidirectional links. SFU collapses this to 4 client-to-server links and forwards selectively.</desc>
+
+  <defs>
+    <style><![CDATA[
+      .panel-bg { fill: #fff7ed; stroke: #cbd5e1; stroke-width: 2; }
+      .panel-title { font: 600 26px system-ui, -apple-system, sans-serif; fill: #0a0f25; text-anchor: middle; }
+      .panel-sub { font: 14px system-ui, -apple-system, sans-serif; fill: #475569; text-anchor: middle; }
+      .client { fill: #ffffff; stroke: #334155; stroke-width: 2; }
+      .client-label { font: 700 18px system-ui, -apple-system, sans-serif; fill: #0a0f25; text-anchor: middle; }
+      .server { fill: #475569; stroke: #1e293b; stroke-width: 2; }
+      .server-label { font: 700 16px system-ui, -apple-system, sans-serif; fill: #ffffff; text-anchor: middle; }
+      .flow { stroke-width: 3; fill: none; stroke-dasharray: 7 10; stroke-linecap: round; }
+      .flow-up { stroke: #16a34a; animation: dash 1.3s linear infinite; }
+      .flow-down { stroke: #2563eb; animation: dash 1.3s linear infinite; }
+      @keyframes dash { to { stroke-dashoffset: -17; } }
+      @media (prefers-reduced-motion: reduce) {
+        .flow-up, .flow-down { animation: none; }
+      }
+    ]]></style>
+  </defs>
+
+  <!-- ============== LEFT PANEL : P2P mesh ============== -->
+  <g>
+    <rect class="panel-bg" x="20" y="50" width="540" height="510" rx="14"/>
+    <text class="panel-title" x="290" y="88">P2P mesh</text>
+    <text class="panel-sub" x="290" y="112">every client uploads to every other client</text>
+
+    <!-- 6 pair edges, each as two parallel flow strokes (green = upload direction, blue = its return) -->
+    <!-- A <-> B  (top horizontal) -->
+    <path class="flow flow-up"   d="M 210 188 L 370 188"/>
+    <path class="flow flow-down" d="M 370 196 L 210 196"/>
+    <!-- C <-> D  (bottom horizontal) -->
+    <path class="flow flow-up"   d="M 210 438 L 370 438"/>
+    <path class="flow flow-down" d="M 370 446 L 210 446"/>
+    <!-- A <-> C  (left vertical) -->
+    <path class="flow flow-up"   d="M 156 224 L 156 410"/>
+    <path class="flow flow-down" d="M 164 410 L 164 224"/>
+    <!-- B <-> D  (right vertical) -->
+    <path class="flow flow-up"   d="M 416 224 L 416 410"/>
+    <path class="flow flow-down" d="M 424 410 L 424 224"/>
+    <!-- A <-> D  (diagonal NW-SE) -->
+    <path class="flow flow-up"   d="M 207 227 L 367 413"/>
+    <path class="flow flow-down" d="M 373 407 L 213 221"/>
+    <!-- B <-> C  (diagonal NE-SW) -->
+    <path class="flow flow-up"   d="M 367 221 L 207 407"/>
+    <path class="flow flow-down" d="M 213 413 L 373 227"/>
+
+    <!-- Clients (drawn above edges so labels stay readable) -->
+    <g>
+      <rect class="client" x="110" y="160" width="100" height="64" rx="8"/>
+      <text class="client-label" x="160" y="199">A</text>
+    </g>
+    <g>
+      <rect class="client" x="370" y="160" width="100" height="64" rx="8"/>
+      <text class="client-label" x="420" y="199">B</text>
+    </g>
+    <g>
+      <rect class="client" x="110" y="410" width="100" height="64" rx="8"/>
+      <text class="client-label" x="160" y="449">C</text>
+    </g>
+    <g>
+      <rect class="client" x="370" y="410" width="100" height="64" rx="8"/>
+      <text class="client-label" x="420" y="449">D</text>
+    </g>
+  </g>
+
+  <!-- ============== RIGHT PANEL : SFU ============== -->
+  <g>
+    <rect class="panel-bg" x="640" y="50" width="540" height="510" rx="14"/>
+    <text class="panel-title" x="910" y="88">SFU</text>
+    <text class="panel-sub" x="910" y="112">each client uploads once; SFU forwards selectively</text>
+
+    <!-- 4 edges between server and clients, two strokes each (upload + download) -->
+    <!-- A (top) <-> SFU -->
+    <path class="flow flow-up"   d="M 906 210 L 906 290"/>
+    <path class="flow flow-down" d="M 914 290 L 914 210"/>
+    <!-- B (left) <-> SFU -->
+    <path class="flow flow-up"   d="M 770 326 L 860 326"/>
+    <path class="flow flow-down" d="M 860 334 L 770 334"/>
+    <!-- C (right) <-> SFU -->
+    <path class="flow flow-up"   d="M 1050 326 L 960 326"/>
+    <path class="flow flow-down" d="M 960 334 L 1050 334"/>
+    <!-- D (bottom) <-> SFU -->
+    <path class="flow flow-up"   d="M 906 450 L 906 380"/>
+    <path class="flow flow-down" d="M 914 380 L 914 450"/>
+
+    <!-- SFU server (drawn above edges) -->
+    <g>
+      <rect class="server" x="860" y="290" width="100" height="90" rx="6"/>
+      <text class="server-label" x="910" y="343">SFU</text>
+    </g>
+
+    <!-- Clients -->
+    <g>
+      <rect class="client" x="860" y="150" width="100" height="60" rx="8"/>
+      <text class="client-label" x="910" y="187">A</text>
+    </g>
+    <g>
+      <rect class="client" x="670" y="300" width="100" height="60" rx="8"/>
+      <text class="client-label" x="720" y="337">B</text>
+    </g>
+    <g>
+      <rect class="client" x="1050" y="300" width="100" height="60" rx="8"/>
+      <text class="client-label" x="1100" y="337">C</text>
+    </g>
+    <g>
+      <rect class="client" x="860" y="450" width="100" height="60" rx="8"/>
+      <text class="client-label" x="910" y="487">D</text>
+    </g>
+  </g>
+</svg>
