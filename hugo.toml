@@ -25,7 +25,7 @@ title = "CheerChen's Blog"
 weight = 1
 [languages.zh.params]
 headerTitle = "CheerChen's Blog"
-motto = "在日程序员的技术分享，杂谈和生活记录"
+motto = "在日本写云、AI、架构和工程实践"
 author = "CheerChen"
 avatar = "3284997.png"
 description = "CheerChen 的技术博客，专注于云原生、Kubernetes、AWS、AI 等前沿技术分享"
@@ -37,7 +37,7 @@ title = "CheerChen's Blog"
 weight = 2
 [languages.ja.params]
 headerTitle = "CheerChen's Blog"
-motto = "クラウドネイティブ・AI、技術共有、雑談"
+motto = "日本からクラウド、AI、アーキテクチャ、開発のことを書く"
 author = "CheerChen"
 avatar = "3284997.png"
 description = "クラウドネイティブ、Kubernetes、AWS、AI などなど"
