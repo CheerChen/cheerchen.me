@@ -1,4 +1,4 @@
-{{ if gt (len .Site.Languages) 1 }}
+{{ if gt (len hugo.Sites) 1 }}
 <div class="language-switcher">
   {{ if .IsTranslated }}
     <h4>{{ i18n "translations" | default "Translations" }}</h4>
@@ -6,20 +6,20 @@
       {{ range .Translations }}
       <li>
         <a href="{{ .RelPermalink }}" title="{{ .Title }}">
-          {{ .Language.LanguageName }}
+          {{ .Language.Label }}
         </a>
       </li>
       {{ end }}
     </ul>
   {{ end }}
-  
+
   <div class="all-languages">
     <h4>{{ i18n "languages" | default "Languages" }}</h4>
     <ul>
       {{ range $.Site.Home.AllTranslations }}
       <li>
         <a href="{{ .RelPermalink }}" {{ if eq .Language.Lang $.Site.Language.Lang }}class="current"{{ end }}>
-          {{ .Language.LanguageName }}
+          {{ .Language.Label }}
         </a>
       </li>
       {{ end }}
