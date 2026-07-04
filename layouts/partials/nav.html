@@ -43,14 +43,14 @@
       </div>
       <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-1 shadow-md">
         {{ partial "navMobileMenu.html" (dict "navItems" $navItems) }}
-        {{ if gt (len .Site.Languages) 1 }}
+        {{ if gt (len hugo.Sites) 1 }}
         <li class="menu-title">
           <span>{{ i18n "languages" | default "Languages" }}</span>
         </li>
         {{ range $.Site.Home.AllTranslations }}
         <li>
           <a href="{{ .RelPermalink }}" {{ if eq .Language.Lang $.Site.Language.Lang }}class="active"{{ end }}>
-            {{ .Language.LanguageName }}
+            {{ .Language.Label }}
           </a>
         </li>
         {{ end }}
@@ -94,7 +94,7 @@
       {{ end }}
 
       <!-- 语言切换器：两个语言并排 + 细竖线分隔，仿 nana.live.acc -->
-      {{ if gt (len .Site.Languages) 1 }}
+      {{ if gt (len hugo.Sites) 1 }}
       {{ $labels := dict "zh" "中" "ja" "JA" }}
       {{ $translations := .AllTranslations }}
       {{ if not .IsTranslated }}{{ $translations = $.Site.Home.AllTranslations }}{{ end }}

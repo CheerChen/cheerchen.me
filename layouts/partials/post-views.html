@@ -7,7 +7,7 @@
 */ -}}
 {{- with .File -}}
   {{- $pageKey := strings.TrimSuffix "/" .Dir -}}
-  {{- with index site.Data.views $pageKey -}}
+  {{- with index hugo.Data.views $pageKey -}}
     <span>{{ . }}{{ T "views" | default " views" }}</span>
   {{- end -}}
 {{- end -}}
