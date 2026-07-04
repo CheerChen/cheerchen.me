@@ -33,6 +33,14 @@
     --claude-content-text-color: #212121;
     --claude-icon-color: #D97757;
     --claude-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+    /* GLM - 青蓝色调 (Zhipu AI) */
+    --glm-border-color: #b8e6ed;
+    --glm-header-bg-color: #ecfbfd;
+    --glm-header-text-color: #0e7490;
+    --glm-content-text-color: #212121;
+    --glm-icon-color: #06b6d4;
+    --glm-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 /* 2. 暗黑模式变量覆盖 (dream 主题用 .dark class 切换) */
@@ -68,6 +76,14 @@
     --claude-content-text-color: #e8cfc4;
     --claude-icon-color: #f08060;
     --claude-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+    /* GLM 暗黑模式 - 青蓝色调 */
+    --glm-border-color: #155e75;
+    --glm-header-bg-color: #0c2a38;
+    --glm-header-text-color: #67e8f9;
+    --glm-content-text-color: #c8e8ed;
+    --glm-icon-color: #22d3ee;
+    --glm-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* 3. 在组件样式中，移除对背景色的应用 */
@@ -251,6 +267,52 @@
 }
 
 .claude-content code {
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+/* --- GLM Shortcode 专用样式 --- */
+.glm-response {
+    border: 1px solid var(--glm-border-color);
+    box-shadow: var(--glm-shadow);
+    border-radius: 12px;
+    margin: 2em 0;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glm-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--glm-header-bg-color);
+    padding: 8px 16px;
+    font-weight: 600;
+    color: var(--glm-header-text-color);
+    border-bottom: 1px solid var(--glm-border-color);
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.glm-header svg {
+    color: var(--glm-icon-color);
+    transition: color 0.3s ease;
+}
+
+.glm-content {
+    padding: 16px;
+    color: var(--glm-content-text-color);
+    transition: color 0.3s ease;
+}
+
+.glm-content strong {
+    color: inherit;
+}
+
+.glm-content a {
+    color: var(--glm-icon-color);
+}
+
+.glm-content code {
     padding: 2px 6px;
     border-radius: 4px;
 }
