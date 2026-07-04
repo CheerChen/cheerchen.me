@@ -354,3 +354,64 @@
 .problem-content a {
     color: var(--problem-icon-color);
 }
+
+/* === Code block: copy button + horizontal scroll === */
+
+.code-block-wrapper {
+    position: relative;
+}
+
+.code-copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10;
+    padding: 6px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: inherit;
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+    line-height: 0;
+}
+
+.code-block-wrapper:hover .code-copy-btn {
+    opacity: 0.5;
+}
+
+.code-copy-btn:hover {
+    opacity: 1 !important;
+    background-color: color-mix(in oklch, currentColor 12%, transparent);
+}
+
+.code-copy-btn--done {
+    opacity: 1 !important;
+    color: oklch(62.7% 0.194 149.214); /* green-600 */
+}
+
+/* Ensure long code lines scroll horizontally instead of wrapping or
+   overflowing the card. The theme already sets .chroma { overflow: auto },
+   but .line { display: flex } can let .cl shrink in some browsers. */
+.chroma .cl {
+    white-space: pre;
+    flex-shrink: 0;
+}
+
+/* Slim scrollbar for code blocks */
+.chroma::-webkit-scrollbar {
+    height: 6px;
+}
+.chroma::-webkit-scrollbar-track {
+    background: transparent;
+}
+.chroma::-webkit-scrollbar-thumb {
+    background-color: color-mix(in oklch, currentColor 20%, transparent);
+    border-radius: 3px;
+}
+
+/* Hide Alpine cloak flash: elements with x-cloak stay hidden until Alpine loads */
+[x-cloak] {
+    display: none !important;
+}
