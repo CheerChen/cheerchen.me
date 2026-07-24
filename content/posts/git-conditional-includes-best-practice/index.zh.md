@@ -1,9 +1,9 @@
 +++
-date = '2025-08-29T02:00:00+09:00'
+date = '2026-07-24T18:00:00+09:00'
 draft = false
-title = '又提交错了！Git 多身份管理最佳实践：从错误提交到条件包含的完整解决方案'
-seo_description = "解决 Git 多项目身份管理问题，详解如何修复错误的用户信息提交，以及使用 Git 条件包含 (conditional includes) 实现自动化身份切换的完整指南"
-tags = ["Git", "开发工具", "最佳实践"]
+title = 'PR 又发错账号了？Git 条件包含与 GitHub CLI / AI Agent 多身份管理 2026 升级版最佳实践'
+seo_description = "解决 Git 多项目身份管理与 GitHub CLI (gh) 账号错乱问题，详解如何修复错误提交，使用 Git 条件包含 (conditional includes) 以及透明 Shell Wrapper 实现终端与 AI Agent 的自动化无感账号隔离。"
+tags = ["Git", "GitHub", "开发工具", "Claude Code", "最佳实践"]
 categories = ["技术"]
 cover = 'git_identity.png'
 images = ['git_identity.png']
@@ -20,7 +20,11 @@ nolastmod = true
 
 ### 紧急修复：处理已推送的错误提交
 
->我在 Git 上发起了一个错误的提交，我的 username 和 email 设置错误，并且 push 了，我应该怎么改正?
+{{< ask >}}
+
+我在 Git 上发起了一个错误的提交，我的 username 和 email 设置错误，并且 push 了，我应该怎么改正?
+
+{{< /ask >}}
 
 {{< gemini >}}
 
@@ -66,6 +70,35 @@ git push --force-with-lease
 ```
 
 完成！现在远程仓库上最后一次提交的作者信息已经被修正了。
+
+#### 方案二：修改历史上的多次提交
+
+如果是历史上的多次提交，或者整个仓库历史中误用了错误邮箱，可以通过以下方法修复：
+
+##### 方法 A：推荐官方标准工具（`git-filter-repo`）
+
+Git 官方目前已将传统的 `git filter-branch` 标记为废弃，并推荐 **`git-filter-repo`** 作为重写历史的官方推荐标准工具（执行速度极快且更安全）。
+
+1. 安装 `git-filter-repo`（例如 macOS 下使用 Homebrew）：
+   ```Bash
+   brew install git-filter-repo
+   ```
+
+2. 在仓库根目录下运行以下命令，批量将旧的错误邮箱和用户名替换为正确信息：
+   ```Bash
+   git filter-repo --email-callback '
+   return b"你的正确邮箱地址@example.com" if email == b"错误的旧邮箱@example.com" else email
+   ' --name-callback '
+   return b"你的正确用户名" if email == b"错误的旧邮箱@example.com" else name
+   ' --force
+   ```
+
+3. 重写完成历史后，强制推送到远程仓库：
+   ```Bash
+   git push --force-with-lease
+   ```
+
+*(注：如果当前开发环境受限无法安装额外 Python 工具，也可以使用 Git 内置的传统命令 `git filter-branch --env-filter ...` 进行替代。)*
 
 {{< /gemini >}}
 
@@ -188,57 +221,65 @@ git config user.email
 
 ### 进阶配置：整合 SSH 密钥管理
 
->好现在我的 ssh 文件
-
-```text
-Host github.com-personal
-  HostName github.com
-  User git
-  IdentityFile ~/.ssh/id_ed25519
-  IdentitiesOnly yes
-
-Host *
-        IdentityAgent "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
-```
-
+>好现在我的 ssh 文件 只有 github.com-personal 个人账户的授权信息
+>
 >然后我的 git 单个项目中有各自有 [user] 的设置，（可能有也可能没有）
+>
 >我如何一步一步梳理成“条件包含” (Conditional Includes) 呢？
 
 {{< gemini >}}
 
 #### 梳理 SSH 配置 (`~/.ssh/config`)
 
-你当前的 SSH 配置已经很不错了，我们只是让它更清晰。`Host *` 的配置意味着默认所有 SSH 连接都尝试通过 1Password 代理，这正好可以作为你的**工作/默认** SSH 设置。而 `github.com-personal` 则明确使用了一个独立的密钥文件，这是你的**个人** SSH 设置。我们保持这个结构。
+为了最严谨地隔离工作与个人资产，建议在 `~/.ssh/config` 中为工作和个人建立**显式、对称**的 Host 别名，并绑定对应的密钥文件：
 
-你的 `~/.ssh/config` 文件基本不用动，它已经完美地区分了两种 SSH 连接方式。
+```text
+Host github.com-work
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_work
+  IdentitiesOnly yes
+
+Host github.com-personal
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_personal
+  IdentitiesOnly yes
+```
+
+这样的优势在于：工作与个人的密钥完全对等独立，无需依赖全局默认兜底（Fallback），结构非常清晰。
 
 ---
 
-#### 修改独立的 Git 身份文件
+#### 修改独立的 Git 身份文件：实现双向对称重定向
 
-现在，我们修改对应的 Git 配置文件。
+接下来，我们在对应的 Git 身份配置文件中设置 **“双向对称重定向”**。
 
-1. **修改个人身份文件 (`~/.gitconfig-personal`)**
+1. **修改工作身份文件 (`~/.gitconfig-work`)**：
 
-这个文件不仅要定义你的用户名和邮箱，**最好还能自动将 `github.com` 的地址"翻译"成使用你个人 SSH 别名的地址**。这样你就不用每次都手动修改 `remote url` 了。
+```TOML
+[user]
+    name = 你的工作用户名
+    email = 你的工作邮箱@work.com
 
-```Bash
-# 在后面加入
-
-# 魔法发生的地方：
-# 当在这个目录下，所有 github.com 的 SSH 地址
-# 都会被自动替换成使用 github.com-personal 这个别名
-[url "git@github.com-personal:"]
+# 在工作目录下，将标准的 git@github.com: 自动替换为 github.com-work
+[url "git@github.com-work:"]
     insteadOf = git@github.com:
-EOF
 ```
 
-这个 `url...insteadOf` 的配置非常强大，意味着以后你即使用标准地址 `git clone git@github.com:CheerChen/some-repo.git`，只要你当前在 `~/dev/personal/` 目录下，Git 也会自动用 `github.com-personal` 的别名去连接，从而用上正确的 SSH 密钥。
+2. **修改个人身份文件 (`~/.gitconfig-personal`)**：
 
-1. **无需修改工作身份文件 (`~/.gitconfig-work`)**
+```TOML
+[user]
+    name = 你的个人用户名
+    email = 你的个人邮箱@personal.com
 
-> [!NOTE]
-> 工作配置里我们不需要 `url...insteadOf`，因为它会使用默认的 `github.com`，并通过 `Host *` 的设置走 1Password 代理，这正是我们想要的。
+# 在个人目录下，将标准的 git@github.com: 自动替换为 github.com-personal
+[url "git@github.com-personal:"]
+    insteadOf = git@github.com:
+```
+
+这个 `url...insteadOf` 双向对称规则极其强大：以后无论在工作目录还是个人目录下，你都可以直接使用 GitHub 官方标准的 `git clone git@github.com:org/repo.git`。Git 会根据当前目录自动将其重定向为对应的 `github.com-work` 或 `github.com-personal`，从而无感调用正确的 SSH 密钥！
 
 ---
 
@@ -291,6 +332,153 @@ git fetch
 
 {{< /gemini >}}
 
+---
+
+### 进阶升级：`gh` 与 AI Agent 时代的多账号无感隔离
+
+搞定了 Git 的条件包含和 SSH 密钥配置后，我以为可以一劳永逸了。结果随着我在命令行里频繁使用 GitHub CLI（`gh`）创建 PR，加上引入了 Claude Code 和 Devin 这些 AI Coding Agent 帮我跑代码，很快又撞上了新尴尬：
+
+在个人项目的目录下，让 Agent 帮我发 PR，结果 `gh` 居然默认调用了公司的 GitHub 账号，把 PR 发错到了公司账号下！
+
+我的第一反应是给 AI Agent 的系统提示词（如 `CLAUDE.md` 或 `AGENTS.md`）增加一段规约：
+
+```markdown
+## gh multi-account auto-select
+
+当运行任何 gh 命令时，请根据当前工作目录手动指定 Token：
+- `~/dev/personal/` -> GH_TOKEN="$(gh auth token --user personal-user)" gh <command>
+- `~/dev/work/`     -> GH_TOKEN="$(gh auth token --user work-user)" gh <command>
+```
+
+本以为这下万无一失了，结果用了一段时间后，发现了三个真正的痛点：
+
+1. **对开发者人类无效**：我自己平时在终端手动敲 `gh pr create` 或 `gh repo view` 时，Prompt 规约根本不起作用，依然只能调用默认账号，经常切错账号。
+2. **占用 Agent 的上下文注意力**：在 Prompt / System Instructions 里硬塞环境变量拼装规则，不仅白白浪费 Context Window 的 Token，还会分散模型对核心代码问题的注意力。
+3. **多 CLI / Agent 重复配置的维护噩梦**：Claude Code（`CLAUDE.md`）、Devin（`AGENTS.md`）、Codex、Cursor（`.cursorrules`）等每个 Agent 工具都有各自的配置文件，每引入一个新 CLI 或新 Agent 就需要重新复制维护一遍，繁琐且极易遗漏。
+
+意识到靠 Prompt 规约约束是不靠谱且维护成本极高的之后，我再次跑去问 Gemini：
+
+> 给 Agent 写 Prompt 规约不仅维护麻烦还占 Context，而且终端手动敲命令还是切不了账号，有办法在 Shell 底层根据目录自动切 gh 账号吗？
+
+{{< gemini >}}
+
+这是一个非常经典的升级版痛点！
+
+Git 的 `includeIf` 是 Git 本身的路径作用域配置，只对 `git` 命令生效。而 GitHub CLI（`gh`）是一个独立的 CLI 工具，它对同一个 Host（如 `github.com`）采取的是全局单一激活账号（Active Account）模式。当你通过 `gh auth status` 查看时，会发现只有一个账号是 `Active account: true`。
+
+最好的原则是：**不要用 Prompt 考验 LLM，也不要用记忆力考验人类，直接在 Shell 环境层进行物理拦截。**
+
+我们可以通过编写一个透明的 `gh` 包装脚本（Shell Wrapper）来实现双向无感隔离。
+
+#### 编写透明 `gh` 包装脚本
+
+在系统的 PATH 优先路径（如 `~/bin/gh`）下创建一个与 `gh` 同名的包装脚本，让它根据当前工作目录（`$PWD`）自动给真实的 `/opt/homebrew/bin/gh` 注入对应的 `GH_TOKEN`：
+
+```bash
+#!/bin/bash
+# 根据当前工作目录自动选择 GitHub 账号 Token
+# 目录映射：
+#   ~/dev/personal/  -> 个人账号
+#   ~/dev/work/      -> 工作账号
+
+# 真实的 Homebrew 安装的 gh 二进制绝对路径
+REAL_GH="/opt/homebrew/bin/gh"
+
+case "$PWD/" in
+  *"$HOME/dev/work/"*)
+    TARGET_USER="work-user"
+    ;;
+  *"$HOME/dev/personal/"*)
+    TARGET_USER="personal-user"
+    ;;
+  *)
+    TARGET_USER=""
+    ;;
+esac
+
+if [ -n "$TARGET_USER" ]; then
+  TOKEN="$("$REAL_GH" auth token --user "$TARGET_USER" 2>/dev/null)"
+  if [ -n "$TOKEN" ]; then
+    export GH_TOKEN="$TOKEN"
+  fi
+fi
+
+exec "$REAL_GH" "$@"
+```
+
+赋予脚本执行权限：`chmod +x ~/bin/gh`。
+
+#### 验证与效果对照
+
+配置完成后，我们可以在不同目录下校验效果，对比原生 `gh` 与包装脚本（Wrapper）作用后的差异：
+
+1. **个人目录校验（终端与 Agent 通用）**：
+   ```bash
+   cd ~/dev/personal/my-repo
+   gh api user --jq .login
+   # 原生 gh: 返回默认 active 账号 (如 work-user，产生错发风险)
+   # Wrapper 作用后: 返回 personal-user (自动匹配个人 Token)
+   ```
+
+2. **工作目录校验（终端与 Agent 通用）**：
+   ```bash
+   cd ~/dev/work/company-repo
+   gh api user --jq .login
+   # 原生 gh: 返回默认 active 账号
+   # Wrapper 作用后: 返回 work-user (自动匹配工作 Token)
+   ```
+
+3. **AI Agent 子进程模拟校验（非交互式 Subshell）**：
+   ```bash
+   zsh -c "cd ~/dev/personal/my-repo && gh api user --jq .login"
+   # 输出: personal-user
+   ```
+
+这样，无论你在命令行手动输入 `gh`，还是 AI Agent 在后台运行子进程命令，系统都会自动走这个 Wrapper 匹配当前目录，实现双向无感隔离！
+
+{{< /gemini >}}
+
+### 关键细节：解决 Subshell 与 Zsh 启动优先级
+
+在实际落地这套包装脚本（Shell Wrapper）时，有两个关于 Shell 环境变量继承机制的细节非常关键。忽略这两个细节会导致开发者终端生效了，但 AI Agent 在后台依然会绕过包装脚本：
+
+#### 1. 非交互式 Subshell 必须配置 `~/.zshenv`
+
+像 Claude Code、Devin 这类 AI Coding Agent 在后台通过子进程（Subshell）运行 Shell 命令（如 `exec("gh ...")`）时，启动的是**非交互式 Shell（Non-interactive Subshell）**。
+
+Zsh 的加载机制决定了：
+- **`~/.zshrc`**：仅在交互式 Shell（如手动打开的终端窗口）中加载。
+- **`~/.zshenv`**：在任何 Shell 启动时（无论是交互式还是非交互式 Subshell）都会被优先加载。
+
+如果仅在 `~/.zshrc` 中导出 `PATH`，开发者终端可以正常拦截，但 AI Agent 执行子进程时将直接绕过 Wrapper，继续使用系统默认的 `/opt/homebrew/bin/gh`。
+
+因此，必须在 `~/.zshenv` 中确保 `~/bin` 优先挂载：
+
+```zsh
+# 在 ~/.zshenv 中置顶 PATH，确保 Subshell 与 Agent 均能调用 Wrapper
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+```
+
+#### 2. 重置 `brew shellenv` 的 PATH 抢占
+
+如果在 `~/.zshrc` 中调用了 `eval "$(/opt/homebrew/bin/brew shellenv)"`，Homebrew 默认会将 `/opt/homebrew/bin` 重新拼接到 `PATH` 的最前面。
+
+必须确保在 `brew shellenv` 执行完成之后，再次将 `~/bin` 重新置于 `PATH` 最前端：
+
+```zsh
+# ~/.zshrc
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# 确保 ~/bin 依然排在 /opt/homebrew/bin 前面
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+```
+
 ### 总结
 
-通过这套完整的解决方案，我们不仅修复了当前的错误提交，还建立了一个自动化的多身份管理系统。从此以后，只要项目放在正确的目录下，Git 就会自动选择正确的身份和 SSH 密钥，再也不用担心身份混乱的问题了。
+通过这套完整的解决方案，我们不仅修复了历史提交错误，还建立了一个全自动的多身份管理系统：
+
+- **紧急修复层**：使用 `git commit --amend` 或官方标准工具 `git-filter-repo` 快速修复已推送的错误提交历史。
+- **Git Commit / SSH 身份层**：通过 `~/.gitconfig` 的 `includeIf` 条件包含与双向重定向（`insteadOf`），实现提交邮箱与对应 SSH 密钥按目录自动无感切换。
+- **GitHub CLI / AI Agent 操作层**：通过 `~/bin/gh` 透明包装脚本与 `~/.zshenv` 的环境变量层拦截，实现终端命令行及 Claude Code / Devin 等 AI Agent 在多账号间的物理无感隔离。
+
+把繁琐的切账号记忆交给 Shell 机制保障，从此只要项目放在正确的目录下，无论是手动 Commit、发起 PR，还是由 AI Agent 自动调用 API，都会自动选择正确的身份，再也不用担心身份混乱与错发事故。
