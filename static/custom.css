@@ -477,3 +477,59 @@
 [x-cloak] {
     display: none !important;
 }
+
+/* === Single post: wider reading column with a collision-safe TOC === */
+
+.dream-single-post-column {
+    min-width: 0;
+}
+
+#dream-single-post-main {
+    width: 100%;
+    max-width: 90ch;
+}
+
+#dream-single-post-main header h1 {
+    overflow-wrap: anywhere;
+}
+
+/*
+ * The theme enables its four-column article layout at 1024px. At that width,
+ * a persistent TOC leaves too little room for long-form content, so keep a
+ * single reading column until the viewport can support three distinct tracks.
+ */
+@media (min-width: 64rem) and (max-width: 79.999rem) {
+    .dream-single-post-layout {
+        display: block;
+    }
+
+    .dream-single-post-sidebar,
+    .dream-single-post-toc {
+        display: none;
+    }
+}
+
+@media (min-width: 80rem) {
+    .dream-single-post-layout {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .dream-single-post-column {
+        grid-column: span 3 / span 3;
+    }
+
+    .dream-single-post-toc {
+        min-width: 0;
+    }
+
+    #TableOfContents {
+        width: 100%;
+        max-width: 18rem;
+    }
+
+    #TableOfContents a {
+        display: block;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+}
