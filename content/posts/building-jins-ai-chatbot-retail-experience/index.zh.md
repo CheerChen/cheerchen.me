@@ -1,7 +1,7 @@
 +++
 date = '2025-06-25T12:00:26+09:00'
 draft = false
-title = ' JINS AI：实体行业的 AI 落地 - AWS Summit Japan 2025 会议回顾'
+title = 'JINS AI：实体行业的 AI 落地 - AWS Summit Japan 2025 会议回顾'
 seo_description = "深度解析 JINS 如何在 3 个月内用 3 人团队成功打造 AI 聊天导购系统，探讨 RAG 架构设计、AWS 托管服务应用，以及实体零售业 AI 落地的挑战与解决方案"
 tags = ["AI", "AWS", "架构设计", "AWS Summit Japan 2025"]
 categories = ["技术"]

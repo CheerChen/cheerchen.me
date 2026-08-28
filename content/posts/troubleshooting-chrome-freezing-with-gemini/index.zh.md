@@ -1,7 +1,7 @@
 +++
 date = '2025-07-12T05:25:26+09:00'
 draft = false
-title = ' 忍不了了！使用 Gemini 一次完整排查 Chrome 卡死并给官方提 Bug 的全过程 '
+title = '忍不了了！使用 Gemini 一次完整排查 Chrome 卡死并给官方提 Bug 的全过程'
 seo_description = "详记使用 Gemini AI 助手从问题分析、工具选择到最终解决 Chrome 启动卡死问题的完整排查过程，包括使用 UIforETW 性能分析工具和 Chrome 官方 Bug 提交流程"
 tags = ["AI", "Chrome", "Gemini", "问题排查"]
 categories = ["AI 协作"]
