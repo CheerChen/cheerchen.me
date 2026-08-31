@@ -74,6 +74,37 @@ html.dark #dream-global-bg {
 </style>
 {{ end }}
 
+{{- if eq .Type "posts" }}
+{{- $authorName := site.Params.author | default "CheerChen" }}
+{{- $images := slice }}
+{{- with .Params.images }}
+  {{- range . }}
+    {{- if hasPrefix . "http" }}
+      {{- $images = $images | append . }}
+    {{- else }}
+      {{- $images = $images | append (printf "%s%s" $.Permalink .) }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- $keywords := slice }}
+{{- with .Params.tags }}{{- $keywords = . }}{{- end }}
+{{- $schema := dict
+  "@context" "https://schema.org"
+  "@type" "BlogPosting"
+  "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+  "headline" (.Title | plainify)
+  "description" ((or .Description .Summary) | plainify)
+  "image" $images
+  "author" (dict "@type" "Person" "name" $authorName "url" site.BaseURL)
+  "publisher" (dict "@type" "Person" "name" $authorName "url" site.BaseURL)
+  "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00")
+  "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")
+  "url" .Permalink
+  "keywords" $keywords
+}}
+<script type="application/ld+json">{{ $schema | jsonify | safeJS }}</script>
+{{- end }}
+
 {{- if .Params.math }}
 <link rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/katex.min.css"
