@@ -1,0 +1,7 @@
+# {{ .Site.Title }}
+
+> {{ .Site.Params.description | plainify }}
+
+{{ range where .Site.RegularPages "Type" "posts" }}
+- [{{ .Title | plainify }}]({{ .Permalink }}){{ with .Description }}: {{ . | plainify }}{{ end }}
+{{ end }}

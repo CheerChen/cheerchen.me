@@ -91,3 +91,16 @@ inline = [["$", "$"]]
 [services]
 [services.googleAnalytics]
 ID = 'G-GVR7W9ZBBP'
+
+# llms.txt — auto-generated index for AI assistants
+[mediaTypes."text/llms-txt"]
+suffixes = ["txt"]
+
+[outputFormats.llms-txt]
+mediaType = "text/llms-txt"
+baseName = "llms"
+isPlainText = true
+notAlternative = true
+
+[outputs]
+home = ["html", "rss", "llms-txt"]
