@@ -12,6 +12,12 @@
 
 <link rel="canonical" href="{{ .Permalink }}" />
 
+<!-- hreflang: declare every language version of this page (incl. itself) + x-default -->
+{{- range .AllTranslations }}
+<link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}" />
+{{- end }}
+<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}" />
+
 {{ if eq .Type "posts" }}
 <!-- Page Author & Description -->
 <meta name="author" content="{{ if isset .Params "author" }}{{ .Params.author
