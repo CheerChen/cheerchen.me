@@ -36,4 +36,4 @@ yarn-error.log*
 .DS_Store
 
 # VS Code 编辑器配置
-.vscode/
+.vscode/data/views.json
