@@ -31,16 +31,26 @@ jobs:
       - name: Fetch latest views from GA
         env:
           GA4_PROPERTY_ID: '499292123'
-        run: uv run scripts/ga-preview-views.py --output-json data/views.json
-
-      - name: Commit if changed
         run: |
-          if git diff --quiet data/views.json; then
-            echo "No changes to data/views.json."
+          mkdir -p data
+          uv run scripts/ga-preview-views.py --output-json data/views.json
+
+      # views.json lives on the orphan `site-data` branch (one squashed commit,
+      # force-replaced on every change) so the main branch history stays clean.
+      # The Cloudflare Pages build command fetches it from raw.githubusercontent
+      # before running hugo.
+      - name: Push to site-data branch if changed
+        run: |
+          git fetch origin site-data --no-tags --depth 1
+          new=$(sha1sum data/views.json | cut -d' ' -f1)
+          old=$(git show origin/site-data:views.json 2>/dev/null | sha1sum | cut -d' ' -f1)
+          if [ "$new" = "$old" ]; then
+            echo "No changes to views.json; skipping."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/views.json
-          git commit -m "chore(views): refresh from GA"
-          git push
+          blob=$(git hash-object -w data/views.json)
+          tree=$(printf '100644 blob %s\tviews.json\n' "$blob" | git mktree)
+          commit=$(git commit-tree "$tree" -m "chore(views): refresh from GA")
+          git push --force origin "$commit:refs/heads/site-data"
