@@ -52,8 +52,8 @@ Keep categories broad and stable. A new category should usually be useful for mo
 - Cloud / infra: `AWS`, `Kubernetes`, `Serverless`, `DynamoDB`, `Amazon IVS`, `WebRTC`
 - AI / agents: `AI`, `Claude`, `Claude Code`, `Codex`, `Gemini`
 - Tools: `Git`, `GitHub`, `Docker`, `Homelab`, `Syncthing`
-- Languages / frontend: `JavaScript`, `TypeScript`, `Go`, `Rust`, `Bun`, `Vite`
-- Platforms / hardware: `macOS`, `Apple Silicon`, `Linux`, `webOS`, `LG`, `Chrome`, `XPC`, `Jellyfin`, `Syncthing`, `Docker`
+- Languages / frontend: `JavaScript`, `TypeScript`, `Go`, `Rust`, `Bun`, `Vite`, `Three.js`, `WebGL`
+- Platforms / hardware: `macOS`, `Apple Silicon`, `Linux`, `webOS`, `LG`, `Chrome`, `XPC`, `Jellyfin`, `Syncthing`, `Docker`, `GBA`
 - Events / domains: `AWS Summit Japan 2025`, `AWS Summit Japan 2026`, `Nintendo`, `Switch 2`
 
 ## LLM Editing Notes
