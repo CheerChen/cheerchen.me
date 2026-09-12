@@ -43,7 +43,7 @@ GameChat 的服务要求包括实时视频音频通信、每个 GameChat group �
 
 “游戏并行运行”是这套系统最硬的产品约束。一般视频会议应用可以占用前台资源，而 GameChat 更像一个嵌在系统层的后台实时通信进程。它不能抢走游戏渲染和在线对战所需的资源，因此服务端必须承担更多转发、选择和状态管理工作。
 
-{{< figure src="slide-05-webrtc.svg" >}}
+{{< figure src="slide-05-WebRTC.svg" >}}
 
 分享中提到 GameChat 使用 WebRTC 做实时音视频通信，并强调 UDP packet communication。这个描述听起来简单，但实际工程复杂度比“用了 WebRTC”要高得多。
 
@@ -177,7 +177,7 @@ SFU 的 region 资源通过 Terraform module 管理。每个 region 注入不同
 
 ## DynamoDB 建模：成本、查询模式与非正規化
 
-{{< figure src="slide-18-dynamodb-chapter.svg" >}}
+{{< figure src="slide-18-DynamoDB-chapter.svg" >}}
 
 后半段进入 DynamoDB 开发事例，重点包括成本效率、use case driven design、非正規化、GameChat 开始流程、状态迁移与最终一致性，以及追加邀请的不一致处理。
 
@@ -259,7 +259,7 @@ Nintendo Systems 明确提到，这次通过设计上的工夫容忍了最终一
 
 这就是这场分享最值得放大的地方：工程问题不一定只能在数据库层解决。有时候产品流程本身提供了更便宜、更贴近用户体验的约束。
 
-{{< figure src="slide-30-dynamodb-reflection.svg" >}}
+{{< figure src="slide-30-DynamoDB-reflection.svg" >}}
 
 最后的总结相当克制。DynamoDB 在设计得当时，可以从一开始就获得预期性能和可扩展性。但如果 use case 变化、处理顺序变化、显示信息变化，就可能需要重新设计。它也不适合 UX 还在频繁试错的阶段。
 
