@@ -1,7 +1,22 @@
+{{/* Resolve src and poster through page resources so the URLs stay valid in
+     every language. Page bundle files are published once, under the default
+     language path, so a bare relative src 404s on /ja/ and /en/ pages. */}}
+{{ $src := .Get "src" }}
+{{ with .Page.Resources.GetMatch $src }}
+  {{ $src = .RelPermalink }}
+{{ end }}
+
+{{ $poster := .Get "poster" }}
+{{ with $poster }}
+  {{ with $.Page.Resources.GetMatch . }}
+    {{ $poster = .RelPermalink }}
+  {{ end }}
+{{ end }}
+
 <figure>
   <video controls muted loop playsinline preload="metadata"
-         style="width:100%"{{ with .Get "poster" }} poster="{{ . }}"{{ end }}>
-    <source src="{{ .Get "src" }}" type="video/mp4">
+         style="width:100%"{{ with $poster }} poster="{{ . }}"{{ end }}>
+    <source src="{{ $src }}" type="video/mp4">
   </video>
   {{ with .Get "title" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
 </figure>

@@ -43,10 +43,7 @@ Portainer 新手起步的时候挺好用的：有 UI、有按钮、stack 一键�
 
 ▎ Portainer 那套之所以别扭，一半是 UI 把 compose 语义包了一层 force-recreate 的壳，一半是 mutable tag 的缓存问题。
 
-<figure>
-  <img src="before.png" alt="Portainer 的管理界面" />
-  <figcaption>Portainer 的管理界面</figcaption>
-</figure>
+{{< figure src="before.png" title="Portainer 的管理界面" >}}
 
 换工具能解决前者。他说我可以试试 Dockge。
 
@@ -259,10 +256,7 @@ sudo reboot
 
 90 秒后 pi 回来，所有容器自动重启，Beszel 立刻能读到内存了。
 
-<figure>
-  <img src="2026-05-30 3.12.08.png" alt="Beszel 的监控界面" />
-  <figcaption>Beszel 的监控界面</figcaption>
-</figure>
+{{< figure src="2026-05-30 3.12.08.png" title="Beszel 的监控界面" >}}
 
 跑了几年容器在树莓派上，根本不知道每个服务实际吃多少 RAM。如果不是因为 Beszel 主动报错，我都不知道树莓派本身是支持查容器内存的！
 
@@ -385,10 +379,7 @@ networks:
 
 现在长这样：
 
-<figure>
-  <img src="2026-05-30 3.09.14.png" alt="Dockge 的管理界面" />
-  <figcaption>Dockge 的管理界面</figcaption>
-</figure>
+{{< figure src="2026-05-30 3.09.14.png" title="Dockge 的管理界面" >}}
 
 Portainer 就再也不见了。
 
