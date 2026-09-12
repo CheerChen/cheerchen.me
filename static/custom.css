@@ -478,6 +478,47 @@
     display: none !important;
 }
 
+/* === Language switcher in nav === */
+.lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 6px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
+
+.lang-switcher-divider {
+    width: 1px;
+    height: 14px;
+    background-color: oklch(50% 0 0 / 0.25);
+    flex-shrink: 0;
+}
+
+.dark .lang-switcher-divider {
+    background-color: oklch(80% 0 0 / 0.25);
+}
+
+.lang-switcher-link {
+    padding: 0 2px;
+    color: color-mix(in oklch, currentColor 60%, transparent);
+    transition: color 0.2s ease;
+    text-decoration: none;
+}
+
+.lang-switcher-link:hover {
+    color: inherit;
+}
+
+.lang-switcher-link--active {
+    color: var(--color-primary, oklch(62.7% 0.194 149.214));
+}
+
+.lang-switcher-link--active:hover {
+    color: var(--color-primary, oklch(62.7% 0.194 149.214));
+}
+
 /* === Single post: wider reading column with a collision-safe TOC === */
 
 .dream-single-post-column {

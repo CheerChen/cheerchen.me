@@ -93,19 +93,19 @@
 
       {{ end }}
 
-      <!-- 语言切换器：两个语言并排 + 细竖线分隔，仿 nana.live.acc -->
+      <!-- Language switcher: inline labels with thin dividers -->
       {{ if gt (len hugo.Sites) 1 }}
-      {{ $labels := dict "zh" "中" "ja" "JA" }}
+      {{ $labels := dict "zh" "中" "ja" "JA" "en" "EN" }}
       {{ $translations := .AllTranslations }}
       {{ if not .IsTranslated }}{{ $translations = $.Site.Home.AllTranslations }}{{ end }}
-      <div role="group" aria-label="language" class="flex items-center gap-2.5 text-sm font-semibold tracking-wider">
+      <div role="group" aria-label="language" class="lang-switcher">
         {{ range $i, $t := $translations }}
-        {{ if gt $i 0 }}<span aria-hidden="true" class="w-px h-2.5 bg-base-content/20"></span>{{ end }}
+        {{ if gt $i 0 }}<span aria-hidden="true" class="lang-switcher-divider"></span>{{ end }}
         {{ $active := eq $t.Language.Lang $.Site.Language.Lang }}
         <a href="{{ $t.RelPermalink }}"
           aria-label="Switch language to {{ upper $t.Language.Lang }}"
           {{ if $active }}aria-current="true"{{ end }}
-          class="transition-colors {{ if $active }}text-primary{{ else }}text-base-content/60 hover:text-base-content{{ end }}">
+          class="lang-switcher-link {{ if $active }}lang-switcher-link--active{{ end }}">
           {{ index $labels $t.Language.Lang | default (upper $t.Language.Lang) }}
         </a>
         {{ end }}
