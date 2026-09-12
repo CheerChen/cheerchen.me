@@ -13,11 +13,11 @@ This file is the single source of truth for categories and tags.
 
 ## Categories
 
-| Slug | 中文 | 日本語 |
-|---|---|---|
-| `tech` | 技术 | 技術 |
-| `ai-collab` | AI 协作 | AI協働 |
-| `career-learning` | 职业与学习 | キャリアと学習 |
+| Slug | 中文 | 日本語 | English |
+|---|---|---|---|
+| `tech` | 技术 | 技術 | Tech |
+| `ai-collab` | AI 协作 | AI協働 | AI Collaboration |
+| `career-learning` | 职业与学习 | キャリアと学習 | Career & Learning |
 
 Keep categories broad and stable. A new category should usually be useful for more than one future post.
 
@@ -29,23 +29,23 @@ Keep categories broad and stable. A new category should usually be useful for mo
 
 ### Translated concepts (use the slug)
 
-| Slug | 中文 | 日本語 |
-|---|---|---|
-| `architecture` | 架构设计 | アーキテクチャ設計 |
-| `cloud-native` | 云原生 | クラウドネイティブ |
-| `dev-tools` | 开发工具 | 開発ツール |
-| `best-practices` | 最佳实践 | ベストプラクティス |
-| `troubleshooting` | 问题排查 | トラブルシューティング |
-| `retrospective` | 复盘 | 振り返り |
-| `realtime` | 实时通信 | リアルタイム通信 |
-| `game-dev` | 游戏开发 | ゲーム開発 |
-| `generative-ai` | 生成式 AI | 生成AI |
-| `raspberry-pi` | 树莓派 | Raspberry Pi |
-| `primer` | 扫盲 | 入門 |
-| `career` | 职业发展 | キャリア |
-| `toolchain` | 工具链 | ツールチェーン |
-| `frontend` | 前端 | フロントエンド |
-| `options` | 期权 | オプション取引 |
+| Slug | 中文 | 日本語 | English |
+|---|---|---|---|
+| `architecture` | 架构设计 | アーキテクチャ設計 | Architecture |
+| `cloud-native` | 云原生 | クラウドネイティブ | Cloud Native |
+| `dev-tools` | 开发工具 | 開発ツール | Dev Tools |
+| `best-practices` | 最佳实践 | ベストプラクティス | Best Practices |
+| `troubleshooting` | 问题排查 | トラブルシューティング | Troubleshooting |
+| `retrospective` | 复盘 | 振り返り | Retrospective |
+| `realtime` | 实时通信 | リアルタイム通信 | Realtime |
+| `game-dev` | 游戏开发 | ゲーム開発 | Game Dev |
+| `generative-ai` | 生成式 AI | 生成AI | Generative AI |
+| `raspberry-pi` | 树莓派 | Raspberry Pi | Raspberry Pi |
+| `primer` | 扫盲 | 入門 | Primer |
+| `career` | 职业发展 | キャリア | Career |
+| `toolchain` | 工具链 | ツールチェーン | Toolchain |
+| `frontend` | 前端 | フロントエンド | Frontend |
+| `options` | 期权 | オプション取引 | Options Trading |
 
 ### Language-neutral tags (write directly)
 

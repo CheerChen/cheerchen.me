@@ -29,6 +29,8 @@ motto = "在日本写云、AI、架构和工程实践"
 author = "CheerChen"
 avatar = "3284997.png"
 description = "CheerChen 的技术博客，专注于云原生、Kubernetes、AWS、AI 等前沿技术分享"
+[languages.zh.params.experimental]
+jsDateFormat = "yyyy年MM月dd日"
 
 [languages.ja]
 locale = 'ja'
@@ -41,6 +43,22 @@ motto = "日本からクラウド、AI、アーキテクチャ、開発のこと
 author = "CheerChen"
 avatar = "3284997.png"
 description = "クラウドネイティブ、Kubernetes、AWS、AI などなど"
+[languages.ja.params.experimental]
+jsDateFormat = "yyyy年MM月dd日"
+
+[languages.en]
+locale = 'en'
+label = 'EN'
+title = "CheerChen's Blog"
+weight = 3
+[languages.en.params]
+headerTitle = "CheerChen's Blog"
+motto = "Writing about cloud, AI, architecture, and engineering from Japan"
+author = "CheerChen"
+avatar = "3284997.png"
+description = "CheerChen's tech blog — cloud-native, Kubernetes, AWS, AI, and more"
+[languages.en.params.experimental]
+jsDateFormat = "MMMM d, yyyy"
 
 [markup]
 [markup.highlight]

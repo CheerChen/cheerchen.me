@@ -1,0 +1,13 @@
+# Project-level i18n overrides for English.
+# The theme (themes/dream/i18n/en.toml) already provides all UI strings
+# (home, about, search, archives, article, category, tag, etc.).
+# This file only adds project-specific keys not covered by the theme.
+
+[views]
+other = " views"
+
+[shareOn]
+other = "Share on {{ .platform }}"
+
+[copyLink]
+other = "Copy link"
