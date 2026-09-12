@@ -1,2 +1,8 @@
 [views]
 other = "回閲覧"
+
+[shareOn]
+other = "{{ .platform }} でシェア"
+
+[copyLink]
+other = "リンクをコピー"

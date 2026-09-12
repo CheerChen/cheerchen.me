@@ -1,1 +1,7 @@
 views = "次浏览"
+
+[shareOn]
+other = "分享到 {{ .platform }}"
+
+[copyLink]
+other = "复制链接"
