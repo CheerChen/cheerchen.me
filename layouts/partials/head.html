@@ -16,7 +16,17 @@
 {{- range .AllTranslations }}
 <link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}" />
 {{- end }}
-<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}" />
+{{- /* x-default must resolve to the SAME URL on every language version, otherwise
+       the hreflang cluster is self-contradictory and search engines discard it.
+       Point it at the default content language (served at the site root). */}}
+{{- $defaultLang := (index hugo.Sites 0).Language.Lang }}
+{{- $xDefault := .Permalink }}
+{{- range .AllTranslations }}
+  {{- if eq .Language.Lang $defaultLang }}
+    {{- $xDefault = .Permalink }}
+  {{- end }}
+{{- end }}
+<link rel="alternate" hreflang="x-default" href="{{ $xDefault }}" />
 
 {{ if eq .Type "posts" }}
 <!-- Page Author & Description -->
