@@ -1,0 +1,58 @@
+name: Content Check
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Hugo build + content lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Setup Hugo
+        env:
+          HUGO_VERSION: '0.162.1'
+        run: |
+          mkdir -p "$HOME/bin"
+          curl -fsSL "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz" -o /tmp/hugo.tar.gz
+          tar -xzf /tmp/hugo.tar.gz -C "$HOME/bin" hugo
+          echo "$HOME/bin" >> "$GITHUB_PATH"
+          hugo version
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install textlint
+        run: npm ci
+
+      - name: Front matter + image reference check
+        run: python3 scripts/check-content.py
+
+      - name: Textlint (prh terminology)
+        run: npx textlint --config tools/textlint/.textlintrc.json "content/posts/**/*.md"
+
+      - name: Hugo build
+        run: hugo --gc --minify --destination /tmp/check

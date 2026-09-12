@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "description": "textlint tooling for blog content checks — not part of the Hugo build",
+  "devDependencies": {
+    "textlint": "^15.0.0",
+    "textlint-rule-prh": "^6.0.0",
+    "textlint-rule-preset-ja-technical-writing": "^12.0.0",
+    "textlint-filter-rule-comments": "^1.3.0"
+  }
+}

@@ -1,0 +1,29 @@
+version: 1
+rules:
+  # Brand names — common capitalization errors
+  - expected: GitHub
+    pattern: /github/i
+  - expected: TypeScript
+    pattern: /type\s?script/i
+  - expected: JavaScript
+    pattern: /java\s?script/i
+  - expected: macOS
+    pattern: /mac\s?os/i
+  - expected: DynamoDB
+    pattern: /dynamodb/i
+  - expected: WebRTC
+    pattern: /webrtc/i
+  - expected: OpenTelemetry
+    pattern: /opentelemetry/i
+  - expected: OpenAI
+    pattern: /open\s?ai/i
+  - expected: ChatGPT
+    pattern: /chat\s?gpt/i
+  - expected: Raspberry Pi
+    pattern: /raspberry\s?pi/i
+  - expected: Claude Code
+    pattern: /claude\s?code/i
+  - expected: Next.js
+    pattern: /next\s?js/i
+  - expected: Three.js
+    pattern: /three\s?js/i

@@ -224,9 +224,9 @@ This behavior of **consistently anchoring to the source text** is an extension o
 Me: You led me astray—Claude noticed that our premise was completely flawed. The problem requires starting from "0", but your `first_source` implementation was wrong.
 {{< /ask >}}
 
-{{< chatgpt >}}
+{{< ChatGPT >}}
 You're right. If the problem specifies starting from 0, then `first_source()` is incorrect—not just as an implementation detail, but as the conceptual entry point to the problem. I'll update v2 to explicitly default to starting from "0" and remove the "first edge origin" assumption.
-{{< /chatgpt >}}
+{{< /ChatGPT >}}
 
 Codex had previously accepted my misread prompt and generated an answer that was **premised on an error, yet internally self-consistent**.
 
