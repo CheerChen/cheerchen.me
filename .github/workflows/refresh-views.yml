@@ -41,7 +41,9 @@ jobs:
       # before running hugo.
       - name: Push to site-data branch if changed
         run: |
-          git fetch origin site-data --no-tags --depth 1
+          # Allow first-run / branch-missing case: fetch fails, old stays empty,
+          # the diff check then forces a (re)create push.
+          git fetch origin site-data --no-tags --depth 1 || true
           new=$(sha1sum data/views.json | cut -d' ' -f1)
           old=$(git show origin/site-data:views.json 2>/dev/null | sha1sum | cut -d' ' -f1)
           if [ "$new" = "$old" ]; then
