@@ -49,6 +49,12 @@ Never write raw `<figure>`, `<img>` or `<video>` tags, and never use Markdown `!
 
 The theme ships a **prebuilt** Tailwind stylesheet at `themes/dream/assets/css/output.css`. Any utility class not already present in that file does nothing at all — edited classes will appear in the HTML and have zero visual effect, which looks exactly like a caching problem. Put new styling in `static/custom.css` with project-specific class names instead.
 
+## View Counts
+
+Post view counts are live, not build-time: `layouts/partials/post-views.html` fetches `/api/views`, a Pages Function (`functions/api/views.js`) backed by the D1 database `cheerchen-me-views`, bound to the Pages project as `VIEWS_DB`. Schema is `db/views.sql`. The counter key is the post bundle directory (`posts/<slug>`), shared by all languages — another reason never to rename a slug.
+
+`hugo server` has no Functions, so the count stays hidden locally and the console logs a 404. To test it, run `wrangler pages dev public` with a D1 binding.
+
 ## Verification
 
 CI runs these checks automatically on every PR:
