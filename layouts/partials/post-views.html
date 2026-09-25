@@ -1,13 +1,42 @@
-{{- /* Render the view count for a post, when available.
+{{- /* Live view count for a post, including its leading " | " separator.
 
-  page_key is the article bundle directory, e.g. "posts/foo".
-  Data source: data/views.json, generated at build time from
-  Google Analytics (scripts/ga-preview-views.py). Hidden when the key
-  is missing or the count is 0 (Hugo treats 0 as falsy in `with`).
+  The key is the article bundle directory ("posts/foo"), so all language
+  versions share one counter. Rendered hidden and filled in by fetching
+  /api/views (functions/api/views.js, backed by D1). The first visit per
+  browser session increments; later visits in the same session only read.
+  On any failure the element stays hidden and the error goes to the console.
 */ -}}
 {{- with .File -}}
-  {{- $pageKey := strings.TrimSuffix "/" .Dir -}}
-  {{- with index hugo.Data.views $pageKey -}}
-    <span>{{ . }}{{ T "views" | default " views" }}</span>
+  {{- $key := strings.TrimSuffix "/" .Dir -}}
+  {{- if hasPrefix $key "posts/" -}}
+<span data-views-key="{{ $key }}" hidden>| <span data-views-count></span>{{ T "views" | default " views" }}</span>
+<script>
+(function () {
+  var el = document.querySelector("[data-views-key]");
+  if (!el) return;
+  var key = el.getAttribute("data-views-key");
+  var seenKey = "views-counted:" + key;
+  var counted = false;
+  try { counted = sessionStorage.getItem(seenKey) === "1"; } catch (e) {}
+  var req = counted
+    ? fetch("/api/views?key=" + encodeURIComponent(key))
+    : fetch("/api/views", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key: key })
+      });
+  req.then(function (res) {
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    return res.json();
+  }).then(function (data) {
+    if (!counted) { try { sessionStorage.setItem(seenKey, "1"); } catch (e) {} }
+    if (!data.views) return;
+    el.querySelector("[data-views-count]").textContent = data.views.toLocaleString();
+    el.hidden = false;
+  }).catch(function (err) {
+    console.error("[post-views] " + key + ": " + err.message);
+  });
+})();
+</script>
   {{- end -}}
 {{- end -}}

@@ -38,5 +38,3 @@ yarn-error.log*
 # VS Code 编辑器配置
 .vscode/
 
-# Post view counts fetched at build time from the site-data branch
-data/views.json

@@ -54,9 +54,7 @@
 
           | <span>{{ .ReadingTime }}{{ T "minuteRead" .ReadingTime }}</span>
 
-          {{ with (partial "post-views.html" .) }}
-            | {{ . | safeHTML }}
-          {{ end }}
+          {{ partial "post-views.html" . }}
 
           {{ if ne .Params.nolastmod true }}
           | <span>{{ T "updatedAt" }}
