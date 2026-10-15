@@ -281,7 +281,7 @@ GLM-5.2 在中间，比 GPT-5.6 多，比 Flash 少一截。
 12:49:54  session开头是 检查两个问题 1 播放界面下快进进度条会抖动……
 ```
 
-「DS4.1」指的是之前一个用 DeepSeek V4.1 Flash 跑的同主题 session（「之间」是我打错了，应该是「之前」）。它去翻了那个 session，然后写出了整个 session 里最大的一个 thinking 块：**59,740 字符**。在这一块里，它先后把「DS4.1」猜成：
+「DS4.1」指的是之前一个用 DeepSeek V4.1 Flash 跑的同主题 session（「之间」笔误，应该是「之前」）。它去翻了那个 session，然后写出了整个 session 里最大的一个 thinking 块：**59,740 字符**。在这一块里，它先后把「DS4.1」猜成：
 
 - DualShock 4 手柄，`.1` 也许是固件版本
 - design spec 4.1
