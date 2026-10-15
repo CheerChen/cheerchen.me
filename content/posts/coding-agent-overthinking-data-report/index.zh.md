@@ -14,7 +14,7 @@ images = ['cover.webp']
 
 我原本是一概不用 OA 两家之外的模型的。但是 Devin 提供的免费 GLM-5.2 刷新了我对国产大模型的印象。
 
-GLM-5.2 找问题速度快，非常适合快速产出脚本和小工具，在实际环境能反复尝试进行快速试错（比如让他验证 webos 底层的命令，能快速产出 skill），最离谱的是在 Promo 期间用多少都不计入额度，性价比超高。
+GLM-5.2 找问题速度快，非常适合快速产出脚本和小工具，在实际环境能反复尝试进行快速试错（比如让它验证 webos 底层的命令，能快速产出 skill），最离谱的是在 Promo 期间用多少都不计入额度，性价比超高。
 
 可能是用得多了，关注也多了。7~8 月份的时候，我经常能在 X 上刷到国产大模型的帖子。DeepSeek V4 Flash、V4.1 Flash、GLM-5.3 Flash 这几个名字出现得特别多。说法都差不多：**benchmark 分数进了第一梯队，跑得快，token 单价便宜，还支持图片输入。**
 
@@ -40,7 +40,7 @@ GLM-5.2 找问题速度快，非常适合快速产出脚本和小工具，在实
 {{< figure src="deepseek-v4-1-flash-iteration-speed-post.webp" >}}
 {{< /figure-row >}}
 
-说速度快我是相信的，GLM-5.2 就非常快，常常 Opus 还在看代码，GLM-5.2 已经给 review 意见了。没道理后继的模型会变慢。再加上能读图这一点对我确实有用：前端 UI 问题，用说的把报错复制进去，都比能直接看图的模型要麻烦。于是我等到 OpenCode 和 Devin 有这些新模型了，就把默认模型换了过去。**然而最后的结果却让我大失所望……**
+说速度快我是相信的，GLM-5.2 就非常快，常常 Opus 还在看代码，GLM-5.2 已经给 review 意见了。没道理后继的模型会变慢。再加上能读图这一点对我确实有用：前端 UI 问题，用说的、把报错复制进去，都比能直接看图的模型要麻烦。于是我等到 OpenCode 和 Devin 有这些新模型了，就把默认模型换了过去。**然而最后的结果却让我大失所望……**
 
 ## 踩了什么坑
 
@@ -62,13 +62,13 @@ At most 4 image(s) may be provided in one prompt
 
 **其次是发现这些模型经常跑很久。一点小问题，小需求，改半小时。**
 
-直到撞上 harness 给 reasoning 设的上限，被 Pi 和 Devin 直接掐掉。展开 thinking 一看，是大量推演。思考过程里都是狂磕一些细节。这种情况在两个 Flash 模型上最明显。他们想得快，想得多，但是解决相同问题，总是要多花几倍的时间。
+直到撞上 harness 给 reasoning 设的上限，被 Pi 和 Devin 直接掐掉。展开 thinking 一看，是大量推演。思考过程里都是狂磕一些细节。这种情况在两个 Flash 模型上最明显。它们想得快，想得多，但是解决相同问题，总是要多花几倍的时间。
 
-## 能解决吗
+## 「不要过度思考」能解决吗
 
 一开始我是怀疑自己的。是不是 Prompt 没写好，没告诉它简洁一点？是不是任务给得太大，它在复杂逻辑里打转？
 
-把一个需求拆小，给一个简单的任务，想得稍微久些，确实不会撞上限了，但是多来回几次，任务进入中段，他还是会撞上限，而撞了上限这个 session 就废了，基本无法再进行下去。
+把一个需求拆小，给一个简单的任务，想得稍微久些，确实不会撞上限了，但是多来回几次，任务进入中段，它还是会撞上限，而撞了上限这个 session 就废了，基本无法再进行下去。
 
 直接在 Prompt 提示，会如何？ 比如：
 
@@ -81,7 +81,7 @@ At most 4 image(s) may be provided in one prompt
 
 为什么大模型会 overthinking？ 我让 GPT 去网上看看，有没有人已经遇到或者在试图解决相同的问题。
 
-## 原来 Overthinking 是一个研究课题
+## 原来 Overthinking 已经是一个研究课题
 
 <!-- textlint-disable prh -->
 
@@ -165,15 +165,15 @@ Prompt 是 soft constraint；`reasoning_tokens >= limit → terminate` 才是 ha
 
 <!-- textlint-enable prh -->
 
-看到这里，我第一反应就是 Late Landing。两个 Flash 模型经常不是没有思路，而是一路确认、推翻、再确认，最后撞上 harness 上限。从行为表面看，它很像已经具备落地条件，却始终没有作出停止决定。
+看到这里，我第一反应就是 Late Landing。两个 Flash 模型经常不是没有思路，而是一路确认、推翻、再确认，最后撞上 harness 上限。从表面上看，它很像已经具备落地条件，却始终没有作出停止决定。
 
 这也解释了为什么那两句 prompt 没什么用。「不要过度思考」确实可能影响 reasoning 长度，但**能影响不等于能保证**。如果什么时候停止属于模型内部学出来的行为，只靠几句自然语言，很难把它变成严格的资源上限。
 
 Flash 这个名字也容易让人误会。它更多是在说推理延迟、吞吐和价格，不保证 reasoning trajectory 短。每秒生成得快和总共生成得多完全可以同时成立：不是想得慢，而是很快地想太多。
 
-于是我有了一个假设：问题可能出在模型对“这个任务值得投入多少 reasoning、什么时候应该停止”的判断上。两个 Flash 模型都出现类似现象，也让我怀疑模型学会了更积极地探索和自我纠错，却不一定同比例地没有学会适时结束。
+于是我有了一个假设：问题可能出在模型对“这个任务值得投入多少 reasoning、什么时候应该停止”的判断上。两个 Flash 模型都出现类似现象，也让我怀疑模型学会了更积极地探索和自我纠错，却未必同比例地学会适时结束。
 
-但这仍然只是一个假设。它到底想了多少，是在哪里停不下来的，和 GLM-5.2 差多少？这些 Agent 的 session 日志都存在本地，如何分析量化他们留下的踪迹？
+但这仍然只是一个假设。它到底想了多少，是在哪里停不下来的，和 GLM-5.2 差多少？这些 Agent 的 session 日志都存在本地，如何分析量化它们留下的踪迹？
 
 ## 量化探索 Overthinking 踪迹
 
@@ -199,14 +199,14 @@ Codex 和 Grok 排除掉了。
 
 | 分组 | 模型 | Session 数 |
 |---|---|---:|
-| 正常组（共 156 个） | GLM-5.2 High | 68 |
+| ✅正常组（共 153 个） | GLM-5.2 High | 68 |
 |  | GPT-5.6 Sol | 56 |
 |  | GPT-5.6 Luna | 29 |
-|  | Gemini 3.8 Flash | 3 |
-| 问题组（共 85 个） | DeepSeek V4 Flash | 40 |
+| ❓问题组（共 85 个） | DeepSeek V4 Flash | 40 |
 |  | GLM-5.3 Flash | 33 |
 |  | DeepSeek V4.1 Flash | 12 |
-| 样本不足，不参与比较（共 6 个） | GPT-5.6 Terra | 2 |
+| 🗑️样本不足，不参与比较（共 9 个） | Gemini 3.8 Flash | 3 |
+|  | GPT-5.6 Terra | 2 |
 |  | Claude Opus 5 | 1 |
 |  | Qwen 3.7 Max | 1 |
 |  | ox-alpha-free | 1 |
@@ -214,7 +214,7 @@ Codex 和 Grok 排除掉了。
 
 ### thinking block 字符数
 
-同样是 high effort 下，先看每个模型平均想了多少：
+同样在 high effort 下，先看每个模型平均想了多少：
 
 {{< chart src="average-max-block.json" title="各模型平均最大 thinking block 字符数" description="横向条形图。正常组模型用蓝色，问题组模型用橙色，并标出 12,000 字符的 critical 阈值。" >}}
 
@@ -253,6 +253,13 @@ GLM-5.2 在中间，比 GPT-5.6 多，比 Flash 少一截。
 正常组在 4% 到 16%，三个 Flash 在 61% 到 83%，中间是空的。同一家的 GLM，从 5.2 的 16% 到 5.3 Flash 的 61%，差不多 4 倍。
 
 这跟我的使用感受是对得上的。但超标率只说明它经常想得多，具体是怎么想多的呢？
+
+### 数据的局限
+
+1. Devin 里 DeepSeek V4 / V4.1 Flash 最低只能选 high，low 和 medium 测不了。
+2. 都是真实使用的 session，每个模型做的任务难度不一样。累计阈值对长时间的正常 session 会误报。
+
+---
 
 ## 两种典型的 Overthinking 形态
 
@@ -323,6 +330,30 @@ GLM-5.2 在中间，比 GPT-5.6 多，比 Flash 少一截。
 
 每一段单独看都说得过去，问题在于每一步都要写这么一段。
 
+## effort 同样是 high，含义却不一样
+
+遇到 overthinking，最直接的想法是把 reasoning effort 调低。但我把四家官方文档里 effort 的定义放在一起看，发现同样叫 `high`，各家指的根本不是一回事：
+
+| | 可选档位 | 默认 | 文档怎么描述 |
+|---|---|---|---|
+| [OpenAI](https://developers.openai.com/api/docs/guides/reasoning) | `none` `minimal` `low` `medium` `high` `xhigh` `max`，视模型而定 | `medium` | `high` 用于难推理、复杂调试、深度规划；模型在各档内会自适应，简单任务用更少 token |
+| [Claude](https://platform.claude.com/docs/en/build-with-claude/effort) | `low` `medium` `high` `xhigh` `max` | 多数模型是 `high` | `high` 是任务需要多少 token 就花多少；effort 是行为信号，不是严格的 token 预算 |
+| [DeepSeek](https://api-docs.deepseek.com/guides/thinking_mode) | 实际只有 `low` `high` `max` | `high` | 请求 `medium` 会映射成 `high`，请求 `xhigh` 也映射成 `high` |
+| [GLM](https://docs.z.ai/guides/llm/glm-5.3) | `low` `high` `max` | `max` | `low` 轻量推理，`high` 增强推理，`max` 深度推理 |
+
+能直接从文档里看出来的有两点：
+
+- **刻度不一样。** OpenAI 有 7 档，`high` 在中间偏上；DeepSeek 和 GLM 只有 3 档，`high` 就是中间那档。Harness 下拉框里同一个 `high`，背后是不同的刻度。
+- **只有 OpenAI 和 Claude 把“按任务难度伸缩”写进了定义。** DeepSeek 和 GLM 的文档只描述了深度（轻量、增强、深度），我没看到类似的说法。
+
+**下面是我的猜测：**
+
+既然 effort 不是硬预算，`high` 到底想多少，只能是训练出来的行为：训练时让模型在每个档位下学会一个大致的长度分布。从文档的措辞看，OpenAI 和 Claude 至少把“同一档位下，简单任务少想、难任务多想”当成了训练目标。Flash 模型可能只学了“档位越高想得越深”这一个维度，对任务难度不敏感，于是一个很小的问题也按深度推理的长度去跑，这就是纵向深挖。这和前面那个假设对得上：问题出在“这个任务值得投入多少 reasoning”的判断上。
+
+横向铺开可能和 interleaved thinking 有关。GLM 的文档写明默认开启 interleaved thinking，模型在每次工具调用之间都会思考。如果模型没学会“这一步很简单，不用想”，每次调用工具前都要交一段固定的“思考税”。上面那个案例里，几乎每轮工具调用前都有一个 thinking 块，正是这个样子。
+
+再加上 Flash 的定位：它本来是用来又快又便宜地跑大量调用的轻量模型，现在却被放在了深度推理那一端的刻度上。
+
 
 ## 能不能在 Overthinking 发生的时候提醒我？
 
@@ -388,7 +419,7 @@ GLM-5.2 在中间，比 GPT-5.6 多，比 Flash 少一截。
 几条原则：
 
 1. 只提醒，不干预。不往对话里插 prompt，不改 reasoning 内容，也不中断模型。
-2. 不阻塞。没有弹窗。warn 是黄色通知，alert 是黄色通知加常驻状态栏，critical 是红色通知加常驻状态栏。
+2. 不阻塞。没有弹窗。warn 是黄色通知，alert 是黄色通知，critical 是红色通知。
 3. 只升不降。同一个 session 里记最高级别，不会每次工具调用都弹一遍。
 4. 文案建议 “Switch model”，其次是 “lower reasoning effort if available”。换模型放在前面，是因为很多模型根本没得降。
 
@@ -399,7 +430,7 @@ Thinking block {n} chars. Over 12000 confirmed overthinking.
 Switch model now or lower reasoning effort if available.
 ```
 
- Devin 目前没法实时提醒。Devin 的 hook 只有 PreToolUse、PostToolUse、UserPromptSubmit、Stop、SessionStart、SessionEnd、PostCompaction，没有 reasoning 相关的事件。reasoning 内容要等 session 结束才写进 transcript，跑的过程中读不到。
+Devin 目前没法实时提醒。Devin 的 hook 只有 PreToolUse、PostToolUse、UserPromptSubmit、Stop、SessionStart、SessionEnd、PostCompaction，没有 reasoning 相关的事件。reasoning 内容要等 session 结束才写进 transcript，跑的过程中读不到。
 
 ### 安装和复现
 
@@ -427,11 +458,10 @@ uv run scripts/incident_rate.py
 uv run scripts/analyze_overthinking.py "label" /path/to/session.jsonl
 ```
 
-## 数据的局限
+### 插件的局限
 
-1. Devin 里 DeepSeek V4 / V4.1 Flash 最低只能 high，low 和 medium 测不了。
-2. 都是真实使用的 session，每个模型做的任务难度不一样。累计阈值对长时间的正常 session 会误报。
-
+1. **再重复一下，这个插件只是提示，不会阻止模型发生 overthinking。**
+2. 每个模型做的任务难度不一样。对于正常使用的 session，也可能会误报。
 
 ## 最后
 
