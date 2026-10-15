@@ -1,0 +1,12 @@
+{{ $src := .Get "src" }}
+{{ $data := .Page.Resources.GetMatch $src }}
+{{ if not $data }}
+  {{ errorf "chart data %q not found in page bundle for %s" $src .Page.File.Path }}
+{{ end }}
+{{ .Page.Store.Set "hasECharts" true }}
+{{ $title := .Get "title" }}
+{{ $description := .Get "description" | default $title }}
+<figure class="article-chart" data-article-chart data-chart-src="{{ $data.RelPermalink }}">
+  {{ with $title }}<figcaption>{{ . }}</figcaption>{{ end }}
+  <div class="article-chart__canvas" role="img" aria-label="{{ $description }}"></div>
+</figure>
