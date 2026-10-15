@@ -1,0 +1,14 @@
+{
+  "xMax": 100,
+  "xUnit": "超标率",
+  "axisFormat": "percent",
+  "valueSuffix": "%",
+  "items": [
+    { "label": "GPT-5.6 Sol", "value": 4, "detail": "2 / 56 个 Session", "group": "normal" },
+    { "label": "GPT-5.6 Luna", "value": 10, "detail": "3 / 29 个 Session", "group": "normal" },
+    { "label": "GLM-5.2 High", "value": 16, "detail": "11 / 68 个 Session", "group": "normal" },
+    { "label": "GLM-5.3 Flash", "value": 61, "detail": "20 / 33 个 Session", "group": "problem" },
+    { "label": "DeepSeek V4 Flash", "value": 62, "detail": "25 / 40 个 Session", "group": "problem" },
+    { "label": "DeepSeek V4.1 Flash", "value": 83, "detail": "10 / 12 个 Session", "group": "problem" }
+  ]
+}

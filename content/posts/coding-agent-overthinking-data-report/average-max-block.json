@@ -1,0 +1,15 @@
+{
+  "xMax": 32000,
+  "xUnit": "平均最大块（字符）",
+  "valueSuffix": "",
+  "threshold": 12000,
+  "thresholdLabel": "critical 12,000",
+  "items": [
+    { "label": "GPT-5.6 Sol", "value": 513, "group": "normal" },
+    { "label": "GPT-5.6 Luna", "value": 1362, "group": "normal" },
+    { "label": "GLM-5.2 High", "value": 7117, "group": "normal" },
+    { "label": "DeepSeek V4 Flash", "value": 14844, "group": "problem" },
+    { "label": "GLM-5.3 Flash", "value": 18927, "group": "problem" },
+    { "label": "DeepSeek V4.1 Flash", "value": 29795, "group": "problem" }
+  ]
+}
