@@ -655,3 +655,21 @@
         height: 27rem;
     }
 }
+
+/* === Wide Markdown tables scroll inside the article column === */
+
+.table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Long inline identifiers wrap instead of widening the page */
+.prose :not(pre) > code {
+    overflow-wrap: anywhere;
+}
+
+/* Wide display math scrolls inside the article column */
+.katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
