@@ -11,11 +11,11 @@ nolastmod = true
 math = true
 +++
 
-## Foreword
+## Introduction
 
 > This was the scene of my first encounter with FFTA as a kid: a tiny GBA game, just 16 MB, that somehow contained such a vast, fully realized world and such exquisitely detailed battle visuals. When Mewt opened that old book, the real-world town of St. Ivalice was quietly rewritten into the fantasy world of Ivalice. Through that long summer vacation, I felt like I was living inside it too — forming a clan, learning "Two Swords," mixing and matching jobs and races, setting out on adventure after adventure. In those moments, I really was one of Ivalice's own. That, to me, is the true "Final Fantasy"!
 
-In the history of tactical RPGs (SRPGs), Final Fantasy Tactics Advance (FFTA), released in 2003, is a benchmark for both pixel art and system depth. Its classic 2.5D isometric projection, diamond-shaped grid, beautifully hand-drawn 45-degree architecture, layered elevation differences, and the classic Charge Time (CT) battle system together form a visual and gameplay experience like no other.
+In tactical RPGs, Final Fantasy Tactics Advance (2003) set a bar for pixel art and for system depth. The 2.5D isometric view, the diamond grid, the hand-drawn 45-degree buildings, the layered heights, and the Charge Time (CT) battle system are the whole package.
 
 More than 20 years later, out of fondness for this game, I recently got an idea: faithfully recreate FFTA's opening battle in the browser — the iconic snowball fight in the schoolyard of St. Ivalice.
 
@@ -23,7 +23,7 @@ Since I was already in, I didn't want to settle for a rigid "2D canvas with past
 
 {{< vfigure src="demo-highlight-1.5x.mp4" title="Live demo of the 3D-rebuilt FFTA snowball fight stage (free rotation across 4 docks). Playable right in the browser: [ffta.cheerchen.me](https://ffta.cheerchen.me)." >}}
 
-An effect that seems effortless in other games turned out to be surprisingly hard to reproduce. Behind those 26 seconds of smooth animation, the thing that consumed most of my time and energy was neither extracting maps and character sprites from the ROM nor implementing the classic CT battle system — it was this "camera switching." It is, in fact, an extremely tricky graphics problem: **how do you reconstruct the "far side of the Moon" — the surfaces that never existed in the original 2D pixel scene?**
+Camera switching took most of the time on this 26-second clip. The original pixel scene left the back walls undrawn. Reconstructing those surfaces is the far side of the Moon.
 
 ---
 
@@ -31,17 +31,17 @@ An effect that seems effortless in other games turned out to be surprisingly har
 
 A 2.5D pixel game is essentially a **carefully staged one-way theater production**.
 
-The original FFTA artists only painted the side visible from the audience seat (Dock 0). The school main building's front wall, the corridor on its right, the green roof facing southeast, and the little snow mounds are all rendered in loving detail. But behind the stage — the back wall of the main building, the eaves on the northwest side, the base of the wall hiding in shadow — simply **do not exist** in the game's ROM.
+The original FFTA artists painted only the side visible from the audience seat (Dock 0): the school front wall, the corridor on its right, the southeast green roof, and the little snow mounds. The back wall, the northwest eaves, and the base of the wall in shadow are absent from the ROM.
 
 {{< figure src="map_000_bg_banner.png" title="The school main building's front wall, the corridor on its right, the southeast-facing green roof, and the little snow mounds" >}}
 
-This leads to the core contradiction: when we press the rotate key in Three.js and the camera swings around behind the building, what should those surfaces — which never existed in the original — even look like?
+Rotate the camera behind the building, and you have to give those missing surfaces a color.
 
-To fill in this "far side of the Moon," I actually went through four completely different approaches, and every single one failed.
+To fill in this far side of the Moon, I tried four approaches. All four failed.
 
 ---
 
-## 2. The First Four Failed Attempts: The Disillusionment of Fake Solutions
+## 2. Four Attempts That Failed
 
 ### Attempt 1: Tiling Cubes by Height Difference (The Wall of Cubes)
 
@@ -87,13 +87,13 @@ To keep the perspective from breaking, I even built a Virtual Camera Capture fea
 {{< figure src="try-4-wireframe-grid.png" title="Attempt 4: the four-direction orthographic white-model structure renders (Dock 0–3) given to the image generation model as geometric constraints for repainting the other views" >}}
 
 * **The giveaway**:
-  1. **Geometric consistency disillusioned**: Dock 0 clearly has two windows and one thick chimney, but the AI-generated other views sometimes gain an extra chimney, sometimes lose a window — they simply don't obey the same solid structure;
+  1. **The solid does not match**: Dock 0 has two windows and one thick chimney. The generated views add a chimney or drop a window.
   2. **Pixel-level perspective distortion**: diffusion models have no internal understanding of "strict orthographic projection with no perspective falloff." The generated images always carry a subtle perspective tilt at the edges — invisible to the naked eye, but badly misaligned once applied;
   3. **Color drift**: the same roof's tile red comes out with irreconcilable color shifts across different views.
 
 {{< figure src="try-4-ai-views-grid.png" title="Attempt 4: the image model's repainted output for Dock 0–3 — you can tell each view basically rebuilt the school from scratch" >}}
 
-* **Lesson learned**: AI-generated multi-view images may look visually complete, but without a global constraint on the 3D structure, they can't guarantee geometric or pixel-level consistency. Still far from usable.
+* **Lesson learned**: AI-generated multi-view images may look visually complete, but without a global constraint on the 3D structure, they can't guarantee geometric or pixel-level consistency. I could not use any of the four views.
 
 ### Interim Summary
 
@@ -108,7 +108,7 @@ To keep the perspective from breaking, I even built a Virtual Camera Capture fea
 
 ## 3. The Breakthrough: Back to Parametric Geometry and UV Projection Baking
 
-After every seemingly cutting-edge shortcut hit a wall, I opened Codex and had a deep reasoning session with GPT-6 Astra.
+After those four attempts, I opened Codex and talked it through with GPT-6 Astra.
 
 {{< ask >}}
 I've already tried four approaches and all failed: cube tiling, horizontal mirroring, AI-generated 3D models, and AI-repainted multi-view images.
@@ -124,7 +124,7 @@ The photo captured the front and the right side, but not the back or the left. R
 Having AI guess, or mirroring, means several images that never agreed on a single solid structure. The right approach is: **build the skeleton with a ruler first, freeze the front pixels and bake them on, then fill in the back with colors that stay structurally coherent.**
 {{< /ChatGPT >}}
 
-Honestly, I didn't fully grasp what GPT-6 Astra meant — why build the skeleton with a ruler first, freeze and bake the front pixels, then fill the back coherently? But we could try following that line of thinking and implement it with parametric geometry and UV projection baking.
+I did not yet see why the skeleton had to come first. I tried it anyway: parametric geometry, then UV projection baking.
 
 ---
 
@@ -144,7 +144,7 @@ That data is wrapped in a Mode `0x11` container, decompressed via the GBA BIOS's
 
 The GBA's screen resolution is only $240 \times 160$. To convey depth on such limited hardware, its diamond tiles have a strict $1:2$ height-to-width ratio (a single flat tile is 32 pixels wide and 16 pixels tall).
 
-Many Web 3D developers, when reproducing old-game camera angles, habitually drag an orbit camera (OrbitControls) around and can never get the pixels to stop looking warped. In fact, the geometric correspondence here is completely determined and unique:
+Dragging an OrbitControls camera around leaves the pixels warped. The isometric mapping here has one solution:
 
 1. **Elevation**:
    Under orthographic projection, the vertical compression ratio of the diamond tiles corresponds to the camera elevation angle $\theta$. Since the tile's height-to-width ratio is $1:2$:
@@ -216,11 +216,11 @@ def add(name, points, kind, outward, donor=None):
     return f
 ```
 
-This step completely solved both the "tactics-grid fit" and the "invisible geometry" problems: every edge where a building meets the ground snaps exactly onto integer grid coordinates.
+The cross-product flip fixed two things: units sit on integer grid edges, and walls stay visible after a rotation.
 
 ### 2. Front-Face Back-Projection and Back-Face UV Baking
 
-With precise geometry faces in place, the texturing problem dissolves:
+With those faces in place, I textured them by projection:
 
 1. **Visible front faces (Source Faces)**:
    Using the mathematical back-projection `project()`, we project each vertex's 3D coordinate directly onto pixel coordinates in the original background `map_000_bg.png`, precisely crop out the texture, and bake it into a unified atlas `school_atlas.png`.
@@ -250,9 +250,9 @@ Only after verification passed completely did the script scale up in one shot to
 
 ## 5. Killing the Dissonance: Eliminating Billboards and Multi-View Self-Consistency
 
-With the main building's far side solved, the moment the camera actually starts rotating, the view shifts to the scene's props, moving characters, and terrain — and a few fatal immersion-breakers still had to be pulled out one by one.
+The building's far side was done. Props, characters, and terrain still broke the illusion as soon as the camera moved.
 
-### 1. Why Must Scene Props Drop the Camera Billboard?
+### 1. Scene Props Cannot Stay Camera Billboards
 
 In isometric games, trees, snowmen, and weathervanes are usually made into single flat billboards that always face the camera.
 
@@ -299,7 +299,7 @@ The snowdrifts in the original GBA scene aren't flat — the artists outlined th
 If you bake that outline into the texture in 3D, rotating the camera to the side reveals an ugly black edge strip.
 
 We ended up using the classic cel-shading **Inverted Hull** technique:
-for each snowdrift, generate a dome shell scaled up 1.08× around its center, set the material to render back faces only, and give it a fixed dark-blue pixel color. No matter which dock the camera stops at, a smooth, even, retro-cartoon hand-drawn outline naturally appears along the silhouette.
+for each snowdrift, generate a dome shell scaled up 1.08× around its center, set the material to render back faces only, and give it a fixed dark-blue pixel color. The dark-blue shell draws the outline from every dock.
 
 {{< figure src="bg-vs-model.png" title="Original GBA snowdrift pixel outline (left) vs. the Inverted Hull 3D implementation" >}}
 
@@ -307,9 +307,8 @@ for each snowdrift, generate a dome shell scaled up 1.08× around its center, se
 
 ## 6. Closing Thoughts and Engineering Takeaways
 
-Finishing just the first stage — and only the snowball fight at that — felt like making up a hundred college computer graphics lectures I'd skipped.
-It also drove home that generative AI — whether producing 3D models or multi-view images — can quickly produce results that seem "right," but its inherent hallucinations and lack of precise topological control are fully exposed the moment it faces hard engineering constraints like **discrete tactical elevation**, **sub-pixel orthographic projection without perspective**, and **multi-view geometric self-consistency**.
+Finishing the snowball fight, and only that first stage, felt like sitting through a hundred computer graphics lectures I had skipped.
 
-That got me thinking: maybe it's precisely because there was no such "shortcut" that the FFTA team back then could, step by step, use algorithms and texture mapping — **deterministic engineering code** — to render pixel art this exquisite.
+Generative AI can emit a 3D mesh or a set of views in one pass. On this board it missed three constraints I could measure: **discrete tactical elevation**, **orthographic projection with no perspective**, and **the same chimney and windows in every view**.
 
-Let this little demo be my most sincere tribute to the pixel craftsmen of that golden age.
+The FFTA team rendered this pixel art with algorithms and texture mapping. This demo is my tribute to that work.
