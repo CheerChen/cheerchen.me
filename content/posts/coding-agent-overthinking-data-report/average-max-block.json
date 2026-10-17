@@ -1,6 +1,6 @@
 {
   "xMax": 32000,
-  "xUnit": "平均最大块（字符）",
+  "xUnit": "Avg. max block (chars)",
   "valueSuffix": "",
   "threshold": 12000,
   "thresholdLabel": "critical 12,000",
