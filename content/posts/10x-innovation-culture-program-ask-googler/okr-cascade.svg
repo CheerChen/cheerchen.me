@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="740" viewBox="0 0 1200 740" role="img" aria-labelledby="title desc">
+  <title id="title">How OKRs cascade from the company to each person</title>
+  <desc id="desc">A tree from the company OKR through departments and teams to individuals. Each person's OKR mixes must-do key results with a high weight, passed down from above, and key results they add themselves. Every OKR is visible to the whole company.</desc>
+  <style>
+    text{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;fill:#1f4a33}
+    .title{font-size:30px;font-weight:700}
+    .tag{font-size:14px;font-weight:700;letter-spacing:1.5px}
+    .cap{font-size:18px;font-weight:600}
+    .b{font-size:19px;font-weight:700}
+    .h{font-size:17px;font-weight:700}
+    .t{font-size:16px}
+    .s{font-size:14px}
+    .t-dim{font-size:16px;fill:#6b7f72}
+    .s-dim{font-size:14px;fill:#6b7f72}
+    .sign{font-size:15px;font-weight:700}
+    .num{font-size:15px;font-weight:700;fill:#ffffff}
+  </style>
+  <rect width="1200" height="740" fill="#fbfbf7"/>
+<text x="60" y="60" class="title">OKRs cascade like a tree</text>
+<text x="60" y="90" class="t-dim">From the CEO down to every employee, each level aligns with the one above</text>
+<text x="60" y="150" class="tag" fill="#6b7f72">COMPANY</text>
+<text x="60" y="264" class="tag" fill="#6b7f72">DEPARTMENT</text>
+<text x="60" y="372" class="tag" fill="#6b7f72">TEAM</text>
+<text x="60" y="480" class="tag" fill="#6b7f72">INDIVIDUAL</text>
+<path d="M600,178 V204 H280 V232" fill="none" stroke="#1f4a33" stroke-width="3" stroke-linejoin="round"/>
+<path d="M600,178 V232" fill="none" stroke="#1f4a33" stroke-width="3" stroke-linejoin="round"/>
+<path d="M600,204 H920 V232" fill="none" stroke="#1f4a33" stroke-width="3" stroke-linejoin="round"/>
+<path d="M600,288 V314 H490 V342" fill="none" stroke="#1f4a33" stroke-width="3" stroke-linejoin="round"/>
+<path d="M600,314 H710 V342" fill="none" stroke="#1f4a33" stroke-width="3" stroke-linejoin="round"/>
+<path d="M490,394 V420 H360 V452" fill="none" stroke="#1f4a33" stroke-width="3" stroke-linejoin="round"/>
+<path d="M490,420 H620 V452" fill="none" stroke="#1f4a33" stroke-width="3" stroke-linejoin="round"/>
+<rect x="460" y="114" width="280" height="64" rx="14" fill="#1f4a33"/>
+<text x="600" y="143" class="b" fill="#ffffff" text-anchor="middle" style="fill:#ffffff">Company OKR</text>
+<text x="600" y="164" class="s" text-anchor="middle" style="fill:#d6ecc9">set by top leadership</text>
+<rect x="180.0" y="232" width="200" height="56" rx="12" fill="#ffffff" stroke="#1f4a33" stroke-width="3"/><text x="280" y="266.0" class="h" text-anchor="middle">Department A</text>
+<rect x="500.0" y="232" width="200" height="56" rx="12" fill="#ffffff" stroke="#1f4a33" stroke-width="3"/><text x="600" y="266.0" class="h" text-anchor="middle">Department B</text>
+<rect x="820.0" y="232" width="200" height="56" rx="12" fill="#ffffff" stroke="#1f4a33" stroke-width="3"/><text x="920" y="266.0" class="h" text-anchor="middle">Department C</text>
+<circle cx="268" cy="326" r="3.5" fill="#6b7f72"/><circle cx="280" cy="326" r="3.5" fill="#6b7f72"/><circle cx="292" cy="326" r="3.5" fill="#6b7f72"/>
+<circle cx="908" cy="326" r="3.5" fill="#6b7f72"/><circle cx="920" cy="326" r="3.5" fill="#6b7f72"/><circle cx="932" cy="326" r="3.5" fill="#6b7f72"/>
+<rect x="400.0" y="342" width="180" height="52" rx="12" fill="#ffffff" stroke="#1f4a33" stroke-width="3"/><text x="490" y="374.0" class="h" text-anchor="middle">Team 1</text>
+<rect x="620.0" y="342" width="180" height="52" rx="12" fill="#ffffff" stroke="#1f4a33" stroke-width="3"/><text x="710" y="374.0" class="h" text-anchor="middle">Team 2</text>
+<circle cx="698" cy="432" r="3.5" fill="#6b7f72"/><circle cx="710" cy="432" r="3.5" fill="#6b7f72"/><circle cx="722" cy="432" r="3.5" fill="#6b7f72"/>
+<rect x="240" y="452" width="240" height="160" rx="14" fill="#ffffff" stroke="#1f4a33" stroke-width="3"/><text x="260" y="482" class="h">Member A</text><text x="260" y="510" class="s">KR1 · must-do</text><text x="460" y="510" class="s" font-weight="700" text-anchor="end">40%</text><rect x="260" y="517" width="200" height="10" rx="5" fill="#eef1ea"/><rect x="260" y="517" width="80" height="10" rx="5" fill="#3e9f3a" stroke="#1f4a33" stroke-width="2"/><text x="260" y="544" class="s">KR2 · must-do</text><text x="460" y="544" class="s" font-weight="700" text-anchor="end">35%</text><rect x="260" y="551" width="200" height="10" rx="5" fill="#eef1ea"/><rect x="260" y="551" width="70" height="10" rx="5" fill="#3e9f3a" stroke="#1f4a33" stroke-width="2"/><text x="260" y="578" class="s">KR3 · own idea</text><text x="460" y="578" class="s" font-weight="700" text-anchor="end">25%</text><rect x="260" y="585" width="200" height="10" rx="5" fill="#eef1ea"/><rect x="260" y="585" width="50" height="10" rx="5" fill="#e9c32b" stroke="#1f4a33" stroke-width="2"/>
+<rect x="500" y="452" width="240" height="160" rx="14" fill="#ffffff" stroke="#1f4a33" stroke-width="3"/><text x="520" y="482" class="h">Member B</text><text x="520" y="510" class="s">KR1 · must-do</text><text x="720" y="510" class="s" font-weight="700" text-anchor="end">50%</text><rect x="520" y="517" width="200" height="10" rx="5" fill="#eef1ea"/><rect x="520" y="517" width="100" height="10" rx="5" fill="#3e9f3a" stroke="#1f4a33" stroke-width="2"/><text x="520" y="544" class="s">KR2 · own idea</text><text x="720" y="544" class="s" font-weight="700" text-anchor="end">30%</text><rect x="520" y="551" width="200" height="10" rx="5" fill="#eef1ea"/><rect x="520" y="551" width="60" height="10" rx="5" fill="#e9c32b" stroke="#1f4a33" stroke-width="2"/><text x="520" y="578" class="s">KR3 · own idea</text><text x="720" y="578" class="s" font-weight="700" text-anchor="end">20%</text><rect x="520" y="585" width="200" height="10" rx="5" fill="#eef1ea"/><rect x="520" y="585" width="40" height="10" rx="5" fill="#e9c32b" stroke="#1f4a33" stroke-width="2"/>
+<text x="800" y="466" class="h">Inside each OKR</text>
+<rect x="800" y="486" width="28" height="12" rx="6" fill="#3e9f3a" stroke="#1f4a33" stroke-width="2"/>
+<text x="840" y="497" class="s">Must-do items</text>
+<text x="840" y="517" class="s-dim">passed down, higher weight</text>
+<rect x="800" y="540" width="28" height="12" rx="6" fill="#e9c32b" stroke="#1f4a33" stroke-width="2"/>
+<text x="840" y="551" class="s">Items the person adds</text>
+<text x="840" y="571" class="s-dim">so it is not 100% top-down</text>
+<text x="800" y="606" class="s-dim">Bar length = weight</text>
+<rect x="60" y="648" width="1080" height="56" rx="14" fill="#fbefb6" stroke="#1f4a33" stroke-width="3"/>
+<g transform="translate(94,676)" fill="none" stroke="#1f4a33" stroke-width="3"><path d="M-17,0 C-8,-12 8,-12 17,0 C8,12 -8,12 -17,0 z" fill="#ffffff"/><circle r="5" fill="#1f4a33" stroke="none"/></g>
+<text x="126" y="682" class="h">Every OKR is open to the whole company: anyone can read their manager's, and their manager's manager's.</text>
+</svg>

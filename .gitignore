@@ -38,3 +38,5 @@ yarn-error.log*
 # VS Code 编辑器配置
 .vscode/
 
+# Python 字节码缓存（tools/pictogram 运行时生成）
+__pycache__/
