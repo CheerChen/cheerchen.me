@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="660" viewBox="0 0 1200 660" role="img" aria-labelledby="title desc">
+  <title id="title">Watch the top 2 KRs, let the rest run</title>
+  <desc id="desc">A manager's 10 key results sorted by weight. The two heaviest are marked as the focus. The rest are split by type: quantitative ones are tracked by their number, qualitative ones are confirmed in a short check-in conversation.</desc>
+  <style>
+    text{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;fill:#1f4a33}
+    .title{font-size:30px;font-weight:700}
+    .tag{font-size:14px;font-weight:700;letter-spacing:1.5px}
+    .cap{font-size:18px;font-weight:600}
+    .b{font-size:19px;font-weight:700}
+    .h{font-size:17px;font-weight:700}
+    .t{font-size:16px}
+    .s{font-size:14px}
+    .t-dim{font-size:16px;fill:#6b7f72}
+    .s-dim{font-size:14px;fill:#6b7f72}
+    .sign{font-size:15px;font-weight:700}
+    .num{font-size:15px;font-weight:700;fill:#ffffff}
+  </style>
+  <rect width="1200" height="660" fill="#fbfbf7"/>
+<text x="600" y="60" class="title" text-anchor="middle">Watch the top 2. Let the rest run.</text>
+<rect x="40" y="90" width="600" height="510" rx="22" fill="#ffffff" stroke="#1f4a33" stroke-width="3"/><text x="70" y="128" class="tag" fill="#1f4a33">10+ KRs, SORTED BY WEIGHT</text>
+<rect x="190" y="330" width="34" height="190" rx="6" fill="#3e9f3a" stroke="#1f4a33" stroke-width="3"/>
+<text x="207.0" y="542" class="s" text-anchor="middle" font-weight="700">KR1</text>
+<rect x="234" y="360" width="34" height="160" rx="6" fill="#3e9f3a" stroke="#1f4a33" stroke-width="3"/>
+<text x="251.0" y="542" class="s" text-anchor="middle" font-weight="700">KR2</text>
+<rect x="278" y="440" width="34" height="80" rx="6" fill="#c3c7c4" stroke="#1f4a33" stroke-width="3"/>
+<text x="295.0" y="542" class="s-dim" text-anchor="middle">KR3</text>
+<rect x="322" y="450" width="34" height="70" rx="6" fill="#c3c7c4" stroke="#1f4a33" stroke-width="3"/>
+<text x="339.0" y="542" class="s-dim" text-anchor="middle">KR4</text>
+<rect x="366" y="460" width="34" height="60" rx="6" fill="#c3c7c4" stroke="#1f4a33" stroke-width="3"/>
+<text x="383.0" y="542" class="s-dim" text-anchor="middle">KR5</text>
+<rect x="410" y="468" width="34" height="52" rx="6" fill="#c3c7c4" stroke="#1f4a33" stroke-width="3"/>
+<text x="427.0" y="542" class="s-dim" text-anchor="middle">KR6</text>
+<rect x="454" y="475" width="34" height="45" rx="6" fill="#c3c7c4" stroke="#1f4a33" stroke-width="3"/>
+<text x="471.0" y="542" class="s-dim" text-anchor="middle">KR7</text>
+<rect x="498" y="482" width="34" height="38" rx="6" fill="#c3c7c4" stroke="#1f4a33" stroke-width="3"/>
+<text x="515.0" y="542" class="s-dim" text-anchor="middle">KR8</text>
+<rect x="542" y="490" width="34" height="30" rx="6" fill="#c3c7c4" stroke="#1f4a33" stroke-width="3"/>
+<text x="559.0" y="542" class="s-dim" text-anchor="middle">KR9</text>
+<rect x="586" y="496" width="34" height="24" rx="6" fill="#c3c7c4" stroke="#1f4a33" stroke-width="3"/>
+<text x="603.0" y="542" class="s-dim" text-anchor="middle">KR10</text>
+<line x1="70" y1="520" x2="610" y2="520" stroke="#1f4a33" stroke-width="4" stroke-linecap="round"/>
+<path d="M190,315 V305 H268 V315" fill="none" stroke="#1f4a33" stroke-width="3" stroke-linejoin="round"/>
+<rect x="184" y="268" width="108" height="30" fill="#e9c32b"/>
+<text x="229" y="290" class="h" text-anchor="middle">Focus</text>
+<path d="M302,275 l3.6,5.3999999999999995 l5.3999999999999995,3.6 l-5.3999999999999995,3.6 l-3.6,5.3999999999999995 l-3.6,-5.3999999999999995 l-5.3999999999999995,-3.6 l5.3999999999999995,-3.6 z" fill="#e9c32b" stroke="#1f4a33" stroke-width="2.5" stroke-linejoin="round"/>
+<path d="M278,554 V564 H620 V554" fill="none" stroke="#6b7f72" stroke-width="3" stroke-linejoin="round"/>
+<text x="449.0" y="586" class="s-dim" text-anchor="middle">the rest: handled by type, see right</text>
+<g transform="translate(110,520) scale(1.0,1.0)"><path d="M-5.0,-46.0 L-6.0,-23.0 L-7.0,0.0" fill="none" stroke="#1f4a33" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M-5.0,-46.0 L-6.0,-23.0 L-7.0,0.0" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M-8.0,-76.0 L-14.0,-60.0 L-15.0,-46.0" fill="none" stroke="#1f4a33" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M-8.0,-76.0 L-14.0,-60.0 L-15.0,-46.0" fill="none" stroke="#3e9f3a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.0,-46.0 L6.0,-23.0 L7.0,0.0" fill="none" stroke="#1f4a33" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.0,-46.0 L6.0,-23.0 L7.0,0.0" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="-4.0" cy="0.0" rx="7" ry="4.5" fill="#1f4a33"/><ellipse cx="10.0" cy="0.0" rx="7" ry="4.5" fill="#1f4a33"/><path d="M0.0,-80.0 L0.0,-50.0" fill="none" stroke="#1f4a33" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/><path d="M0.0,-80.0 L0.0,-50.0" fill="none" stroke="#3e9f3a" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.0,-76.0 L24.0,-82.0 L40.0,-94.0" fill="none" stroke="#1f4a33" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.0,-76.0 L24.0,-82.0 L40.0,-94.0" fill="none" stroke="#3e9f3a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="-15.0" cy="-46.0" r="4.5" fill="#ffffff" stroke="#1f4a33" stroke-width="3"/><circle cx="40.0" cy="-94.0" r="4.5" fill="#ffffff" stroke="#1f4a33" stroke-width="3"/><circle cx="0" cy="-101" r="14" fill="#ffffff" stroke="#1f4a33" stroke-width="3.5"/><path d="M-14,-102 A14,14 0 0 1 14,-102 Q4,-109 -14,-102 z" fill="#1f4a33"/></g>
+<path d="M99,346 L112,390 L125,346" fill="#ffffff" stroke="#1f4a33" stroke-width="3.5" stroke-linejoin="round"/><rect x="60" y="270" width="128" height="76" rx="18" fill="#ffffff" stroke="#1f4a33" stroke-width="3.5"/><path d="M101,344.5 L123,344.5" stroke="#ffffff" stroke-width="5"/><text x="82" y="302" class="t">These two</text><text x="82" y="326" class="t">matter most.</text>
+<path d="M612.0,208.0 L653.6,208.0 L653.6,201.0 L676.0,215.0 L653.6,229.0 L653.6,222.0 L612.0,222.0 z" fill="#e9c32b"/>
+<path d="M612.0,463.0 L653.6,463.0 L653.6,456.0 L676.0,470.0 L653.6,484.0 L653.6,477.0 L612.0,477.0 z" fill="#e9c32b"/>
+<rect x="680" y="90" width="480" height="230" rx="22" fill="#ffffff" stroke="#1f4a33" stroke-width="3"/><text x="710" y="128" class="tag" fill="#3e9f3a">QUANTITATIVE KRs</text>
+<text x="710" y="160" class="t">Just watch the number</text>
+<rect x="710" y="178" width="420" height="118" rx="12" fill="#fbfbf7" stroke="#1f4a33" stroke-width="3"/>
+<path d="M730.0,270.0 L770.0,258.0 L810.0,262.0 L850.0,240.0 L890.0,244.0 L930.0,222.0 L970.0,214.0 L1010.0,200.0" fill="none" stroke="#3e9f3a" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="1010" cy="200" r="7" fill="#e9c32b" stroke="#1f4a33" stroke-width="3"/>
+<text x="1110" y="240" font-size="34" font-weight="700" text-anchor="end">68%</text>
+<text x="1110" y="266" class="s-dim" text-anchor="end">on track</text>
+<rect x="680" y="340" width="480" height="260" rx="22" fill="#ffffff" stroke="#1f4a33" stroke-width="3"/><text x="710" y="378" class="tag" fill="#1f4a33">QUALITATIVE KRs</text>
+<text x="710" y="404" class="t">Confirm at the regular check-in</text>
+<line x1="710" y1="580" x2="1130" y2="580" stroke="#1f4a33" stroke-width="4" stroke-linecap="round"/>
+<g transform="translate(790,580) scale(0.75,0.75)"><path d="M-5.0,-46.0 L-6.0,-23.0 L-7.0,0.0" fill="none" stroke="#1f4a33" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M-5.0,-46.0 L-6.0,-23.0 L-7.0,0.0" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M-8.0,-76.0 L-14.0,-60.0 L-15.0,-46.0" fill="none" stroke="#1f4a33" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M-8.0,-76.0 L-14.0,-60.0 L-15.0,-46.0" fill="none" stroke="#3e9f3a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.0,-46.0 L6.0,-23.0 L7.0,0.0" fill="none" stroke="#1f4a33" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.0,-46.0 L6.0,-23.0 L7.0,0.0" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="-4.0" cy="0.0" rx="7" ry="4.5" fill="#1f4a33"/><ellipse cx="10.0" cy="0.0" rx="7" ry="4.5" fill="#1f4a33"/><path d="M0.0,-80.0 L0.0,-50.0" fill="none" stroke="#1f4a33" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/><path d="M0.0,-80.0 L0.0,-50.0" fill="none" stroke="#3e9f3a" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.0,-76.0 L24.0,-82.0 L40.0,-94.0" fill="none" stroke="#1f4a33" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.0,-76.0 L24.0,-82.0 L40.0,-94.0" fill="none" stroke="#3e9f3a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="-15.0" cy="-46.0" r="4.5" fill="#ffffff" stroke="#1f4a33" stroke-width="3"/><circle cx="40.0" cy="-94.0" r="4.5" fill="#ffffff" stroke="#1f4a33" stroke-width="3"/><circle cx="0" cy="-101" r="14" fill="#ffffff" stroke="#1f4a33" stroke-width="3.5"/><path d="M-14,-102 A14,14 0 0 1 14,-102 Q4,-109 -14,-102 z" fill="#1f4a33"/></g>
+<g transform="translate(1040,580) scale(-0.75,0.75)"><path d="M-5.0,-46.0 L-6.0,-23.0 L-7.0,0.0" fill="none" stroke="#1f4a33" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M-5.0,-46.0 L-6.0,-23.0 L-7.0,0.0" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><path d="M-8.0,-76.0 L-14.0,-60.0 L-15.0,-46.0" fill="none" stroke="#1f4a33" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M-8.0,-76.0 L-14.0,-60.0 L-15.0,-46.0" fill="none" stroke="#e9c32b" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.0,-46.0 L6.0,-23.0 L7.0,0.0" fill="none" stroke="#1f4a33" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.0,-46.0 L6.0,-23.0 L7.0,0.0" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="-4.0" cy="0.0" rx="7" ry="4.5" fill="#1f4a33"/><ellipse cx="10.0" cy="0.0" rx="7" ry="4.5" fill="#1f4a33"/><path d="M0.0,-80.0 L0.0,-50.0" fill="none" stroke="#1f4a33" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/><path d="M0.0,-80.0 L0.0,-50.0" fill="none" stroke="#e9c32b" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.0,-76.0 L14.0,-60.0 L15.0,-46.0" fill="none" stroke="#1f4a33" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.0,-76.0 L14.0,-60.0 L15.0,-46.0" fill="none" stroke="#e9c32b" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="-15.0" cy="-46.0" r="4.5" fill="#ffffff" stroke="#1f4a33" stroke-width="3"/><circle cx="15.0" cy="-46.0" r="4.5" fill="#ffffff" stroke="#1f4a33" stroke-width="3"/><circle cx="0" cy="-101" r="14" fill="#ffffff" stroke="#1f4a33" stroke-width="3.5"/><path d="M-15,-91 L-15,-103 A15,15 0 0 1 15,-103 Q2,-111 -7,-103 L-8,-91 z" fill="#1f4a33"/></g>
+<path d="M783,474 L796,489 L809,474" fill="#ffffff" stroke="#1f4a33" stroke-width="3.5" stroke-linejoin="round"/><rect x="710" y="426" width="230" height="48" rx="18" fill="#ffffff" stroke="#1f4a33" stroke-width="3.5"/><path d="M785,472.5 L807,472.5" stroke="#ffffff" stroke-width="5"/><text x="732" y="456" class="s">Anything blocking you?</text>
+<path d="M1023,474 L1036,489 L1049,474" fill="#ffffff" stroke="#1f4a33" stroke-width="3.5" stroke-linejoin="round"/><rect x="960" y="426" width="150" height="48" rx="18" fill="#ffffff" stroke="#1f4a33" stroke-width="3.5"/><path d="M1025,472.5 L1047,472.5" stroke="#ffffff" stroke-width="5"/><text x="982" y="456" class="s">All good!</text>
+<text x="600" y="634" class="cap" text-anchor="middle">Managers track key results, not the process.</text>
+</svg>

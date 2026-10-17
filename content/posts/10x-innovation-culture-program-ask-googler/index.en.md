@@ -43,6 +43,8 @@ The "getting to Shinagawa Station" example they gave explains this well:
     
 - **Google's way:** "We meet at Shinagawa Station at 7 AM" (that's the goal, the WHAT). "If you don't know how to get there, we can figure it out together" (that's offering support, not giving orders).
 
+{{< figure src="what-vs-how.svg" >}}
+
 **Q: How often, and how, do managers and members share progress?**
 
 - **The core of the answer:** the focus is on **progress toward goals**, not the details of the process.
@@ -76,6 +78,8 @@ The "getting to Shinagawa Station" example they gave explains this well:
         
     - That said, the company does have some **"must-do items" (マスト項目)**, which carry a higher **weight (ウェイト)** inside the OKRs.
 
+{{< figure src="okr-cascade.svg" >}}
+
 **Q: Employees have a lot of freedom (like the 20% time for personal projects). How do managers track project progress?**
 
 - **Answer: again, through OKRs. Managers don't track the "process." They only track progress on the Key Results (KRs).**
@@ -85,6 +89,8 @@ The "getting to Shinagawa Station" example they gave explains this well:
     - **Kota's approach:** He might have a lot of KRs (10 or more), but he **focuses on the top 2** (the highest-weighted ones). For the rest, if a KR is quantifiable, he just tracks the numbers; if it's qualitative (hard to measure), he confirms things are fine during the regular check-ins/reviews.
         
     - **Sawako's approach:** Many of her KRs are tied to **customer needs**. In other words, her goal is "make the customer successful," and whether she hits her KRs depends on the customer's situation. That keeps her work tightly connected to external value.
+
+{{< figure src="kr-focus.svg" >}}
 
 **Q: Does Google have any unique rules around evaluation and meetings?**
 
@@ -145,6 +151,8 @@ The Googlers' advice was consistent: **don't push it top-down. Nurture it bottom
 	    
 	- Tie it to the company's fundamental goals and reason for existing. That way, culture-building stops being an empty slogan and becomes concrete action toward the company's mission, and it resonates much more with everyone.
 
+{{< figure src="culture-bottom-up.svg" >}}
+
 **Q: In what mindset, motivation, and environment are people most willing to share ideas freely?**
 
 - **Answer: when the environment feels "safe," "fun," and "connected."**
@@ -177,6 +185,8 @@ The Googlers' advice was consistent: **don't push it top-down. Nurture it bottom
         
     - **Voting + live answers:** employees can vote ahead of time on the questions they want asked, and the executives answer the top-voted ones **off the cuff, live (アドリブで答えていく)**.
 
+{{< figure src="tgif.svg" >}}
+
 **Q: Why do Google employees dare to ask questions, instead of staying silent like in Japanese companies?**
 
 - **Answer: it comes from a core mindset and the company culture.**
@@ -196,3 +206,8 @@ The Googlers' advice was consistent: **don't push it top-down. Nurture it bottom
 - **Answer: the main content is answering the questions employees care about most.**
     
 - It's not a one-way broadcast. They communicate two-way with the whole company by answering the questions employees voted up.
+
+### Links
+
+- [10X Innovation Culture Program (Grow with Google, Japanese)](https://grow.google/intl/ja_jp/10xinnovationculture/)
+- [re:Work - Set goals with OKRs (Google's official OKR guide)](https://rework.withgoogle.com/intl/en/guides/set-goals-with-okrs)
