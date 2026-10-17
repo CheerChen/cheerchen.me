@@ -673,3 +673,12 @@
     overflow-x: auto;
     overflow-y: hidden;
 }
+
+/* === Tables: keep inline code unbroken, scroll instead ===
+   .prose sets overflow-wrap:anywhere on inline code, which breaks long paths
+   mid-token (e.g. a trailing "l" on its own line). Tables already get a
+   .table-scroll wrapper, so nowrap is safe: overflow scrolls horizontally. */
+.prose table code {
+    overflow-wrap: normal;
+    white-space: nowrap;
+}
