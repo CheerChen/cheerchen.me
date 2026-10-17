@@ -231,6 +231,113 @@ def dynamodb_reflection():
         "that fits the system and how it is being built.")
 
 
+FRAME_CSS = """<style>
+  .fr{opacity:0;animation:12s linear infinite}
+  .fr-0{animation-name:fr0}.fr-1{animation-name:fr1}.fr-2{animation-name:fr2}.fr-3{animation-name:fr3}
+  @keyframes fr0{0%,22%{opacity:1}25%,100%{opacity:0}}
+  @keyframes fr1{0%,22%{opacity:0}25%,47%{opacity:1}50%,100%{opacity:0}}
+  @keyframes fr2{0%,47%{opacity:0}50%,72%{opacity:1}75%,100%{opacity:0}}
+  @keyframes fr3{0%,72%{opacity:0}75%,97%{opacity:1}100%{opacity:0}}
+  @media (prefers-reduced-motion:reduce){.fr{animation:none}.fr-3{opacity:1}}
+</style>"""
+
+
+def arrow_line(pts, color=INK, label=None, label_at=None, anchor="start"):
+    """An orthogonal connector with an arrowhead at the last point, optionally labelled."""
+    d = "M" + " L".join(f"{x},{y}" for x, y in pts)
+    (x1, y1), (x2, y2) = pts[-2], pts[-1]
+    ux, uy = (x2 > x1) - (x2 < x1), (y2 > y1) - (y2 < y1)
+    head = [(x2, y2), (x2 - ux * 12 - uy * 6, y2 - uy * 12 + ux * 6), (x2 - ux * 12 + uy * 6, y2 - uy * 12 - ux * 6)]
+    s = (f'<path d="{d}" fill="none" stroke="{color}" stroke-width="2.5" stroke-linejoin="round"/>'
+         f'<polygon points="{" ".join(f"{x},{y}" for x, y in head)}" fill="{color}"/>')
+    if label:
+        lx, ly = label_at
+        s += f'<text x="{lx}" y="{ly}" font-size="18" fill="{color}" text-anchor="{anchor}">{esc(label)}</text>'
+    return s
+
+
+def screen(x, y, w, h, kind):
+    """A simplified Switch screen: a friend list, a chat with video tiles, or a notification."""
+    s = f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="6" fill="#ffffff" stroke="{INK}" stroke-width="2"/>'
+    if kind == "friends":
+        for i in range(3):
+            s += (f'<circle cx="{x + 22}" cy="{y + 20 + i * 22}" r="7" fill="#c9d6e0"/>'
+                  f'<rect x="{x + 36}" y="{y + 16 + i * 22}" width="{w * 0.5:.0f}" height="8" rx="4" fill="{ROW_B}"/>')
+    elif kind == "chat":
+        s += f'<rect x="{x + 8}" y="{y + 8}" width="{w - 16}" height="{h * 0.5:.0f}" rx="3" fill="#dbe9f4"/>'
+        tw = (w - 16 - 9) / 4
+        for i in range(4):
+            s += f'<rect x="{x + 8 + i * (tw + 3):.0f}" y="{y + h * 0.5 + 14:.0f}" width="{tw:.0f}" height="{h * 0.3:.0f}" rx="3" fill="{ROW_B}"/>'
+    else:
+        s += (f'<rect x="{x + 10}" y="{y + 12}" width="{w - 20}" height="26" rx="13" fill="#e7f3fb" stroke="{BLUE}" stroke-width="1.5"/>'
+              f'<circle cx="{x + 24}" cy="{y + 25}" r="6" fill="{BLUE}"/>'
+              f'<rect x="{x + 36}" y="{y + 21}" width="{w * 0.45:.0f}" height="8" rx="4" fill="#c9d6e0"/>')
+    return s
+
+
+def start_flow():
+    s = Slide("", "GameChat start flow", heading=False)
+    s.add(FRAME_CSS)
+    Y, R = 330, 64
+    nodes = {"friends": (150, "box", "Friend selection"), "reserved": (370, "circle", "Reserved"),
+             "auth": (560, "circle", "Authenticated"), "connected": (750, "circle", "Connected"),
+             "notify": (968, "box", "Send notification")}
+
+    def node(key, style):
+        cx, shape, label = nodes[key]
+        stroke, fill, dash, width, weight = {
+            "plain": (INK, "#ffffff", "", 2, ""),
+            "idle": ("#b9c0c8", "#ffffff", ' stroke-dasharray="8,6"', 2.5, ""),
+            "on": (BLUE, "#e7f3fb", "", 4, ' font-weight="700"'),
+        }[style]
+        tf = "" if style != "idle" else f' fill="{DIM}"'
+        if shape == "box":
+            g = f'<rect x="{cx - 90}" y="{Y - 34}" width="180" height="68" rx="8" fill="{fill}" stroke="{stroke}" stroke-width="{width}"{dash}/>'
+        else:
+            g = f'<circle cx="{cx}" cy="{Y}" r="{R}" fill="{fill}" stroke="{stroke}" stroke-width="{width}"{dash}/>'
+        size = 18 if label == "Authenticated" else 20
+        return g + f'<text x="{cx}" y="{Y + 7}" font-size="{size}"{weight}{tf} text-anchor="middle">{label}</text>'
+
+    base = "".join(chevron(x, Y) for x in (264, 467, 655, 856))
+    base += f'<rect x="292" y="248" width="536" height="164" rx="16" fill="none" stroke="{INK}" stroke-width="2"/>'
+    base += (f'<rect x="490" y="398" width="140" height="30" rx="8" fill="#ffffff" stroke="{INK}" stroke-width="2"/>'
+             f'<text x="560" y="419" font-size="17" font-weight="700" text-anchor="middle">Group server</text>')
+    s.add(base)
+
+    def frame(i, tag, title, body, on=()):
+        """One animation frame: heading, every node (highlighted ones in `on`), extras, and its page number."""
+        nodes_svg = "".join(node(k, "on" if k in on else ("plain" if i == 0 else "idle")) for k in nodes)
+        s.add(f'<g class="fr fr-{i}" data-frame="{i}">{Slide.heading(tag, title)}{nodes_svg}{body}</g>')
+        s.overlay.append(f'<g class="fr fr-{i}" data-frame="{i}"><text x="{W - 76}" y="{H - 50}" font-size="17" '
+                         f'font-weight="700" text-anchor="middle">{22 + i}</text></g>')
+
+    sw_l, sw_r = (150, 470), (965, 470)
+    host = switch_badge(*sw_l, scale=0.9, mono=True)
+    sfu = (aws_icon("ec2", 560, 540, 44)
+           + f'<text x="560" y="586" font-size="17" font-weight="700" text-anchor="middle">SFU server</text>')
+
+    frame(0, "Development case study", "GameChat start flow", "")
+    frame(1, "GameChat start flow", "From friend selection to a chat reservation",
+          host + screen(80, 498, 140, 82, "friends")
+          + arrow_line([(196, 470), (540, 470), (540, 430)], BLUE, "sends member info", (240, 458)), on=("friends",))
+    frame(2, "GameChat start flow", "Changing state to connected",
+          host + screen(80, 498, 140, 82, "chat") + sfu
+          + arrow_line([(560, 514), (560, 430)], BLUE, "connection established", (574, 490))
+          + arrow_line([(500, 428), (500, 460), (196, 460)], INK), on=("auth",))
+    frame(3, "GameChat start flow", "Sending notifications asynchronously",
+          host + screen(80, 498, 140, 82, "chat") + sfu
+          + switch_badge(*sw_r, scale=0.9, mono=True) + screen(895, 498, 140, 82, "notice")
+          + arrow_line([(560, 514), (560, 430)], INK, "reports the connection", (574, 490))
+          + arrow_line([(500, 428), (500, 460), (196, 460)], INK, "chat connected", (240, 450))
+          + arrow_line([(965, 364), (965, 446)], BLUE, "invitee is notified", (978, 412)), on=("connected", "notify"))
+    return "slide-22-25-state-machine.svg", s.svg(
+        "Animated, four frames, slides 22 to 25. The GameChat start flow runs friend selection, reserved, "
+        "authenticated, connected, send notification; the group server owns the three middle states. Frame 2: the "
+        "Switch 2 sends the member info to the group server. Frame 3: the SFU server reports the established "
+        "connection and the host's Switch 2 enters the chat. Frame 4: the state is connected, the host's chat is "
+        "connected, and the invitee is notified asynchronously.")
+
+
 def denormalization():
     s = Slide("Design priorities", "Denormalization", page=21)
     s.add(table(570, 176, [190, 170, 200], ["Partition Key", "Value", "List"],
@@ -243,7 +350,7 @@ def denormalization():
         "Bowser. Lists are kept inside the item instead of being normalized, so one query returns everything needed.")
 
 
-SLIDES = {"p2p-vs-sfu": p2p_vs_sfu, "multi-region": multi_region, "state-api-race": state_api_race, "consistent-read": consistent_read, "cost-design": cost_design, "invite-inconsistency": invite_inconsistency, "dynamodb-reflection": dynamodb_reflection, "usecase-driven": usecase_driven, "denormalization": denormalization}
+SLIDES = {"p2p-vs-sfu": p2p_vs_sfu, "multi-region": multi_region, "state-api-race": state_api_race, "consistent-read": consistent_read, "cost-design": cost_design, "start-flow": start_flow, "invite-inconsistency": invite_inconsistency, "dynamodb-reflection": dynamodb_reflection, "usecase-driven": usecase_driven, "denormalization": denormalization}
 
 if __name__ == "__main__":
     names = [a for a in sys.argv[1:] if not a.startswith("--")] or list(SLIDES)

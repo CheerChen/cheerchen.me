@@ -62,16 +62,24 @@ def esc(text):
 
 
 class Slide:
-    def __init__(self, tag, title, page=None):
+    def __init__(self, tag, title, page=None, heading=True):
+        """heading=False leaves tag and title to the caller, e.g. one per animation frame."""
         self.page = page
         self.parts = []
+        self.overlay = []   # drawn after the page badge, e.g. per-frame page numbers
+        self.title = title
+        if heading:
+            self.parts.append(self.heading(tag, title))
+
+    @staticmethod
+    def heading(tag, title):
+        """The section tag (top right, underlined) and the title, shrunk to fit."""
         size = 44
         while measure(title, size, True) > RIGHT - LEFT and size > 30:
             size -= 2
-        self.parts.append(f'<text x="{RIGHT}" y="62" font-size="20" fill="{DIM}" text-anchor="end" '
-                          f'text-decoration="underline">{esc(tag)}</text>')
-        self.parts.append(f'<text x="{LEFT}" y="138" font-size="{size}" font-weight="700">{esc(title)}</text>')
-        self.title = title
+        return (f'<text x="{RIGHT}" y="62" font-size="20" fill="{DIM}" text-anchor="end" '
+                f'text-decoration="underline">{esc(tag)}</text>\n'
+                f'<text x="{LEFT}" y="138" font-size="{size}" font-weight="700">{esc(title)}</text>')
 
     def add(self, fragment):
         self.parts.append(fragment)
@@ -103,7 +111,8 @@ class Slide:
                 f'  <rect width="{W}" height="{H}" fill="{DESK}"/>\n'
                 f'  <rect x="16" y="20" width="{W - 32}" height="{H - 32}" rx="14" fill="#c9ced4"/>\n'
                 f'  <rect x="14" y="14" width="{W - 28}" height="{H - 30}" rx="14" fill="{BG}" stroke="#cfd4da" stroke-width="1.5"/>\n'
-                + "\n".join(self.parts) + "\n" + switch_badge(W - 76, H - 56, self.page) + "\n</svg>\n")
+                + "\n".join(self.parts) + "\n" + switch_badge(W - 76, H - 56, self.page) + "\n"
+                + "".join(o + "\n" for o in self.overlay) + "</svg>\n")
 
 
 # ---- widgets ----
@@ -218,15 +227,18 @@ _PROBE = """<!doctype html><meta charset="utf-8"><body style="margin:0">%s
 const svg = document.querySelector('svg'), vb = svg.viewBox.baseVal, out = [];
 // rendered boxes (transforms applied), in viewBox units
 const o = svg.getBoundingClientRect(), k = vb.width / o.width;
-const texts = [...svg.querySelectorAll('text')].map(t => {
-  const r = t.getBoundingClientRect();
-  return {t: t.textContent, b: {x: (r.left - o.left) * k, y: (r.top - o.top) * k, width: r.width * k, height: r.height * k}};
+// animation frames share the canvas: texts in different data-frame groups never count as overlapping
+const texts = [...svg.querySelectorAll('text')].filter(t => t.textContent.trim()).map(t => {
+  const r = t.getBoundingClientRect(), fr = t.closest('[data-frame]');
+  return {t: t.textContent, f: fr ? fr.dataset.frame : null,
+          b: {x: (r.left - o.left) * k, y: (r.top - o.top) * k, width: r.width * k, height: r.height * k}};
 });
 for (const {t, b} of texts) {
   if (b.x < 0 || b.y < 0 || b.x + b.width > vb.width || b.y + b.height > vb.height)
     out.push('outside canvas: ' + t);
 }
 for (let i = 0; i < texts.length; i++) for (let j = i + 1; j < texts.length; j++) {
+  if (texts[i].f && texts[j].f && texts[i].f !== texts[j].f) continue;
   const a = texts[i].b, c = texts[j].b;
   const ox = Math.min(a.x + a.width, c.x + c.width) - Math.max(a.x, c.x);
   const oy = Math.min(a.y + a.height, c.y + c.height) - Math.max(a.y, c.y);
