@@ -35,15 +35,11 @@ GameChat 是 Nintendo Switch 2 的本体功能，支持用户之间的实时视�
 
 ## 产品约束：实时通信、12 人房间、游戏并行运行
 
-{{< figure src="slide-04-requirements.svg" >}}
-
-GameChat 的服务要求包括实时视频音频通信、每个 GameChat group 最多 12 人接入，以及在用户游玩游戏期间并行运行。12 这个数字非常关键。
+GameChat 的服务要求包括**实时视频音频通信**、**每个 GameChat group 最多 12 人接入**，以及**在用户游玩游戏期间并行运行**。12 这个数字非常关键。
 
 如果使用 P2P mesh，12 人房间里每个客户端要向其他 11 人上传媒体流。对家用网络、NAT 环境和 Switch 2 的编码预算来说，这基本不可行。即便是只开语音，mesh 的连接管理复杂度也会很快膨胀；一旦加入游戏画面共享，P2P 就不再现实。
 
 “游戏并行运行”是这套系统最硬的产品约束。一般视频会议应用可以占用前台资源，而 GameChat 更像一个嵌在系统层的后台实时通信进程。它不能抢走游戏渲染和在线对战所需的资源，因此服务端必须承担更多转发、选择和状态管理工作。
-
-{{< figure src="slide-05-WebRTC.svg" >}}
 
 分享中提到 GameChat 使用 WebRTC 做实时音视频通信，并强调 UDP packet communication。这个描述听起来简单，但实际工程复杂度比“用了 WebRTC”要高得多。
 
@@ -63,19 +59,13 @@ P2P mesh 的复杂度是 $O(N^2)$。12 人房间中总连接数达到 $C(12,2)=6
 
 ## 系统架构：把控制面和媒体面拆开
 
-{{< figure src="slide-07-system-architecture.svg" >}}
-
-{{< figure src="mermaid-07-system-architecture.svg" >}}
+{{< figure src="arch-07-system-architecture.svg" >}}
 
 架构图把系统拆成两个层次。
 
 控制面集中在 Admin Region。CloudFront、ALB、Fargate、SQS、API Gateway 和 DynamoDB 共同负责群组服务器、异步 worker、SFU instance manager 和状态存储。这里处理的是房间、邀请、认证、状态同步、instance discovery 等业务和控制逻辑。
 
 媒体面则部署在多个 region。每个 region 有 EC2 上的 SFU 服务器，以及 Amazon Transcribe。SFU 负责真正的 WebRTC 音视频连接与转发。这个分层很重要：低延迟媒体路径需要靠近用户，而控制面状态如果也做多 region，会引入数据同步、冲突解决和更复杂的故障模式。
-
-{{< figure src="slide-08-functional-groups.svg" >}}
-
-{{< figure src="mermaid-08-functional-groups.svg" >}}
 
 用功能重新看这张架构图，可以分成三类服务。
 
@@ -93,15 +83,11 @@ P2P mesh 的复杂度是 $O(N^2)$。12 人房间中总连接数达到 $C(12,2)=6
 
 multi-region SFU 的价值，是让用户尽量连接到近端媒体节点，并把跨区域复杂度放到服务端处理。但架构图没有展开 SFU 之间是否 cascading，也没有公开具体 region，这是这场分享留下的一个信息空洞。
 
-{{< figure src="slide-10-selective-region.svg" >}}
-
-Nintendo Systems 采用的是选择性 region 运用：SFU 服务器 multi-region，群组服务器和 SFU instance manager single-region。
+Nintendo Systems 采用的是选择性 region 运用：**SFU 服务器 multi-region，群组服务器和 SFU instance manager single-region**。
 
 这是典型的 control plane / data plane separation。媒体面直接影响通话延迟，因此必须靠近用户；控制面主要影响创建房间、加入房间和状态管理，延迟敏感度相对低一些。让控制面保持 single-region，可以避免 Global Tables、跨 region 写冲突、强一致协调等复杂度。
 
 代价也很明确。如果 Admin Region 整体故障，全球用户可能无法新建或加入 GameChat；但已经建立的媒体连接可能还能继续运行。这个取舍的核心是：把最常发生、最影响体验的媒体路径做近端化，把低频且复杂的控制状态集中管理。
-
-{{< figure src="slide-11-sfu-discovery-problem.svg" >}}
 
 客户端需要知道应该连接哪个 SFU。这个问题看起来像 service discovery，但比普通 DNS 或负载均衡更复杂。
 
@@ -109,9 +95,7 @@ Nintendo Systems 采用的是选择性 region 运用：SFU 服务器 multi-regio
 
 因此，SFU discovery 本质上是 placement scheduler：为某个用户、某个房间、某个时刻选择一个最合适的媒体实例。
 
-{{< figure src="slide-12-sfu-discovery-solution.svg" >}}
-
-{{< figure src="mermaid-12-sfu-discovery.svg" >}}
+{{< figure src="arch-12-sfu-discovery.svg" >}}
 
 解决方案是让 SFU instance manager 监控所有 instance 状态，并把连接数等信息写入 DynamoDB。群组服务器读取同一个 DynamoDB，选择合适的 instance，再把 endpoint 返回给客户端。
 
@@ -121,9 +105,7 @@ Nintendo Systems 采用的是选择性 region 运用：SFU 服务器 multi-regio
 
 ## 入室路径：认证、事件同步与关键路径隔离
 
-{{< figure src="slide-13-auth-state-sync.svg" >}}
-
-{{< figure src="mermaid-13-auth-state-sync.svg" >}}
+{{< figure src="arch-13-auth-state-sync.svg" >}}
 
 入室时需要检查三个条件：用户是否连接到正确的 SFU instance，是否属于对应 group，access token 是否有效。用户状态变化，比如入室、退室、瞬断和复归，也会同步到群组服务器，并写入 DynamoDB。
 
@@ -131,9 +113,7 @@ Nintendo Systems 采用的是选择性 region 运用：SFU 服务器 multi-regio
 
 这个分工降低了 SFU 的 blast radius。SFU 暴露公网 UDP 和 WebRTC 入口，如果它不持有用户表、成员关系和认证 secret，即使媒体实例出现问题，业务数据和访问控制仍然集中在控制面。
 
-{{< figure src="slide-14-webhook-auth.svg" >}}
-
-{{< figure src="mermaid-14-webhook-auth.svg" >}}
+{{< figure src="arch-14-webhook-auth.svg" >}}
 
 SFU 收到 WebRTC 连接请求后，会通过认证 webhook 调用群组服务器。请求里包含用户信息、连接目标 instance、时间、access token 和 WebRTC 设置。群组服务器检查后返回 200 OK，SFU 才完成连接。
 
@@ -141,9 +121,7 @@ SFU 收到 WebRTC 连接请求后，会通过认证 webhook 调用群组服务�
 
 代价是认证 webhook 位于入室 critical path。跨 region 用户连接近端 SFU，但 SFU 仍可能要回到 Admin Region 调群组服务器做认证。对加入房间这种低频动作来说，几百毫秒延迟可以接受；对每帧媒体转发来说，则绝对不能这么做。
 
-{{< figure src="slide-15-webhook-split.svg" >}}
-
-{{< figure src="mermaid-15-webhook-split.svg" >}}
+{{< figure src="arch-15-webhook-split.svg" >}}
 
 分享中把 webhook 分成两类。
 
@@ -155,9 +133,7 @@ SFU 收到 WebRTC 连接请求后，会通过认证 webhook 调用群组服务�
 
 ## 运行治理：可观测性与 region 模块化
 
-{{< figure src="slide-16-observability.svg" >}}
-
-{{< figure src="mermaid-16-observability.svg" >}}
+{{< figure src="arch-16-observability.svg" >}}
 
 可观测性部分透露了几个技术栈信息。群组服务器使用 Go，并通过 AWS Distro for OpenTelemetry SDK 生成 trace。SFU 服务器侧则通过 Envoy proxy 生成或传播 trace ID，最后由 OtelCollector container 收集并送到 AWS X-Ray。
 
@@ -165,9 +141,7 @@ SFU 收到 WebRTC 连接请求后，会通过认证 webhook 调用群组服务�
 
 SFU 侧使用 Envoy 也很有意思。媒体服务器本体可能不方便修改埋点，尤其如果它是开源 SFU 或内部 fork。用 Envoy sidecar 拦截 webhook HTTP 流量并注入 trace，是一种外置可观测性的做法。
 
-{{< figure src="slide-17-terraform.svg" >}}
-
-{{< figure src="mermaid-17-terraform.svg" >}}
+{{< figure src="arch-17-terraform.svg" >}}
 
 SFU 的 region 资源通过 Terraform module 管理。每个 region 注入不同 config，就可以创建对应的 EC2、网络和 Transcribe 资源。
 
@@ -176,8 +150,6 @@ SFU 的 region 资源通过 Terraform module 管理。每个 region 注入不同
 不过，“即座に対応”不能理解成加 region 只需要一次 `terraform apply`。真实上线一个新 region 还包括镜像复制、客户端区域列表更新、instance manager 配置、监控告警、灰度接流、故障演练等工作。Terraform 解决的是 provisioning，而不是完整上线流程。
 
 ## DynamoDB 建模：成本、查询模式与非正規化
-
-{{< figure src="slide-18-DynamoDB-chapter.svg" >}}
 
 后半段进入 DynamoDB 开发事例，重点包括成本效率、use case driven design、非正規化、GameChat 开始流程、状态迁移与最终一致性，以及追加邀请的不一致处理。
 
@@ -238,8 +210,6 @@ DynamoDB 支持 strongly consistent read，可以保证读取到已确认的写�
 此外，strongly consistent read 并不是无处可用。它主要适用于 base table 的单 region 读取，GSI 仍然只能 eventually consistent。对高频读路径来说，把所有读取都改成 strong read，既增加成本，也可能掩盖数据模型本身的问题。
 
 因此，strong read 应该是针对关键约束的工具，而不是遇到状态不一致就全面打开的开关。
-
-{{< figure src="slide-28-no-strong-read.svg" >}}
 
 Nintendo Systems 明确提到，这次通过设计上的工夫容忍了最终一致性，因此没有采用 strongly consistent read。
 

@@ -35,15 +35,11 @@ GameChat は Nintendo Switch 2 の本体機能で、ユーザー同士でボイ�
 
 ## 制約：12 人ルームとゲーム並走
 
-{{< figure src="slide-04-requirements.svg" >}}
-
-GameChat のサービス要件は、リアルタイム映像・音声通信、1 グループ最大 12 人、ゲームプレイ中の並走の三つだ。12 という数字が効いてくる。
+GameChat のサービス要件は、**リアルタイム映像・音声通信**、**1 グループ最大 12 人**、**ゲームプレイ中の並走**の三つだ。12 という数字が効いてくる。
 
 P2P の mesh 構成にすると、12 人ルームでは各クライアントが他の 11 人に向けてメディアストリームを上げ続ける必要がある。家庭用ネットワーク・NAT 環境・Switch 2 のエンコード予算を考えると、これは現実的でない。音声だけでも mesh のコネクション管理はすぐ膨らむし、ゲーム画面の共有が加わればP2P は選択肢から消える。
 
 「ゲーム並走」は一番きつい制約だと思う。一般的なビデオ会議アプリならフォアグラウンドリソースを使い切れるが、GameChat はシステム層に埋め込まれたバックグラウンドの通信プロセスに近い。ゲームのレンダリングやオンライン対戦に必要なリソースを奪えないので、サーバー側がより多くの転送・選択・状態管理を担う必要がある。
-
-{{< figure src="slide-05-WebRTC.svg" >}}
 
 セッションでは GameChat がリアルタイム音声映像に WebRTC を使っていると説明があり、UDP パケット通信が強調されていた。聞くと単純に思えるが、「WebRTC を使った」と言うだけでは実際の複雑さはあまり伝わらない。
 
@@ -63,19 +59,13 @@ P2P mesh の複雑さは $O(N^2)$ で、12 人ルームの総接続数は $C(12,
 
 ## システム構成
 
-{{< figure src="slide-07-system-architecture.svg" >}}
-
-{{< figure src="mermaid-07-system-architecture.svg" >}}
+{{< figure src="arch-07-system-architecture.svg" >}}
 
 アーキテクチャ図はシステムを二つの層に分けている。
 
 コントロールプレーンは Admin Region に集中している。CloudFront・ALB・Fargate・SQS・API Gateway・DynamoDB がグループサーバー、非同期ワーカー、SFU インスタンスマネージャー、状態ストレージを担う。ルーム・招待・認証・状態同期・インスタンスディスカバリーなどのビジネスロジックと制御ロジックがここに集まる。
 
 メディアプレーンは複数リージョンに展開されている。各リージョンに EC2 上の SFU サーバーと Amazon Transcribe が置かれていて、SFU が実際の WebRTC 音声映像接続と転送を処理する。低遅延メディアパスはユーザーの近くに置く必要があるが、コントロールプレーンの状態もマルチリージョンにしようとすると、データ同期・競合解決・複雑な障害パターンが増える。
-
-{{< figure src="slide-08-functional-groups.svg" >}}
-
-{{< figure src="mermaid-08-functional-groups.svg" >}}
 
 機能で整理すると三つに分かれる。
 
@@ -93,15 +83,11 @@ P2P mesh の複雑さは $O(N^2)$ で、12 人ルームの総接続数は $C(12,
 
 マルチリージョン SFU の価値は、ユーザーをなるべく近くのメディアノードに繋いで、クロスリージョンの複雑さをサーバー側に押し込めることにある。ただ構成図では SFU 間のカスケーディングについては触れておらず、具体的なリージョンも公開されていなかった。この辺りはセッションの情報の空白部分だと思う。
 
-{{< figure src="slide-10-selective-region.svg" >}}
-
-Nintendo Systems はリージョンを選択的に使う方針をとっている。SFU サーバーはマルチリージョン、グループサーバーと SFU インスタンスマネージャーはシングルリージョンだ。
+Nintendo Systems はリージョンを選択的に使う方針をとっている。**SFU サーバーはマルチリージョン、グループサーバーと SFU インスタンスマネージャーはシングルリージョン**だ。
 
 典型的なコントロールプレーン/データプレーン分離の構成だ。メディアプレーンは通話遅延に直結するのでユーザーの近くに置く必要があるが、コントロールプレーンが主に担うのはルーム作成・参加・状態管理で、遅延への感度は相対的に低い。コントロールプレーンをシングルリージョンに保てば、Global Tables・クロスリージョン書き込み競合・強一貫性の協調といった複雑さを避けられる。
 
 デメリットははっきりしている。Admin Region 全体が障害になると、世界中のユーザーが新しい GameChat を作れなくなる可能性がある。ただすでに確立したメディア接続はそのまま継続できるかもしれない。ここでのトレードオフの核心は、最も頻繁に発生しユーザー体験に直結するメディアパスを近端化して、低頻度かつ複雑なコントロール状態は集中管理するという判断だ。
-
-{{< figure src="slide-11-sfu-discovery-problem.svg" >}}
 
 クライアントはどの SFU に繋ぐかを知る必要がある。一見 service discovery に見えるが、普通の DNS や負荷分散より複雑だ。
 
@@ -109,9 +95,7 @@ SFU の選択には少なくとも、リージョンのレイテンシ・イン�
 
 SFU のディスカバリーは実質的には placement スケジューラー、つまり特定のユーザー・ルーム・時刻に最適なメディアインスタンスを選ぶ仕組みだ。
 
-{{< figure src="slide-12-sfu-discovery-solution.svg" >}}
-
-{{< figure src="mermaid-12-sfu-discovery.svg" >}}
+{{< figure src="arch-12-sfu-discovery.svg" >}}
 
 解決策は、SFU インスタンスマネージャーが全インスタンスの状態を監視して接続数などを DynamoDB に書き込み、グループサーバーが同じ DynamoDB を読んで適切なインスタンスを選んでエンドポイントをクライアントに返す構成だ。
 
@@ -121,9 +105,7 @@ Consul・etcd・ZooKeeper・Cloud Map を別途入れずに、コントロール
 
 ## 入室の流れ
 
-{{< figure src="slide-13-auth-state-sync.svg" >}}
-
-{{< figure src="mermaid-13-auth-state-sync.svg" >}}
+{{< figure src="arch-13-auth-state-sync.svg" >}}
 
 入室時には三つの条件を確認する必要がある。ユーザーが正しい SFU インスタンスに繋いでいるか、対応するグループに所属しているか、アクセストークンが有効か。ユーザーの状態変化、たとえば入室・退室・瞬断・復帰も、グループサーバーに同期されて DynamoDB に書き込まれる。
 
@@ -131,9 +113,7 @@ Consul・etcd・ZooKeeper・Cloud Map を別途入れずに、コントロール
 
 この役割分担で SFU の blast radius が抑えられている。SFU は公衆ネットワークの UDP と WebRTC の入口に晒されているが、ユーザーテーブル・メンバー関係・認証シークレットを持っていなければ、メディアインスタンスに問題が起きてもビジネスデータとアクセス制御はコントロールプレーンにそのまま残る。
 
-{{< figure src="slide-14-webhook-auth.svg" >}}
-
-{{< figure src="mermaid-14-webhook-auth.svg" >}}
+{{< figure src="arch-14-webhook-auth.svg" >}}
 
 SFU が WebRTC 接続リクエストを受けると、認証 webhook でグループサーバーを呼ぶ。リクエストにはユーザー情報・接続先インスタンス・タイムスタンプ・アクセストークン・WebRTC 設定が含まれていて、グループサーバーが確認して 200 OK を返してから SFU が接続を完了する。
 
@@ -141,9 +121,7 @@ SFU が WebRTC 接続リクエストを受けると、認証 webhook でグル�
 
 コストはある。認証 webhook が入室の critical path に入っている。クロスリージョンのユーザーが近くの SFU に繋いでも、SFU が Admin Region のグループサーバーに認証を問い合わせに行く可能性がある。ルームに参加するような低頻度の操作なら数百ミリ秒の遅延は許容できるが、メディアフレームの転送ごとにこれをやると完全にアウトだ。
 
-{{< figure src="slide-15-webhook-split.svg" >}}
-
-{{< figure src="mermaid-15-webhook-split.svg" >}}
+{{< figure src="arch-15-webhook-split.svg" >}}
 
 セッションでは webhook を二種類に分けていた。
 
@@ -155,9 +133,7 @@ SFU が WebRTC 接続リクエストを受けると、認証 webhook でグル�
 
 ## オブザーバビリティと Terraform
 
-{{< figure src="slide-16-observability.svg" >}}
-
-{{< figure src="mermaid-16-observability.svg" >}}
+{{< figure src="arch-16-observability.svg" >}}
 
 オブザーバビリティのセクションから技術スタックの情報がいくつか出てきた。グループサーバーは Go で書かれていて、AWS Distro for OpenTelemetry SDK でトレースを生成する。SFU サーバー側では Envoy proxy がトレース ID を生成・伝播して、OtelCollector コンテナが収集して AWS X-Ray に送る。
 
@@ -165,9 +141,7 @@ X-Ray native SDK には直接バインドせず、OpenTelemetry を抽象層と�
 
 SFU 側で Envoy を使っているのも面白い。メディアサーバー本体に計装を埋め込むのが難しい場合、とくに OSS の SFU や内部 fork の場合、Envoy sidecar で webhook の HTTP トラフィックを捕捉してトレースを注入するのは、外部から可観測性を足す方法として理にかなっている。
 
-{{< figure src="slide-17-terraform.svg" >}}
-
-{{< figure src="mermaid-17-terraform.svg" >}}
+{{< figure src="arch-17-terraform.svg" >}}
 
 SFU のリージョンリソースは Terraform モジュールで管理している。各リージョンに異なる設定を注入するだけで、EC2・ネットワーク・Transcribe のリソースを作れる構成だ。
 
@@ -176,8 +150,6 @@ SFU のリージョンリソースは Terraform モジュールで管理して�
 ただ「即座に対応できる」という表現は少し言いすぎな気がする。新しいリージョンを本番に追加するには、イメージの複製・クライアントのリージョンリスト更新・インスタンスマネージャーの設定・監視アラート・段階的なトラフィック切り替え・障害演練など、Terraform が解決しない作業がまだたくさんある。Terraform が担うのはプロビジョニングであって、完全な本番導入プロセスではない。
 
 ## DynamoDB の設計
-
-{{< figure src="slide-18-DynamoDB-chapter.svg" >}}
 
 後半は DynamoDB 開発事例に入る。コスト効率・ユースケース駆動設計・非正規化・GameChat 開始フロー・状態遷移と最終一致性・追加招待の不整合処理がテーマだった。
 
@@ -238,8 +210,6 @@ DynamoDB は strongly consistent read をサポートしていて、確認済み
 また strongly consistent read には適用範囲の制限がある。シングルリージョンのベーステーブル読み取りには有効だが、GSI は常に eventually consistent のままだ。高頻度読み取りパスで全読み取りを strong read に変えると、コストが増えるだけでなくデータモデル自体の問題を隠してしまう可能性がある。
 
 strong read は重要な制約に使うツールであって、状態の不整合が出るたびに全面的に有効にするスイッチではない。
-
-{{< figure src="slide-28-no-strong-read.svg" >}}
 
 Nintendo Systems はっきりと、設計上の工夫で最終一致性を受け入れたため、strongly consistent read は採用しなかったと述べていた。
 

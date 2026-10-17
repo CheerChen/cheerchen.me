@@ -1,113 +1,55 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" role="img" aria-labelledby="title desc">
   <title id="title">P2P mesh vs SFU: connection topology</title>
-  <desc id="desc">Animated comparison. In a 4-client room, P2P mesh requires every client to maintain bidirectional streams with every other client, producing 6 bidirectional links. SFU collapses this to 4 client-to-server links and forwards selectively.</desc>
-
-  <defs>
-    <style><![CDATA[
-      .panel-bg { fill: #fff7ed; stroke: #cbd5e1; stroke-width: 2; }
-      .panel-title { font: 600 26px system-ui, -apple-system, sans-serif; fill: #0a0f25; text-anchor: middle; }
-      .panel-sub { font: 14px system-ui, -apple-system, sans-serif; fill: #475569; text-anchor: middle; }
-      .client { fill: #ffffff; stroke: #334155; stroke-width: 2; }
-      .client-label { font: 700 18px system-ui, -apple-system, sans-serif; fill: #0a0f25; text-anchor: middle; }
-      .server { fill: #475569; stroke: #1e293b; stroke-width: 2; }
-      .server-label { font: 700 16px system-ui, -apple-system, sans-serif; fill: #ffffff; text-anchor: middle; }
-      .flow { stroke-width: 3; fill: none; stroke-dasharray: 7 10; stroke-linecap: round; }
-      .flow-up { stroke: #16a34a; animation: dash 1.3s linear infinite; }
-      .flow-down { stroke: #2563eb; animation: dash 1.3s linear infinite; }
-      @keyframes dash { to { stroke-dashoffset: -17; } }
-      @media (prefers-reduced-motion: reduce) {
-        .flow-up, .flow-down { animation: none; }
-      }
-    ]]></style>
-  </defs>
-
-  <!-- ============== LEFT PANEL : P2P mesh ============== -->
-  <g>
-    <rect class="panel-bg" x="20" y="50" width="540" height="510" rx="14"/>
-    <text class="panel-title" x="290" y="88">P2P mesh</text>
-    <text class="panel-sub" x="290" y="112">every client uploads to every other client</text>
-
-    <!-- 6 pair edges, each as two parallel flow strokes (green = upload direction, blue = its return) -->
-    <!-- A <-> B  (top horizontal) -->
-    <path class="flow flow-up"   d="M 210 188 L 370 188"/>
-    <path class="flow flow-down" d="M 370 196 L 210 196"/>
-    <!-- C <-> D  (bottom horizontal) -->
-    <path class="flow flow-up"   d="M 210 438 L 370 438"/>
-    <path class="flow flow-down" d="M 370 446 L 210 446"/>
-    <!-- A <-> C  (left vertical) -->
-    <path class="flow flow-up"   d="M 156 224 L 156 410"/>
-    <path class="flow flow-down" d="M 164 410 L 164 224"/>
-    <!-- B <-> D  (right vertical) -->
-    <path class="flow flow-up"   d="M 416 224 L 416 410"/>
-    <path class="flow flow-down" d="M 424 410 L 424 224"/>
-    <!-- A <-> D  (diagonal NW-SE) -->
-    <path class="flow flow-up"   d="M 207 227 L 367 413"/>
-    <path class="flow flow-down" d="M 373 407 L 213 221"/>
-    <!-- B <-> C  (diagonal NE-SW) -->
-    <path class="flow flow-up"   d="M 367 221 L 207 407"/>
-    <path class="flow flow-down" d="M 213 413 L 373 227"/>
-
-    <!-- Clients (drawn above edges so labels stay readable) -->
-    <g>
-      <rect class="client" x="110" y="160" width="100" height="64" rx="8"/>
-      <text class="client-label" x="160" y="199">A</text>
-    </g>
-    <g>
-      <rect class="client" x="370" y="160" width="100" height="64" rx="8"/>
-      <text class="client-label" x="420" y="199">B</text>
-    </g>
-    <g>
-      <rect class="client" x="110" y="410" width="100" height="64" rx="8"/>
-      <text class="client-label" x="160" y="449">C</text>
-    </g>
-    <g>
-      <rect class="client" x="370" y="410" width="100" height="64" rx="8"/>
-      <text class="client-label" x="420" y="449">D</text>
-    </g>
-  </g>
-
-  <!-- ============== RIGHT PANEL : SFU ============== -->
-  <g>
-    <rect class="panel-bg" x="640" y="50" width="540" height="510" rx="14"/>
-    <text class="panel-title" x="910" y="88">SFU</text>
-    <text class="panel-sub" x="910" y="112">each client uploads once; SFU forwards selectively</text>
-
-    <!-- 4 edges between server and clients, two strokes each (upload + download) -->
-    <!-- A (top) <-> SFU -->
-    <path class="flow flow-up"   d="M 906 210 L 906 290"/>
-    <path class="flow flow-down" d="M 914 290 L 914 210"/>
-    <!-- B (left) <-> SFU -->
-    <path class="flow flow-up"   d="M 770 326 L 860 326"/>
-    <path class="flow flow-down" d="M 860 334 L 770 334"/>
-    <!-- C (right) <-> SFU -->
-    <path class="flow flow-up"   d="M 1050 326 L 960 326"/>
-    <path class="flow flow-down" d="M 960 334 L 1050 334"/>
-    <!-- D (bottom) <-> SFU -->
-    <path class="flow flow-up"   d="M 906 450 L 906 380"/>
-    <path class="flow flow-down" d="M 914 380 L 914 450"/>
-
-    <!-- SFU server (drawn above edges) -->
-    <g>
-      <rect class="server" x="860" y="290" width="100" height="90" rx="6"/>
-      <text class="server-label" x="910" y="343">SFU</text>
-    </g>
-
-    <!-- Clients -->
-    <g>
-      <rect class="client" x="860" y="150" width="100" height="60" rx="8"/>
-      <text class="client-label" x="910" y="187">A</text>
-    </g>
-    <g>
-      <rect class="client" x="670" y="300" width="100" height="60" rx="8"/>
-      <text class="client-label" x="720" y="337">B</text>
-    </g>
-    <g>
-      <rect class="client" x="1050" y="300" width="100" height="60" rx="8"/>
-      <text class="client-label" x="1100" y="337">C</text>
-    </g>
-    <g>
-      <rect class="client" x="860" y="450" width="100" height="60" rx="8"/>
-      <text class="client-label" x="910" y="487">D</text>
-    </g>
-  </g>
+  <desc id="desc">Animated comparison. In a 4-client P2P mesh every client sends a stream to each of the other three, 6 links in all; with 12 clients that grows to 66 links and 11 uploads per client. With an SFU each client sends one stream to the server, which forwards the others' streams back: 4 links for 4 clients, 12 for 12, and still one upload per client.</desc>
+  <style>
+    text{font-family:'Amazon Ember',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif}
+    text:where(:not([fill])){fill:#232f3e}
+    .title{font-size:26px;font-weight:700}
+    .lbl{font-size:13px}
+    .grp{font-size:14px;font-weight:600}
+    .role{font-size:14px;font-weight:700}
+    .note{font-size:13px;fill:#5f6b7a}
+  </style>
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#232f3e"/></marker><marker id="ah-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d13212"/></marker><marker id="ah-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1d8102"/></marker></defs>
+  <rect width="1200" height="640" fill="#ffffff"/>
+<style>
+  .st{fill:none;stroke-width:3;stroke-dasharray:8 8;stroke-linecap:round;animation:flow 1.2s linear infinite}
+  @keyframes flow{to{stroke-dashoffset:-16}}
+  @media (prefers-reduced-motion:reduce){.st{animation:none}}
+</style>
+<rect x="20" y="20" width="560" height="560" rx="14" fill="#f7f8f9" stroke="#d5d9de" stroke-width="1.5"/><text x="300" y="62" class="title" text-anchor="middle">P2P mesh</text><text x="300" y="88" class="note" text-anchor="middle">every client sends to every other client</text><text x="300" y="520" class="lbl" font-weight="700" text-anchor="middle">4 clients: 6 links, each sends 3 streams and receives 3</text><text x="300" y="544" class="lbl" text-anchor="middle">12 clients: 66 links, 11 up and 11 down per client</text>
+<path class="st" d="M220,195 L380,195" stroke="#1d8102"/>
+<path class="st" d="M165,240 L165,360" stroke="#1d8102"/>
+<path class="st" d="M205,226 L389,382" stroke="#1d8102"/>
+<path class="st" d="M380,185 L220,185" stroke="#1d8102"/>
+<path class="st" d="M389,218 L205,374" stroke="#1d8102"/>
+<path class="st" d="M425,240 L425,360" stroke="#1d8102"/>
+<path class="st" d="M175,360 L175,240" stroke="#1d8102"/>
+<path class="st" d="M211,382 L395,226" stroke="#1d8102"/>
+<path class="st" d="M220,415 L380,415" stroke="#1d8102"/>
+<path class="st" d="M395,374 L211,218" stroke="#1d8102"/>
+<path class="st" d="M435,360 L435,240" stroke="#1d8102"/>
+<path class="st" d="M380,405 L220,405" stroke="#1d8102"/>
+<rect x="144" y="172" width="52" height="36" rx="3" fill="#ffffff" stroke="#232f3e" stroke-width="2.5"/><rect x="130" y="170" width="14" height="40" rx="7" fill="#232f3e"/><rect x="196" y="170" width="14" height="40" rx="7" fill="#232f3e"/><circle cx="137" cy="182" r="2.5" fill="#ffffff"/><circle cx="203" cy="196" r="2.5" fill="#ffffff"/>
+<rect x="404" y="172" width="52" height="36" rx="3" fill="#ffffff" stroke="#232f3e" stroke-width="2.5"/><rect x="390" y="170" width="14" height="40" rx="7" fill="#232f3e"/><rect x="456" y="170" width="14" height="40" rx="7" fill="#232f3e"/><circle cx="397" cy="182" r="2.5" fill="#ffffff"/><circle cx="463" cy="196" r="2.5" fill="#ffffff"/>
+<rect x="144" y="392" width="52" height="36" rx="3" fill="#ffffff" stroke="#232f3e" stroke-width="2.5"/><rect x="130" y="390" width="14" height="40" rx="7" fill="#232f3e"/><rect x="196" y="390" width="14" height="40" rx="7" fill="#232f3e"/><circle cx="137" cy="402" r="2.5" fill="#ffffff"/><circle cx="203" cy="416" r="2.5" fill="#ffffff"/>
+<rect x="404" y="392" width="52" height="36" rx="3" fill="#ffffff" stroke="#232f3e" stroke-width="2.5"/><rect x="390" y="390" width="14" height="40" rx="7" fill="#232f3e"/><rect x="456" y="390" width="14" height="40" rx="7" fill="#232f3e"/><circle cx="397" cy="402" r="2.5" fill="#ffffff"/><circle cx="463" cy="416" r="2.5" fill="#ffffff"/>
+<rect x="620" y="20" width="560" height="560" rx="14" fill="#f7f8f9" stroke="#d5d9de" stroke-width="1.5"/><text x="900" y="62" class="title" text-anchor="middle">SFU</text><text x="900" y="88" class="note" text-anchor="middle">each client sends once; the SFU forwards selectively</text><text x="900" y="520" class="lbl" font-weight="700" text-anchor="middle">4 clients: 4 links, each sends 1 stream</text><text x="900" y="544" class="lbl" text-anchor="middle">12 clients: 12 links, still 1 upload per client</text>
+<path class="st" d="M895,174 L895,260" stroke="#1d8102"/>
+<path class="st" d="M905,260 L905,174" stroke="#139ad6"/>
+<path class="st" d="M734,305 L860,305" stroke="#1d8102"/>
+<path class="st" d="M860,295 L734,295" stroke="#139ad6"/>
+<path class="st" d="M1066,295 L940,295" stroke="#1d8102"/>
+<path class="st" d="M940,305 L1066,305" stroke="#139ad6"/>
+<path class="st" d="M905,421 L905,340" stroke="#1d8102"/>
+<path class="st" d="M895,340 L895,421" stroke="#139ad6"/>
+<rect x="868" y="268" width="64" height="64" rx="8" fill="#ffffff"/>
+<g transform="translate(872.0,272.0) scale(0.8750)"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g fill="#ED7100"> <rect x="0" y="0" width="64" height="64"></rect> </g> <path d="M22,41 L41,41 L41,23 L22,23 L22,41 Z M43,23 L46,23 L46,25 L43,25 L43,27 L46,27 L46,29 L43,29 L43,31 L46,31 L46,33 L43,33 L43,36 L46,36 L46,38 L43,38 L43,40 L46,40 L46,42 L42.863,42 C42.608,42.587 42.023,43 41.344,43 L41,43 L41,46 L39,46 L39,43 L37,43 L37,46 L35,46 L35,43 L33,43 L33,46 L31,46 L31,43 L29,43 L29,46 L27,46 L27,43 L24,43 L24,46 L22,46 L22,43 L21.656,43 C20.977,43 20.392,42.587 20.137,42 L18,42 L18,40 L20,40 L20,38 L18,38 L18,36 L20,36 L20,33 L18,33 L18,31 L20,31 L20,29 L18,29 L18,27 L20,27 L20,25 L18,25 L18,23 L20,23 L20,22.656 C20,21.743 20.743,21 21.656,21 L22,21 L22,18 L24,18 L24,21 L27,21 L27,18 L29,18 L29,21 L31,21 L31,18 L33,18 L33,21 L35,21 L35,18 L37,18 L37,21 L39,21 L39,18 L41,18 L41,21 L41.344,21 C42.257,21 43,21.743 43,22.656 L43,23 Z M32,52 L12,52 L12,32 L16,32 L16,30 L11.843,30 C10.826,30 10,30.827 10,31.843 L10,52.157 C10,53.173 10.826,54 11.843,54 L32.157,54 C33.174,54 34,53.173 34,52.157 L34,48 L32,48 L32,52 Z M54,11.843 L54,32.157 C54,33.173 53.174,34 52.157,34 L48,34 L48,32 L52,32 L52,12 L32,12 L32,16 L30,16 L30,11.843 C30,10.827 30.826,10 31.843,10 L52.157,10 C53.174,10 54,10.827 54,11.843 L54,11.843 Z" fill="#FFFFFF"></path> </g></g>
+<text x="940" y="266" class="lbl" font-weight="700">SFU server</text>
+<rect x="874" y="112" width="52" height="36" rx="3" fill="#ffffff" stroke="#232f3e" stroke-width="2.5"/><rect x="860" y="110" width="14" height="40" rx="7" fill="#232f3e"/><rect x="926" y="110" width="14" height="40" rx="7" fill="#232f3e"/><circle cx="867" cy="122" r="2.5" fill="#ffffff"/><circle cx="933" cy="136" r="2.5" fill="#ffffff"/>
+<rect x="664" y="282" width="52" height="36" rx="3" fill="#ffffff" stroke="#232f3e" stroke-width="2.5"/><rect x="650" y="280" width="14" height="40" rx="7" fill="#232f3e"/><rect x="716" y="280" width="14" height="40" rx="7" fill="#232f3e"/><circle cx="657" cy="292" r="2.5" fill="#ffffff"/><circle cx="723" cy="306" r="2.5" fill="#ffffff"/>
+<rect x="1084" y="282" width="52" height="36" rx="3" fill="#ffffff" stroke="#232f3e" stroke-width="2.5"/><rect x="1070" y="280" width="14" height="40" rx="7" fill="#232f3e"/><rect x="1136" y="280" width="14" height="40" rx="7" fill="#232f3e"/><circle cx="1077" cy="292" r="2.5" fill="#ffffff"/><circle cx="1143" cy="306" r="2.5" fill="#ffffff"/>
+<rect x="874" y="447" width="52" height="36" rx="3" fill="#ffffff" stroke="#232f3e" stroke-width="2.5"/><rect x="860" y="445" width="14" height="40" rx="7" fill="#232f3e"/><rect x="926" y="445" width="14" height="40" rx="7" fill="#232f3e"/><circle cx="867" cy="457" r="2.5" fill="#ffffff"/><circle cx="933" cy="471" r="2.5" fill="#ffffff"/>
+<line x1="330" y1="612" x2="374" y2="612" stroke="#1d8102" stroke-width="3" stroke-dasharray="8 8" stroke-linecap="round"/><text x="386" y="617" class="lbl">stream sent by a client</text>
+<line x1="660" y1="612" x2="704" y2="612" stroke="#139ad6" stroke-width="3" stroke-dasharray="8 8" stroke-linecap="round"/><text x="716" y="617" class="lbl">stream forwarded by the SFU</text>
 </svg>
