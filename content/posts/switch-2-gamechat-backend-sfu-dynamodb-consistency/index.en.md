@@ -35,15 +35,11 @@ The flow also implies an important structure: a chat is not a fully peer-to-peer
 
 ## Product Constraints: Real-Time Communication, 12-Person Rooms, Running Alongside a Game
 
-{{< figure src="slide-04-requirements.svg" >}}
-
-GameChat's service requirements are real-time video and audio, up to 12 participants per GameChat group, and operation in parallel with gameplay. The number 12 matters.
+GameChat's service requirements are **real-time video and audio**, **up to 12 participants per GameChat group**, and **operation in parallel with gameplay**. The number 12 matters.
 
 With a P2P mesh, every client in a 12-person room uploads media streams to the other 11. For home networks, NAT environments, and the Switch 2's encoding budget, that is essentially infeasible. Even voice-only mesh connection management bloats quickly; once game screen sharing joins in, P2P stops being realistic.
 
 "Running alongside a game" is the hardest product constraint in this system. A normal video conferencing app can claim foreground resources, but GameChat behaves more like a background real-time process embedded in the system layer. It cannot steal the resources a game needs for rendering and online play, so the server side has to carry more of the forwarding, selection, and state management work.
-
-{{< figure src="slide-05-WebRTC.svg" >}}
 
 The session said GameChat uses WebRTC for real-time audio/video and emphasized UDP packet communication. That sounds simple, but the actual engineering is far more complex than "it uses WebRTC."
 
@@ -63,19 +59,13 @@ Real networks add NAT hole-punching failures, TURN fallback, unpredictable cross
 
 ## System Architecture: Splitting the Control Plane from the Media Plane
 
-{{< figure src="slide-07-system-architecture.svg" >}}
-
-{{< figure src="mermaid-07-system-architecture.svg" >}}
+{{< figure src="arch-07-system-architecture.svg" >}}
 
 The architecture diagram splits the system into two layers.
 
 The control plane is concentrated in the Admin Region. CloudFront, ALB, Fargate, SQS, API Gateway, and DynamoDB together form the group server, the async workers, the SFU instance manager, and the state store. This is where rooms, invitations, authentication, state sync, and instance discovery live.
 
 The media plane is deployed across multiple regions. Each region runs SFU servers on EC2 plus Amazon Transcribe. The SFUs handle the actual WebRTC audio/video connections and forwarding. This layering matters: low-latency media paths need to sit near users, while making control-plane state multi-region as well would pull in data synchronization, conflict resolution, and much harder failure modes.
-
-{{< figure src="slide-08-functional-groups.svg" >}}
-
-{{< figure src="mermaid-08-functional-groups.svg" >}}
 
 Re-reading the diagram by function, the services fall into three groups.
 
@@ -93,15 +83,11 @@ Voice call quality does not degrade linearly. Below 50ms is barely noticeable, 5
 
 The value of multi-region SFU is connecting users to a nearby media node and pushing cross-region complexity onto the server side. The diagrams did not say whether the SFUs cascade between themselves, and the specific regions were never disclosed. That is one information gap the session left open.
 
-{{< figure src="slide-10-selective-region.svg" >}}
-
-Nintendo Systems runs regions selectively: SFU servers are multi-region, while the group server and the SFU instance manager stay single-region.
+Nintendo Systems runs regions selectively: **SFU servers are multi-region, while the group server and the SFU instance manager stay single-region.**
 
 This is textbook control plane / data plane separation. The media plane directly determines call latency, so it has to sit near users. The control plane mainly handles room creation, joining, and state management, which are less latency-sensitive. Keeping the control plane in a single region avoids Global Tables, cross-region write conflicts, and strong-consistency coordination.
 
 The cost is clear too. If the Admin Region fails outright, users worldwide may be unable to create or join GameChat sessions, though already-established media connections could keep running. The core of this trade-off: localize the media path, the highest-frequency, most experience-critical piece, and centralize the low-frequency, complex control state.
-
-{{< figure src="slide-11-sfu-discovery-problem.svg" >}}
 
 A client needs to know which SFU to connect to. That looks like service discovery, but it is more complicated than plain DNS or load balancing.
 
@@ -109,9 +95,7 @@ Picking an SFU has to weigh region latency, per-instance connection counts, CPU/
 
 At bottom, SFU discovery is a placement scheduler: picking the best media instance for a given user, in a given room, at a given moment.
 
-{{< figure src="slide-12-sfu-discovery-solution.svg" >}}
-
-{{< figure src="mermaid-12-sfu-discovery.svg" >}}
+{{< figure src="arch-12-sfu-discovery.svg" >}}
 
 The solution: the SFU instance manager monitors every instance and writes information like connection counts into DynamoDB. The group server reads the same DynamoDB, picks a suitable instance, and returns the endpoint to the client.
 
@@ -121,9 +105,7 @@ The flip side: instance state is effectively eventually consistent. Connection c
 
 ## The Join Path: Authentication, Event Sync, and Critical-Path Isolation
 
-{{< figure src="slide-13-auth-state-sync.svg" >}}
-
-{{< figure src="mermaid-13-auth-state-sync.svg" >}}
+{{< figure src="arch-13-auth-state-sync.svg" >}}
 
 Joining a room requires three checks: is the user connected to the correct SFU instance, do they belong to the right group, and is the access token valid? User state changes, such as joining, leaving, momentary drops, and reconnects, also sync back to the group server and get written to DynamoDB.
 
@@ -131,9 +113,7 @@ This means the SFU is not the source of truth for business state. It handles med
 
 This division shrinks the SFU's blast radius. The SFU is exposed to public UDP and WebRTC ingress. As long as it holds no user tables, membership data, or auth secrets, business data and access control stay centralized in the control plane even when a media instance has problems.
 
-{{< figure src="slide-14-webhook-auth.svg" >}}
-
-{{< figure src="mermaid-14-webhook-auth.svg" >}}
+{{< figure src="arch-14-webhook-auth.svg" >}}
 
 After the SFU receives a WebRTC connection request, it calls the group server through the auth webhook. The request carries user information, the target instance, a timestamp, the access token, and WebRTC settings. Only after the group server verifies it and returns 200 OK does the SFU complete the connection.
 
@@ -141,9 +121,7 @@ This resembles the usual media-server auth callback pattern: the SFU does not to
 
 The cost is that the auth webhook sits on the join critical path. A cross-region user connects to a nearby SFU, but that SFU may still have to call back to the group server in the Admin Region to authenticate. For a low-frequency action like joining a room, a few hundred milliseconds is acceptable. For per-frame media forwarding, it would be fatal.
 
-{{< figure src="slide-15-webhook-split.svg" >}}
-
-{{< figure src="mermaid-15-webhook-split.svg" >}}
+{{< figure src="arch-15-webhook-split.svg" >}}
 
 The session split webhooks into two categories.
 
@@ -155,9 +133,7 @@ This separation is an important step in mature system design. Workloads with dif
 
 ## Operations: Observability and Regional Modularity
 
-{{< figure src="slide-16-observability.svg" >}}
-
-{{< figure src="mermaid-16-observability.svg" >}}
+{{< figure src="arch-16-observability.svg" >}}
 
 The observability section revealed a few stack details. The group server is written in Go and generates traces via the AWS Distro for OpenTelemetry SDK. On the SFU side, an Envoy proxy generates or propagates trace IDs, and an OtelCollector container collects them and ships them to AWS X-Ray.
 
@@ -165,9 +141,7 @@ The system does not bind directly to the X-Ray native SDK; it uses OpenTelemetry
 
 Using Envoy on the SFU side is interesting too. The media server itself may be awkward to instrument, especially if it is an open-source SFU or an internal fork. Using an Envoy sidecar to intercept webhook HTTP traffic and inject traces is a way of adding observability from the outside.
 
-{{< figure src="slide-17-terraform.svg" >}}
-
-{{< figure src="mermaid-17-terraform.svg" >}}
+{{< figure src="arch-17-terraform.svg" >}}
 
 SFU regional resources are managed through a Terraform module. Inject a different config per region and you get the corresponding EC2, networking, and Transcribe resources.
 
@@ -176,8 +150,6 @@ The value is abstracting "the media-plane resource set for one region" into a re
 That said, the slide's "respond immediately" (即座に対応) should not be read as "a new region is one `terraform apply` away." Bringing a new region online also involves image replication, client region-list updates, instance manager configuration, monitoring and alerting, staged traffic cutover, and failure drills. Terraform solves provisioning, not the full go-live process.
 
 ## DynamoDB Modeling: Cost, Query Patterns, and Denormalization
-
-{{< figure src="slide-18-DynamoDB-chapter.svg" >}}
 
 The second half moved into DynamoDB development examples: cost efficiency, use-case-driven design, denormalization, the GameChat start flow, state transitions and eventual consistency, and handling inconsistency in additional invites.
 
@@ -238,8 +210,6 @@ DynamoDB supports strongly consistent reads, which guarantee you read confirmed 
 Strongly consistent reads are also not available everywhere. They mainly apply to base-table reads within a single region; GSIs remain eventually consistent. On a high-frequency read path, switching every read to strong both increases cost and can hide problems in the data model itself.
 
 Strong reads should be a tool for the constraints that actually need them, not a switch you flip globally whenever state looks inconsistent.
-
-{{< figure src="slide-28-no-strong-read.svg" >}}
 
 Nintendo Systems explicitly said that this time they tolerated eventual consistency through design work, so they did not adopt strongly consistent reads.
 

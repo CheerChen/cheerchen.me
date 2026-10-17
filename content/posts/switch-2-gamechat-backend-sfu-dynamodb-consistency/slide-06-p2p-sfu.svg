@@ -1,25 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
-  <style>text{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans CJK JP',sans-serif;fill:#1f2937}.tag{font-size:22px;fill:#475569;text-decoration:underline}.title{font-size:50px;font-weight:800}.h{font-size:26px;font-weight:700}.p{font-size:24px;fill:#334155}.cell{fill:#fff;stroke:#cbd5e1;stroke-width:2}.head{fill:#f1f5f9}</style>
-  <rect width="1200" height="675" fill="#f8fafc"/>
-  <text x="1070" y="60" class="tag">システム構成</text>
-  <text x="80" y="130" class="title">採用技術：WebRTC</text>
-  <rect x="70" y="170" width="280" height="380" class="head"/>
-  <rect x="350" y="170" width="420" height="380" class="cell"/>
-  <rect x="770" y="170" width="360" height="380" class="cell"/>
-  <line x1="70" y1="220" x2="1130" y2="220" stroke="#cbd5e1" stroke-width="2"/>
-  <line x1="70" y1="290" x2="1130" y2="290" stroke="#cbd5e1" stroke-width="2"/>
-  <line x1="70" y1="350" x2="1130" y2="350" stroke="#cbd5e1" stroke-width="2"/>
-  <line x1="70" y1="410" x2="1130" y2="410" stroke="#cbd5e1" stroke-width="2"/>
-  <text x="160" y="205" class="h">方式名</text>
-  <text x="495" y="205" class="h">P2P</text>
-  <text x="920" y="205" class="h">SFU</text>
-  <text x="140" y="270" class="h">通信方法</text>
-  <text x="370" y="270" class="p">クライアント間直接通信</text><text x="395" y="305" class="p">(最も遅延しない)</text>
-  <text x="790" y="270" class="p">サーバー経由通信</text><text x="810" y="305" class="p">(の分遅延する)</text>
-  <text x="135" y="385" class="h">ストリーム数</text>
-  <text x="540" y="385" class="p">大</text>
-  <text x="940" y="385" class="p">小</text>
-  <text x="98" y="448" class="h">エンコード・デコード数</text>
-  <text x="540" y="448" class="p">大</text>
-  <text x="940" y="448" class="p">小</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">WebRTC: P2P vs SFU</title>
+  <desc id="desc">WebRTC carries real-time audio and video over UDP in one of two topologies. P2P sends media directly between clients with the lowest latency, but each client handles many streams and many encodes and decodes. SFU relays media through a server, adding relay latency, but each client handles few streams and few encodes and decodes.</desc>
+  <style>text{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif}text:where(:not([fill])){fill:#232f3e}</style>
+  <rect width="1200" height="675" fill="#e4e7eb"/>
+  <rect x="16" y="20" width="1168" height="643" rx="14" fill="#c9ced4"/>
+  <rect x="14" y="14" width="1172" height="645" rx="14" fill="#ffffff" stroke="#cfd4da" stroke-width="1.5"/>
+<text x="1130" y="62" font-size="20" fill="#5f6b7a" text-anchor="end" text-decoration="underline">System architecture</text>
+<text x="70" y="138" font-size="44" font-weight="700">WebRTC: P2P vs SFU</text>
+<text x="70" y="184" font-size="22" fill="#5f6b7a">WebRTC carries real-time audio and video over UDP, in one of two topologies.</text>
+<rect x="70" y="236" width="1060" height="52" fill="#3a3f46"/><rect x="70" y="288" width="1060" height="79" fill="#f3f4f6"/><rect x="70" y="367" width="1060" height="52" fill="#e9ebee"/><rect x="70" y="419" width="1060" height="52" fill="#f3f4f6"/><rect x="70" y="288" width="300" height="183" fill="#e9ebee"/><line x1="70" y1="367" x2="1130" y2="367" stroke="#ffffff" stroke-width="3"/><line x1="70" y1="419" x2="1130" y2="419" stroke="#ffffff" stroke-width="3"/><text x="220.0" y="270" font-size="22" font-weight="700" fill="#ffffff" text-anchor="middle"></text><text x="220.0" y="336" font-size="22" font-weight="700" text-anchor="middle">Media path</text><text x="220.0" y="401" font-size="22" font-weight="700" text-anchor="middle">Streams per client</text><text x="220.0" y="453" font-size="22" font-weight="700" text-anchor="middle">Encodes / decodes</text><text x="560.0" y="270" font-size="22" font-weight="700" fill="#ffffff" text-anchor="middle">P2P</text><text x="560.0" y="321" font-size="22" text-anchor="middle">Direct between clients</text><text x="560.0" y="350" font-size="22" text-anchor="middle">(lowest latency)</text><text x="560.0" y="401" font-size="22" text-anchor="middle">Many</text><text x="560.0" y="453" font-size="22" text-anchor="middle">Many</text><line x1="370" y1="236" x2="370" y2="471" stroke="#ffffff" stroke-width="3"/><text x="940.0" y="270" font-size="22" font-weight="700" fill="#ffffff" text-anchor="middle">SFU</text><text x="940.0" y="321" font-size="22" text-anchor="middle">Relayed by a server</text><text x="940.0" y="350" font-size="22" text-anchor="middle">(adds relay latency)</text><text x="940.0" y="401" font-size="22" text-anchor="middle">Few</text><text x="940.0" y="453" font-size="22" text-anchor="middle">Few</text><line x1="750" y1="236" x2="750" y2="471" stroke="#ffffff" stroke-width="3"/>
+<g transform="translate(1124,619) scale(1.0)"><rect x="-26" y="-18" width="52" height="36" rx="3" fill="#ffffff" stroke="#232f3e" stroke-width="2.5"/><text x="0" y="6" font-size="17" font-weight="700" text-anchor="middle">6</text><rect x="-40" y="-20" width="14" height="40" rx="7" fill="#139ad6" stroke="#232f3e" stroke-width="2"/><rect x="26" y="-20" width="14" height="40" rx="7" fill="#e8412c" stroke="#232f3e" stroke-width="2"/><circle cx="-33" cy="-8" r="2.5" fill="#ffffff"/><circle cx="33" cy="6" r="2.5" fill="#ffffff"/></g>
 </svg>
