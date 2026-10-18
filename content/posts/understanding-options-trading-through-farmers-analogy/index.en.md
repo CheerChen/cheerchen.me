@@ -16,7 +16,7 @@ nolastmod = true
 
 ## Introduction
 
-In the US market, trading shares is easy: you pay, you get the goods — fair and square, totally intuitive. Options trading, on the other hand, leaves most beginners scratching their heads. So how am I learning options in the AI era? I simply told the AI honestly that I knew nothing about options, and asked it to teach me.
+US share trading is pay the cash, take the shares. I am learning options by telling an AI I know none of this and asking it to teach me.
 
 ## Let's Start with Running a Casino
 
@@ -50,7 +50,7 @@ the shares as the anchor, the next-week puts as the "assignment line", and the n
 
 {{< /ask >}}
 
-Gemini bluntly pointed out that I was trying to fly before I'd learned to walk.
+Gemini said this three-leg combo runs ahead of a first lesson.
 
 {{< gemini >}}
 
@@ -303,9 +303,7 @@ OK, let's look at another options player's approach — can you explain his game
 
 {{< /ask >}}
 
-This is a great contrasting case!
-
-The first example you brought (@liangbin penny) and this second one (Guo Yu, @turingou) perfectly represent **two opposite schools** in the options world:
+The two tweets sit on opposite sides of the trade. @liangbin penny sells options. Guo Yu buys them.
 
 1.  **@liangbin penny (the first example):** an **option seller**.
     * **Role:** the insurance company / the casino.
@@ -639,7 +637,7 @@ Only in the **final second** of expiration day — when all "hope" and "time" hi
 
 ## Why Did Humans Even Invent This Thing?
 
-After sorting through both players' trades, I felt like my head was splitting in two. So — what are options, really?
+Both trades were in my head at once. I asked what options actually are.
 
 {{< ask >}}
 
@@ -745,7 +743,7 @@ That's **all of it**. Remember these two roles and you've already grasped the "s
 
 >But somehow we've now rushed into "the exchange for insurance policies and deposits" (the options market). We don't care at all whether apples actually get delivered in the fall — we're just purely, frantically speculating on the prices of the "insurance contracts" and "deposit contracts" themselves.
 
-His analogy was brilliant — the absurdity clicked for me instantly.
+The analogy landed.
 
 ## Recap: Rapid-Fire Q&A
 
