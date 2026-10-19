@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="470" viewBox="0 0 1200 470" role="img" aria-labelledby="title desc">
+  <title id="title">E2E load test: API calls and 4XX errors</title>
+  <desc id="desc">Redrawn CloudWatch chart from the E2E load test. API calls per minute climb steeply; at the cursor, 609,946 calls per minute with an average of 10,166 RPS, 4XX errors start (8,820 at that point) and rise together with the calls, while average RPS stays near the floor of the scale. Curve shapes are approximate.</desc>
+  <style>
+    text{font-family:'Amazon Ember',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif}
+    text:where(:not([fill])){fill:#232f3e}
+    .title{font-size:26px;font-weight:700}
+    .lbl{font-size:13px}
+    .grp{font-size:14px;font-weight:600}
+    .role{font-size:14px;font-weight:700}
+    .note{font-size:13px;fill:#5f6b7a}
+  </style>
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#232f3e"/></marker><marker id="ah-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d13212"/></marker><marker id="ah-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1d8102"/></marker></defs>
+  <rect width="1200" height="470" fill="#ffffff"/>
+<text x="40" y="34" class="grp">E2E load test: API calls and 4XX errors</text>
+<text x="40" y="54" class="note" text-anchor="start">Redrawn from the CloudWatch chart on the talk slide; curve shapes are approximate, values at the cursor are as shown</text>
+<line x1="120" y1="432.0" x2="900" y2="432.0" stroke="#e6e9ee"/>
+<text x="110" y="436.0" class="note" text-anchor="end">0</text>
+<line x1="120" y1="385.1" x2="900" y2="385.1" stroke="#e6e9ee"/>
+<text x="110" y="389.14285714285717" class="note" text-anchor="end">100k</text>
+<line x1="120" y1="338.3" x2="900" y2="338.3" stroke="#e6e9ee"/>
+<text x="110" y="342.2857142857143" class="note" text-anchor="end">200k</text>
+<line x1="120" y1="291.4" x2="900" y2="291.4" stroke="#e6e9ee"/>
+<text x="110" y="295.42857142857144" class="note" text-anchor="end">300k</text>
+<line x1="120" y1="244.6" x2="900" y2="244.6" stroke="#e6e9ee"/>
+<text x="110" y="248.57142857142858" class="note" text-anchor="end">400k</text>
+<line x1="120" y1="197.7" x2="900" y2="197.7" stroke="#e6e9ee"/>
+<text x="110" y="201.71428571428572" class="note" text-anchor="end">500k</text>
+<line x1="120" y1="150.9" x2="900" y2="150.9" stroke="#e6e9ee"/>
+<text x="110" y="154.85714285714283" class="note" text-anchor="end">600k</text>
+<line x1="120" y1="104.0" x2="900" y2="104.0" stroke="#e6e9ee"/>
+<text x="110" y="108.0" class="note" text-anchor="end">700k</text>
+<line x1="120" y1="432" x2="900" y2="432" stroke="#9aa3ad" stroke-width="1.5"/>
+<text x="900" y="454" class="note" text-anchor="end">time →</text>
+<text x="110" y="88" class="note" text-anchor="end">per minute</text>
+<line x1="689.4" y1="98" x2="689.4" y2="432" stroke="#5f6b7a" stroke-width="1.5" stroke-dasharray="5,4"/>
+<path d="M307,431.1 L838,431.1" fill="none" stroke="#e8902c" stroke-width="3"/>
+<path d="M307,432.0 C448,417.9 604,282.1 689.4,146.2 C713,122.7 736,104.0 760,104.0 L791,104.0 L799,211.8" fill="none" stroke="#c9553f" stroke-width="3"/>
+<path d="M689.4,432.0 C713,399.2 736,388.9 752,389.8 C767,390.8 775,399.2 783,402.9" fill="none" stroke="#8f5fa8" stroke-width="3"/>
+<circle cx="689.4" cy="146.2" r="5" fill="#ffffff" stroke="#c9553f" stroke-width="2.5"/>
+<path d="M675,146 L510,146" fill="none" stroke="#d13212" stroke-width="1.5"/>
+<text x="502" y="138" class="lbl" font-weight="700" text-anchor="end" style="fill:#d13212">~600,000 requests/min (10,000 RPS on average):</text>
+<text x="502" y="158" class="lbl" font-weight="700" text-anchor="end" style="fill:#d13212">4XX errors start</text>
+<rect x="930" y="104" width="240" height="132" rx="6" fill="#ffffff" stroke="#232f3e" stroke-width="1.5"/>
+<text x="948" y="132" class="lbl" font-weight="700">At the cursor</text>
+<circle cx="954" cy="160" r="5" fill="none" stroke="#c9553f" stroke-width="2.5"/><text x="968" y="164" class="lbl">Count</text><text x="1152" y="164" class="lbl" font-weight="700" text-anchor="end">609,946</text>
+<circle cx="954" cy="186" r="5" fill="none" stroke="#e8902c" stroke-width="2.5"/><text x="968" y="190" class="lbl">RPS</text><text x="1152" y="190" class="lbl" font-weight="700" text-anchor="end">10,166</text>
+<circle cx="954" cy="212" r="5" fill="none" stroke="#8f5fa8" stroke-width="2.5"/><text x="968" y="216" class="lbl">4XXError</text><text x="1152" y="216" class="lbl" font-weight="700" text-anchor="end">8,820</text>
+<line x1="930" y1="279" x2="956" y2="279" stroke="#c9553f" stroke-width="3"/><text x="966" y="284" class="lbl"><tspan font-weight="700">Count</tspan> API calls per minute</text>
+<line x1="930" y1="307" x2="956" y2="307" stroke="#e8902c" stroke-width="3"/><text x="966" y="312" class="lbl"><tspan font-weight="700">RPS</tspan> average requests per second</text>
+<line x1="930" y1="335" x2="956" y2="335" stroke="#8f5fa8" stroke-width="3"/><text x="966" y="340" class="lbl"><tspan font-weight="700">4XXError</tspan> 4xx errors</text>
+<text x="930" y="390" class="note" text-anchor="start">Count and 4XXError rise together</text>
+<text x="930" y="408" class="note" text-anchor="start">from the cursor on.</text>
+</svg>

@@ -13,6 +13,8 @@ REPO = HERE.parents[1]
 INK = "#232f3e"          # AWS squid ink: text, AWS Cloud border, arrows
 DIM = "#5f6b7a"
 REGION = "#00a4a6"       # AWS Region group colour
+VPC = "#8c4fff"          # AWS VPC group colour
+ACCOUNT = "#e7157b"      # AWS Account group colour
 RED = "#d13212"          # highlights: the selected / synchronous path
 GREEN = "#1d8102"        # highlights: the asynchronous path
 FONT = "'Amazon Ember',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif"
@@ -38,6 +40,19 @@ ICONS = {
     "app": "Res_Generic-Application_48_Light",
     "aws-cloud": "AWS-Cloud-logo_32",
     "region": "Region_32",
+    "vpc": "Virtual-private-cloud-VPC_32",
+    "account": "AWS-Account_32",
+    "lambda": "Arch_AWS-Lambda_48",
+    "ecs": "Arch_Amazon-Elastic-Container-Service_48",
+    "elasticache": "Arch_Amazon-ElastiCache_48",
+    "rds": "Arch_Amazon-RDS_48",
+    "ivs": "Arch_Amazon-Interactive-Video-Service_48",
+    "users": "Res_Users_48_Light",
+    "stepfunctions": "Arch_AWS-Step-Functions_48",
+    "firehose": "Arch_Amazon-Data-Firehose_48",
+    "bedrock": "Arch_Amazon-Bedrock_48",
+    "mobile": "Res_Mobile-client_48_Light",
+    "user": "Res_User_48_Light",
 }
 
 STYLE = f"""
@@ -74,16 +89,30 @@ def icon(key, cx, cy, size=48, label=None):
 
 
 def group(x, y, w, h, kind, label):
-    """AWS group box. kind: "cloud" (solid ink border) or "region" (dashed teal border)."""
-    if kind == "cloud":
-        border = f'stroke="{INK}" stroke-width="1.5"'
-        color = INK
-    else:
-        border = f'stroke="{REGION}" stroke-width="1.5" stroke-dasharray="6,4"'
-        color = REGION
+    """AWS group box. kind: "cloud" (solid ink), "region" (dashed teal), "vpc" (solid purple) or "account" (solid pink)."""
+    color, dash, glyph = {"cloud": (INK, "", "aws-cloud"), "region": (REGION, ' stroke-dasharray="6,4"', "region"),
+                          "vpc": (VPC, "", "vpc"), "account": (ACCOUNT, "", "account")}[kind]
+    border = f'stroke="{color}" stroke-width="1.5"{dash}'
     return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="none" {border}/>'
-            + icon("aws-cloud" if kind == "cloud" else "region", x + 14, y + 14, 28)
+            + icon(glyph, x + 14, y + 14, 28)
             + f'<text x="{x + 36}" y="{y + 19}" class="grp" style="fill:{color}">{label}</text>')
+
+
+def service_box(x, y, w, h, key, label):
+    """A dashed box standing for one service's insides, its icon on the top-left corner (key=None: a plain group)."""
+    return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="4" fill="none" stroke="{DIM}" stroke-width="1.5" stroke-dasharray="6,5"/>'
+            + (icon(key, x, y, 36) if key else "")
+            + f'<text x="{x + (30 if key else 16)}" y="{y + (22 if key else 26)}" class="grp">{label}</text>')
+
+
+def box(x, y, w, h, lines, fill="#ffffff"):
+    """A plain labelled rectangle for something that has no AWS icon (a stage, an environment)."""
+    s = f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="6" fill="{fill}" stroke="{INK}" stroke-width="1.5"/>'
+    lines = [lines] if isinstance(lines, str) else lines
+    top = y + h / 2 - (len(lines) - 1) * 9 + 5
+    for i, line in enumerate(lines):
+        s += f'<text x="{x + w / 2}" y="{top + i * 18:.0f}" class="lbl" text-anchor="middle">{line}</text>'
+    return s
 
 
 def band(x, y, w, h, color):
@@ -116,7 +145,8 @@ def step(cx, cy, n, color=INK):
 
 
 def note(x, y, text, anchor="start", color=None, bold=False):
-    fill = f' fill="{color}"' if color else ""
+    # inline style: a fill attribute would lose to the .note class rule
+    fill = f' style="fill:{color}"' if color else ""
     weight = ' font-weight="700"' if bold else ""
     return f'<text x="{x}" y="{y}" class="note"{fill}{weight} text-anchor="{anchor}">{text}</text>'
 

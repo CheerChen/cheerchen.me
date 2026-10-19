@@ -6,7 +6,7 @@
   <text x="1070" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="40" font-weight="700" fill="#33426f">TBS</text>
   <line x1="72" y1="98" x2="1060" y2="98" stroke="#c8d0ca" stroke-width="3"/>
   <text x="110" y="150" font-family="Avenir" font-size="22" fill="#4b5853">実際にユーザーが利用するときを想定して、VU 数が変化するシナリオを用意した</text>
-  <g transform="translate(225 215)">
+  <g transform="translate(225 170)">
     <line x1="100" y1="300" x2="760" y2="300" stroke="#777" stroke-width="2" marker-end="url(#arrow)"/>
     <line x1="100" y1="300" x2="100" y2="30" stroke="#777" stroke-width="2" marker-end="url(#arrow)"/>
     <text x="76" y="24" font-family="Avenir" font-size="18" fill="#555">アクセス数</text>
@@ -24,8 +24,10 @@
     <text x="678" y="342" font-family="Avenir" font-size="19" fill="#777">本編配信中</text>
   </g>
   <g font-family="Avenir" font-size="21" fill="#4b5853">
-    <text x="140" y="585">• 待機配信開始時に、最大 VU 数の 10% が参加する</text>
-    <text x="140" y="620">• その後は開始時間前に参加数が急増するように、</text><rect x="695" y="594" width="250" height="34" fill="#fff06a"/><text x="705" y="620" font-weight="700">VU 数が指数的に増加する</text>
+    <text x="140" y="586">• 待機配信開始時に、最大 VU 数の 10% が参加する</text>
+    <rect x="614.3" y="600.0" width="211.5" height="23.0" data-mark="m06-exp" fill="#fff06a"/>
+    <text x="140" y="618">• その後は開始時間前に参加数が急増するように、<tspan id="m06-exp" font-weight="700">VU 数が指数的に増加</tspan>する</text>
+    <text x="140" y="650">• この傾向は、過去に実施した類似イベントのデータをもとに作成した</text>
   </g>
   <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#777"/></marker></defs>
 </svg>

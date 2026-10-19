@@ -31,9 +31,7 @@ Kustamie 要承接的是一组同时发生的行为：观众打开活动页、�
 
 ## 架构总览：事件信息与实时数据分离
 
-{{< figure src="slide-01-architecture.svg" >}}
-
-{{< figure src="mermaid-01-architecture.svg" >}}
+{{< figure src="arch-01-architecture.svg" >}}
 
 Kustamie 的通信被明确拆成两条链路。
 
@@ -58,6 +56,8 @@ TBS 在大规模配信前遇到的第一个问题是：原有客户端 API 并�
 ## 容量规划：不能只看 Lambda 并发
 
 {{< figure src="slide-03-lambda-load-metrics.svg" >}}
+
+{{< figure src="arch-03-lambda-concurrency.svg" >}}
 
 API Gateway + Lambda 的容量规划至少要同时看三个指标。
 
@@ -89,11 +89,9 @@ Slide 给出的解法是把并发 quota 放宽到 2,000。这个说法需要谨�
 
 ## 负荷测试：k6 与跨账号压测
 
-{{< figure src="slide-05-load-test-method.svg" >}}
+{{< figure src="arch-05-load-test.svg" >}}
 
-{{< figure src="mermaid-05-load-test.svg" >}}
-
-负荷测试工具选的是 k6。这个选择很务实：场景脚本可以用 JavaScript / TypeScript 描述，工程师容易 review；Go runtime 资源效率高；AWS Prescriptive Guidance 也把 k6 作为负荷测试工具之一。
+**负荷测试工具选的是 k6**。这个选择很务实：场景脚本可以用 JavaScript / TypeScript 描述，工程师容易 review；Go runtime 资源效率高；AWS Prescriptive Guidance 也把 k6 作为负荷测试工具之一。
 
 测试拓扑采用了压测账号和 Kustamie 账号分离的方式。管理节点使用 `t3.medium`，大规模 worker 使用 `c6i.2xlarge`。中规模测试，也就是 100 到 5,000 VU，可以在本地 PC 上执行；大规模测试，也就是 5,000 到 60,000 VU，则启动 EC2 worker 集群。
 
@@ -115,6 +113,8 @@ Kustamie 的 scenario 假设待机配信开始时已有最大 VU 的 10% 在线�
 
 {{< figure src="slide-07-quota.svg" >}}
 
+{{< figure src="arch-07-load-test-result.svg" >}}
+
 E2E 压测的结果很直接：当请求量超过 **每分钟 600,000 次**，也就是平均 **10,000 RPS** 时，400 番台错误开始增加。这个数字恰好对应 API Gateway 默认 throttle rate。
 
 排查链路也很清楚：Lambda 侧没有观察到错误，因此判断问题发生在 API Gateway 层。Slide 也诚实地指出，API Gateway 标准 metrics 只能看到 4xx，不能直接区分具体错误类型。要更精确定位，实际运维中需要打开 access logging，记录 status、requestId、error message 和 throttling 相关上下文。
@@ -125,9 +125,7 @@ E2E 压测的结果很直接：当请求量超过 **每分钟 600,000 次**，�
 
 ## 多段缓存：让请求尽量停在外层
 
-{{< figure src="slide-08-multi-tier-cache.svg" >}}
-
-{{< figure src="mermaid-08-cache.svg" >}}
+{{< figure src="arch-08-cache.svg" >}}
 
 性能改善的第一步是多段缓存。
 
@@ -137,31 +135,27 @@ E2E 压测的结果很直接：当请求量超过 **每分钟 600,000 次**，�
 
 第三层是 **ECS + ElastiCache for Valkey**。这层在应用服务侧挡住 RDS 查询。Valkey 与 Redis 7.2 基本兼容，AWS 在 Redis license 变化后明显加大了对 Valkey 的推动，选它既是性能选择，也有 license 和成本上的考量。
 
-从方法论上看，多段缓存的原则很简单：缓存越靠近请求源，命中时省掉的后端工作越多。API Gateway stage cache 省掉 Lambda、ECS 和数据库；Lambda global cache 省掉后段服务调用；ElastiCache 省掉 RDS 查询。
+从方法论上看，多段缓存的原则很简单：**缓存越靠近请求源，命中时省掉的后端工作越多**。API Gateway stage cache 省掉 Lambda、ECS 和数据库；Lambda global cache 省掉后段服务调用；ElastiCache 省掉 RDS 查询。
 
 这里的 cache invalidation 并不是特别难，因为架构在一开始已经把实时用户产生数据分流给 IVS Chat。留在 API 路径上的数据大多是预先安排或变化可控的内容，TTL-based 失效就足够覆盖多数场景。
 
 ## 异步化：把用户感知路径缩到 150ms
 
-{{< figure src="slide-09-async.svg" >}}
-
-{{< figure src="mermaid-09-async.svg" >}}
+{{< figure src="arch-09-async.svg" >}}
 
 最大的一次改善来自异步化。配信参加 API 的响应从最大 **12,000ms** 降到平均 **150ms** 左右，约 80 倍改善。
 
-核心思路是只把用户立刻需要的内容留在同步路径里。同步路径通过 API Gateway 进入 Lambda，再用 Step Functions Express Workflow 完成 UserID 生成、IVS Token 生成和 SQS 入队。剩下不影响用户立即观看的处理，通过 SQS 进入异步路径，由 Lambda 和 ECS 后台慢慢消费。
+核心思路是只把用户立刻需要的内容留在同步路径里。同步路径通过 API Gateway 进入 Lambda，再用 Step Functions Express Workflow 完成 UserID 生成、IVS Token 生成和 SQS 入队。**剩下不影响用户立即观看的处理，通过 SQS 进入异步路径**，由 Lambda 和 ECS 后台慢慢消费。
 
 这不是单纯调参数，而是重新定义“什么必须同步完成”。用户要立刻进入直播，因此 UserID 和 IVS Token 必须同步返回；注册记录、关联状态、历史写入等工作可以延后。
 
-IVS Realtime Token 的处理也很关键。Slide 提到 IVS API call rate 是 **50 TPS 且不可放宽**，如果 60,000 用户集中进入，每人调用一次 IVS API 会直接撞上控制面限制。因此 token 由 Lambda 直接签发。它本质上是用私钥生成的 JWT，属于用本地密码学操作替代 rate-limited control plane API 的模式。S3 presigned URL、CloudFront signed URL / cookies 也是类似思路。
+IVS Realtime Token 的处理也很关键。Slide 提到 IVS API call rate 是 **50 TPS 且不可放宽**，如果 60,000 用户集中进入，每人调用一次 IVS API 会直接撞上控制面限制。**因此 token 由 Lambda 直接签发**。它本质上是用私钥生成的 JWT，属于用本地密码学操作替代 rate-limited control plane API 的模式。S3 presigned URL、CloudFront signed URL / cookies 也是类似思路。
 
-Step Functions 选 Express Workflow 也合理。这个流程高频、短时，不需要 Standard Workflow 那种长时间持久化和完整历史；Express 的成本和延迟更适合做轻量编排。Slide 还提到当 workflow 并发上限达到时，在调用侧 Lambda 实现 retry，这是托管服务架构里非常实际的防线。
+**Step Functions 选 Express Workflow** 也合理。这个流程高频、短时，不需要 Standard Workflow 那种长时间持久化和完整历史；Express 的成本和延迟更适合做轻量编排。Slide 还提到当 workflow 并发上限达到时，在调用侧 Lambda 实现 retry，这是托管服务架构里非常实际的防线。
 
 ## AI 聊天审核：后置审核换取实时体验
 
-{{< figure src="slide-10-ai-chat-moderation.svg" >}}
-
-{{< figure src="mermaid-10-chat-moderation.svg" >}}
+{{< figure src="arch-10-chat-moderation.svg" >}}
 
 Kustamie 还使用 Amazon Nova Micro 做聊天内容审核。整体链路是：用户消息先通过 WebSocket 进入 IVS Chat，同时消息经由 Data Firehose 落到后段存储，再通过 stream 触发 Lambda 调用 Bedrock。模型判定违规后，系统更新状态，并向 IVS Chat 发起 delete message request。
 
@@ -196,8 +190,6 @@ Bedrock 上的第三方 serverless 模型，包括 Claude 等，优点是多语�
 ## 视频审核构想：从每条消息到抽样画面
 
 {{< figure src="slide-13-video-moderation.svg" >}}
-
-{{< figure src="mermaid-13-video-moderation.svg" >}}
 
 视频审核部分使用的是“構想”这个词，说明它还不是已经落地的功能。思路是从 IVS 视频流里定期截取 snapshot，把图片交给 Nova Lite 这类多模态模型判断，再根据结果通知主办方。
 

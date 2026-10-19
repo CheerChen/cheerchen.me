@@ -31,9 +31,7 @@ Kustamie が同時に捌かなければいけない行動は複数ある。視�
 
 ## アーキテクチャの全体像
 
-{{< figure src="slide-01-architecture.svg" >}}
-
-{{< figure src="mermaid-01-architecture.svg" >}}
+{{< figure src="arch-01-architecture.svg" >}}
 
 Kustamie の通信は大きく 2 本に分けられている。
 
@@ -58,6 +56,8 @@ Kustamie の通信は大きく 2 本に分けられている。
 ## Lambda のキャパシティプランニング
 
 {{< figure src="slide-03-lambda-load-metrics.svg" >}}
+
+{{< figure src="arch-03-lambda-concurrency.svg" >}}
 
 API Gateway + Lambda の容量を考えるときは、少なくとも 3 つの指標を同時に見る必要がある。
 
@@ -89,11 +89,9 @@ $$
 
 ## 負荷テストの設計
 
-{{< figure src="slide-05-load-test-method.svg" >}}
+{{< figure src="arch-05-load-test.svg" >}}
 
-{{< figure src="mermaid-05-load-test.svg" >}}
-
-負荷テストツールは k6 を選んだ。スクリプトが JavaScript / TypeScript で書けるのでエンジニアがレビューしやすく、Go のランタイムなのでリソース効率も良い。AWS Prescriptive Guidance も k6 を負荷テストツールのひとつに挙げている。
+**負荷テストツールは k6 を選んだ**。スクリプトが JavaScript / TypeScript で書けるのでエンジニアがレビューしやすく、Go のランタイムなのでリソース効率も良い。AWS Prescriptive Guidance も k6 を負荷テストツールのひとつに挙げている。
 
 テストの構成は、プレッシャーをかけるアカウントと Kustamie のアカウントを分けた。管理ノードは `t3.medium`、大規模 worker は `c6i.2xlarge` を使用。100 から 5,000 VU の中規模テストはローカル PC で実行でき、5,000 から 60,000 VU の大規模テストは EC2 worker クラスタを起動する。
 
@@ -115,6 +113,8 @@ Kustamie のシナリオ設定は、待機配信開始時点ですでに最大 V
 
 {{< figure src="slide-07-quota.svg" >}}
 
+{{< figure src="arch-07-load-test-result.svg" >}}
+
 E2E テストの結果はシンプルだった。リクエスト量が**毎分 60 万回**、平均 **10,000 RPS** を超えたあたりから 4xx エラーが増え始めた。API Gateway のデフォルト throttle rate とぴったり一致する数字だ。
 
 Lambda 側にエラーが見られなかったので、問題は API Gateway 層で起きていると判断した。スライドでも正直に書いてあったが、API Gateway の標準メトリクスは 4xx が見えても具体的なエラー種別は区別できない。正確に切り分けるにはアクセスログを有効にして、ステータス・requestId・エラーメッセージ・スロットリング関連のコンテキストを記録する必要がある。
@@ -125,9 +125,7 @@ Lambda 側にエラーが見られなかったので、問題は API Gateway 層
 
 ## 多段キャッシュ
 
-{{< figure src="slide-08-multi-tier-cache.svg" >}}
-
-{{< figure src="mermaid-08-cache.svg" >}}
+{{< figure src="arch-08-cache.svg" >}}
 
 パフォーマンス改善の最初の手は多段キャッシュだった。
 
@@ -137,31 +135,27 @@ Lambda 側にエラーが見られなかったので、問題は API Gateway 層
 
 3 段目は**ECS + ElastiCache for Valkey**。アプリケーションサービス側で RDS クエリを遮断する。Valkey は Redis 7.2 とほぼ互換で、AWS は Redis のライセンス変更を受けて Valkey への推進を強めている。性能面での選択でもあるが、ライセンスとコストの要因もある。
 
-多段キャッシュの原則はシンプルで、リクエスト元に近いほどヒット時のバックエンド節約が大きい。API Gateway stage cache は Lambda・ECS・DB をまるごとスキップする。Lambda global cache は後段サービス呼び出しを省く。ElastiCache は RDS クエリを省く。
+多段キャッシュの原則はシンプルで、**リクエスト元に近いほどヒット時のバックエンド節約が大きい**。API Gateway stage cache は Lambda・ECS・DB をまるごとスキップする。Lambda global cache は後段サービス呼び出しを省く。ElastiCache は RDS クエリを省く。
 
 キャッシュの無効化がそれほど難しくないのは、最初から高頻度リアルタイムデータを IVS Chat に逃しているからだ。API パスに残るデータは大半があらかじめ用意されているか、変化が予測可能なもの。TTL ベースの失効で大半のシナリオはカバーできる。
 
 ## 非同期化と 150ms
 
-{{< figure src="slide-09-async.svg" >}}
-
-{{< figure src="mermaid-09-async.svg" >}}
+{{< figure src="arch-09-async.svg" >}}
 
 最大の改善は非同期化だった。配信参加 API のレスポンスが最大 **12,000ms** から平均 **150ms** 前後に下がった。約 80 倍の改善だ。
 
-発想はシンプルで、「ユーザーがすぐ必要なものだけを同期パスに残す」。同期パスは API Gateway から Lambda に入り、Step Functions Express Workflow で UserID 生成・IVS Token 生成・SQS へのエンキューを完了させる。ユーザーがすぐ視聴を始めることに関係しない処理は、SQS 経由で非同期パスに流し、Lambda と ECS がバックグラウンドで消費する。
+発想はシンプルで、「ユーザーがすぐ必要なものだけを同期パスに残す」。同期パスは API Gateway から Lambda に入り、Step Functions Express Workflow で UserID 生成・IVS Token 生成・SQS へのエンキューを完了させる。**ユーザーがすぐ視聴を始めることに関係しない処理は、SQS 経由で非同期パスに流し**、Lambda と ECS がバックグラウンドで消費する。
 
 パラメータを調整したわけではなく、「何を同期完了させるべきか」を再定義した。ユーザーがすぐ配信に入るには UserID と IVS Token が必要なので同期で返す。登録レコード・関連状態・履歴の書き込みなどは後回しにできる。
 
-IVS Realtime Token の扱いも重要なポイントだ。スライドでは IVS の API call rate が **50 TPS で上限変更不可**と書いてあった。60,000 ユーザーが集中して入ってきたとき、一人ひとりが IVS API を直接呼ぶと即座にコントロールプレーンの制限に当たる。だからトークンは Lambda がローカルで署名発行する。秘密鍵で生成する JWT なので、rate limit のある API 呼び出しを検証可能なローカル暗号演算で置き換えるパターンだ。S3 presigned URL や CloudFront signed URL / cookies も同じ発想だ。
+IVS Realtime Token の扱いも重要なポイントだ。スライドでは IVS の API call rate が **50 TPS で上限変更不可**と書いてあった。60,000 ユーザーが集中して入ってきたとき、一人ひとりが IVS API を直接呼ぶと即座にコントロールプレーンの制限に当たる。**だからトークンは Lambda がローカルで署名発行する**。秘密鍵で生成する JWT なので、rate limit のある API 呼び出しを検証可能なローカル暗号演算で置き換えるパターンだ。S3 presigned URL や CloudFront signed URL / cookies も同じ発想だ。
 
-Step Functions で Express Workflow を選んだのも理にかなっている。このフローは高頻度・短時間なので、Standard Workflow のような長時間の持続化と完全な実行履歴は必要ない。コストと遅延の面で Express の方が軽量なオーケストレーションに向いている。ワークフローの並行上限に達したとき、呼び出し側の Lambda でリトライを実装しているというのも、マネージドサービスを使う構成ではよくある現実的な対処だ。
+**Step Functions で Express Workflow を選んだ**のも理にかなっている。このフローは高頻度・短時間なので、Standard Workflow のような長時間の持続化と完全な実行履歴は必要ない。コストと遅延の面で Express の方が軽量なオーケストレーションに向いている。ワークフローの並行上限に達したとき、呼び出し側の Lambda でリトライを実装しているというのも、マネージドサービスを使う構成ではよくある現実的な対処だ。
 
 ## AI チャットモデレーション
 
-{{< figure src="slide-10-ai-chat-moderation.svg" >}}
-
-{{< figure src="mermaid-10-chat-moderation.svg" >}}
+{{< figure src="arch-10-chat-moderation.svg" >}}
 
 Kustamie はチャットコンテンツのモデレーションに Amazon Nova Micro を使っている。フローはこうだ。ユーザーのメッセージが WebSocket 経由で IVS Chat に入ると同時に、Data Firehose 経由でバックエンドストレージに流れ、そこから Lambda がトリガーされて Bedrock を呼ぶ。モデルが違反と判定したらシステムが状態を更新し、IVS Chat に delete message リクエストを送る。
 
@@ -196,8 +190,6 @@ AWS Summit という場での文脈も影響している。システム全体が
 ## 映像モデレーションの構想
 
 {{< figure src="slide-13-video-moderation.svg" >}}
-
-{{< figure src="mermaid-13-video-moderation.svg" >}}
 
 映像モデレーションは「構想」という言葉が使われていたので、まだ実装済みではない機能だ。IVS の映像ストリームから定期的にスナップショットを取り、Nova Lite のようなマルチモーダルモデルに渡して判定し、結果を主催者に通知するというアイデアだ。
 

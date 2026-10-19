@@ -31,9 +31,7 @@ Kustamie has to handle a set of behaviors happening all at once: viewers open th
 
 ## Architecture Overview: Separating Event Info from Real-Time Data
 
-{{< figure src="slide-01-architecture.svg" >}}
-
-{{< figure src="mermaid-01-architecture.svg" >}}
+{{< figure src="arch-01-architecture.svg" >}}
 
 Kustamie's traffic splits cleanly into two paths.
 
@@ -58,6 +56,8 @@ The second problem was more tangible: the stream-participation API took up to **
 ## Capacity Planning: Lambda Concurrency Isn't the Only Metric
 
 {{< figure src="slide-03-lambda-load-metrics.svg" >}}
+
+{{< figure src="arch-03-lambda-concurrency.svg" >}}
 
 Capacity planning for API Gateway + Lambda has to watch at least three metrics at once.
 
@@ -89,11 +89,9 @@ The slide's fix was to raise the concurrency quota to 2,000. That claim needs ca
 
 ## Load Testing: k6 and a Cross-Account Setup
 
-{{< figure src="slide-05-load-test-method.svg" >}}
+{{< figure src="arch-05-load-test.svg" >}}
 
-{{< figure src="mermaid-05-load-test.svg" >}}
-
-They picked k6 for load testing, a pragmatic choice: scenarios can be written in JavaScript / TypeScript so engineers can review them easily, the Go runtime is resource-efficient, and AWS Prescriptive Guidance also lists k6 as a load-testing tool.
+**They picked k6 for load testing**, a pragmatic choice: scenarios can be written in JavaScript / TypeScript so engineers can review them easily, the Go runtime is resource-efficient, and AWS Prescriptive Guidance also lists k6 as a load-testing tool.
 
 The test topology separated the load-generating account from the Kustamie account. The management node used a `t3.medium`; large-scale workers used `c6i.2xlarge`. Medium-scale tests (100 to 5,000 VU) could run on a local PC; large-scale tests (5,000 to 60,000 VU) spun up an EC2 worker cluster.
 
@@ -115,6 +113,8 @@ Traffic for live and event-driven products rarely ramps linearly. Thirty minutes
 
 {{< figure src="slide-07-quota.svg" >}}
 
+{{< figure src="arch-07-load-test-result.svg" >}}
+
 The E2E load test result was blunt: once request volume passed **600,000 requests per minute** (an average of **10,000 RPS**), 4xx errors started climbing. That number lines up exactly with the API Gateway default throttle rate.
 
 The investigation path was clear too: no errors on the Lambda side, so the problem was judged to be at the API Gateway layer. The slide acknowledged that standard API Gateway metrics only show 4xx counts without distinguishing the specific error type; to pinpoint it in production you need access logging that records status, requestId, error messages, and throttling context.
@@ -125,9 +125,7 @@ That's a reminder that large-scale serverless systems can't treat service quotas
 
 ## Multi-Tier Caching: Stop Requests as Early as Possible
 
-{{< figure src="slide-08-multi-tier-cache.svg" >}}
-
-{{< figure src="mermaid-08-cache.svg" >}}
+{{< figure src="arch-08-cache.svg" >}}
 
 The first step in the performance work was multi-tier caching.
 
@@ -137,31 +135,27 @@ Tier two: **Lambda global variables**. When the Lambda execution environment is 
 
 Tier three: **ECS + ElastiCache for Valkey**, shielding RDS at the application-service layer. Valkey is largely compatible with Redis 7.2, and AWS has pushed Valkey hard since the Redis license change; choosing it is as much about licensing and cost as performance.
 
-Methodologically, the principle is simple: the closer a cache sits to the request source, the more backend work a hit saves. The API Gateway stage cache skips Lambda, ECS, and the database entirely; the Lambda global cache skips downstream service calls; ElastiCache skips RDS queries.
+Methodologically, the principle is simple: **the closer a cache sits to the request source, the more backend work a hit saves.** The API Gateway stage cache skips Lambda, ECS, and the database entirely; the Lambda global cache skips downstream service calls; ElastiCache skips RDS queries.
 
 Cache invalidation is not that hard here, since the architecture routed real-time user-generated data to IVS Chat from the start. Most of what remains on the API path is pre-arranged or changes predictably, so TTL-based expiry covers the majority of cases.
 
 ## Going Async: Cutting the User-Facing Path to 150ms
 
-{{< figure src="slide-09-async.svg" >}}
-
-{{< figure src="mermaid-09-async.svg" >}}
+{{< figure src="arch-09-async.svg" >}}
 
 The biggest improvement came from going async: the participation API's response time dropped from a worst case of **12,000ms** to an average of around **150ms**, an 80x improvement.
 
-The core idea: keep only what the user needs immediately on the synchronous path. That path goes through API Gateway into Lambda, then a Step Functions Express Workflow that completes UserID generation, IVS token generation, and the SQS enqueue. Everything that doesn't affect the user starting playback goes through SQS into the async path, consumed in the background by Lambda and ECS.
+The core idea: keep only what the user needs immediately on the synchronous path. That path goes through API Gateway into Lambda, then a Step Functions Express Workflow that completes UserID generation, IVS token generation, and the SQS enqueue. **Everything that doesn't affect the user starting playback goes through SQS into the async path**, consumed in the background by Lambda and ECS.
 
 This wasn't parameter tuning. It redefined what must complete synchronously. The user needs to enter the stream right away, so the UserID and IVS token must come back synchronously; registration records, associated state, and history writes can wait.
 
-IVS Real-Time token handling mattered too. The slide notes the IVS API call rate is **50 TPS and cannot be raised**: if 60,000 users pile in at once and each triggers an IVS API call, you hit the control-plane limit immediately. So tokens are signed and issued directly by Lambda. A token here is a JWT generated with a private key. The pattern replaces a rate-limited control-plane API call with a verifiable local cryptographic operation. S3 presigned URLs and CloudFront signed URLs / cookies follow the same idea.
+IVS Real-Time token handling mattered too. The slide notes the IVS API call rate is **50 TPS and cannot be raised**: if 60,000 users pile in at once and each triggers an IVS API call, you hit the control-plane limit immediately. **So tokens are signed and issued directly by Lambda.** A token here is a JWT generated with a private key. The pattern replaces a rate-limited control-plane API call with a verifiable local cryptographic operation. S3 presigned URLs and CloudFront signed URLs / cookies follow the same idea.
 
-Choosing Express Workflows for Step Functions also makes sense. The flow is high-frequency and short-lived, so it doesn't need Standard Workflow's long-duration persistence and full execution history; Express is cheaper and lower-latency for lightweight orchestration. The slide also mentioned implementing retries in the calling Lambda when the workflow concurrency limit is hit, a pragmatic line of defense in a managed-service architecture.
+**Choosing Express Workflows for Step Functions** also makes sense. The flow is high-frequency and short-lived, so it doesn't need Standard Workflow's long-duration persistence and full execution history; Express is cheaper and lower-latency for lightweight orchestration. The slide also mentioned implementing retries in the calling Lambda when the workflow concurrency limit is hit, a pragmatic line of defense in a managed-service architecture.
 
 ## AI Chat Moderation: Post-Moderation for a Real-Time Experience
 
-{{< figure src="slide-10-ai-chat-moderation.svg" >}}
-
-{{< figure src="mermaid-10-chat-moderation.svg" >}}
+{{< figure src="arch-10-chat-moderation.svg" >}}
 
 Kustamie also uses Amazon Nova Micro for chat moderation. The pipeline: a user message enters IVS Chat over WebSocket while also flowing through Data Firehose to backend storage; a stream then triggers a Lambda that calls Bedrock. If the model flags a violation, the system updates state and issues a delete-message request to IVS Chat.
 
@@ -196,8 +190,6 @@ This slide also reflects the venue effect of AWS Summit. The whole system runs o
 ## Video Moderation Concept: From Every Message to Sampled Frames
 
 {{< figure src="slide-13-video-moderation.svg" >}}
-
-{{< figure src="mermaid-13-video-moderation.svg" >}}
 
 The video moderation section used the word "構想" (concept), meaning it is not a shipped feature yet. The idea: periodically take snapshots from the IVS video stream, hand the images to a multimodal model like Nova Lite for judgment, and notify the organizers based on the result.
 
