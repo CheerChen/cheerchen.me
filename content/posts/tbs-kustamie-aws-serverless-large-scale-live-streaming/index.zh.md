@@ -113,6 +113,8 @@ Kustamie 的 scenario 假设待机配信开始时已有最大 VU 的 10% 在线�
 
 {{< figure src="slide-07-quota.svg" >}}
 
+{{< figure src="arch-07-load-test-result.svg" >}}
+
 E2E 压测的结果很直接：当请求量超过 **每分钟 600,000 次**，也就是平均 **10,000 RPS** 时，400 番台错误开始增加。这个数字恰好对应 API Gateway 默认 throttle rate。
 
 排查链路也很清楚：Lambda 侧没有观察到错误，因此判断问题发生在 API Gateway 层。Slide 也诚实地指出，API Gateway 标准 metrics 只能看到 4xx，不能直接区分具体错误类型。要更精确定位，实际运维中需要打开 access logging，记录 status、requestId、error message 和 throttling 相关上下文。

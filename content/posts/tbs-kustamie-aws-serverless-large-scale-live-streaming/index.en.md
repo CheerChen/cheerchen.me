@@ -113,6 +113,8 @@ Traffic for live and event-driven products rarely ramps linearly. Thirty minutes
 
 {{< figure src="slide-07-quota.svg" >}}
 
+{{< figure src="arch-07-load-test-result.svg" >}}
+
 The E2E load test result was blunt: once request volume passed **600,000 requests per minute** (an average of **10,000 RPS**), 4xx errors started climbing. That number lines up exactly with the API Gateway default throttle rate.
 
 The investigation path was clear too: no errors on the Lambda side, so the problem was judged to be at the API Gateway layer. The slide acknowledged that standard API Gateway metrics only show 4xx counts without distinguishing the specific error type; to pinpoint it in production you need access logging that records status, requestId, error messages, and throttling context.
