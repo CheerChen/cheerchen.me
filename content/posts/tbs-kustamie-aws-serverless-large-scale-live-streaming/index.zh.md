@@ -137,19 +137,17 @@ E2E 压测的结果很直接：当请求量超过 **每分钟 600,000 次**，�
 
 ## 异步化：把用户感知路径缩到 150ms
 
-{{< figure src="slide-09-async.svg" >}}
-
-{{< figure src="mermaid-09-async.svg" >}}
+{{< figure src="arch-09-async.svg" >}}
 
 最大的一次改善来自异步化。配信参加 API 的响应从最大 **12,000ms** 降到平均 **150ms** 左右，约 80 倍改善。
 
-核心思路是只把用户立刻需要的内容留在同步路径里。同步路径通过 API Gateway 进入 Lambda，再用 Step Functions Express Workflow 完成 UserID 生成、IVS Token 生成和 SQS 入队。剩下不影响用户立即观看的处理，通过 SQS 进入异步路径，由 Lambda 和 ECS 后台慢慢消费。
+核心思路是只把用户立刻需要的内容留在同步路径里。同步路径通过 API Gateway 进入 Lambda，再用 Step Functions Express Workflow 完成 UserID 生成、IVS Token 生成和 SQS 入队。**剩下不影响用户立即观看的处理，通过 SQS 进入异步路径**，由 Lambda 和 ECS 后台慢慢消费。
 
 这不是单纯调参数，而是重新定义“什么必须同步完成”。用户要立刻进入直播，因此 UserID 和 IVS Token 必须同步返回；注册记录、关联状态、历史写入等工作可以延后。
 
-IVS Realtime Token 的处理也很关键。Slide 提到 IVS API call rate 是 **50 TPS 且不可放宽**，如果 60,000 用户集中进入，每人调用一次 IVS API 会直接撞上控制面限制。因此 token 由 Lambda 直接签发。它本质上是用私钥生成的 JWT，属于用本地密码学操作替代 rate-limited control plane API 的模式。S3 presigned URL、CloudFront signed URL / cookies 也是类似思路。
+IVS Realtime Token 的处理也很关键。Slide 提到 IVS API call rate 是 **50 TPS 且不可放宽**，如果 60,000 用户集中进入，每人调用一次 IVS API 会直接撞上控制面限制。**因此 token 由 Lambda 直接签发**。它本质上是用私钥生成的 JWT，属于用本地密码学操作替代 rate-limited control plane API 的模式。S3 presigned URL、CloudFront signed URL / cookies 也是类似思路。
 
-Step Functions 选 Express Workflow 也合理。这个流程高频、短时，不需要 Standard Workflow 那种长时间持久化和完整历史；Express 的成本和延迟更适合做轻量编排。Slide 还提到当 workflow 并发上限达到时，在调用侧 Lambda 实现 retry，这是托管服务架构里非常实际的防线。
+**Step Functions 选 Express Workflow** 也合理。这个流程高频、短时，不需要 Standard Workflow 那种长时间持久化和完整历史；Express 的成本和延迟更适合做轻量编排。Slide 还提到当 workflow 并发上限达到时，在调用侧 Lambda 实现 retry，这是托管服务架构里非常实际的防线。
 
 ## AI 聊天审核：后置审核换取实时体验
 

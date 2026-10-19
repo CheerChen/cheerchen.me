@@ -48,6 +48,7 @@ ICONS = {
     "rds": "Arch_Amazon-RDS_48",
     "ivs": "Arch_Amazon-Interactive-Video-Service_48",
     "users": "Res_Users_48_Light",
+    "stepfunctions": "Arch_AWS-Step-Functions_48",
 }
 
 STYLE = f"""

@@ -137,19 +137,17 @@ Cache invalidation is not that hard here, since the architecture routed real-tim
 
 ## Going Async: Cutting the User-Facing Path to 150ms
 
-{{< figure src="slide-09-async.svg" >}}
-
-{{< figure src="mermaid-09-async.svg" >}}
+{{< figure src="arch-09-async.svg" >}}
 
 The biggest improvement came from going async: the participation API's response time dropped from a worst case of **12,000ms** to an average of around **150ms**, an 80x improvement.
 
-The core idea: keep only what the user needs immediately on the synchronous path. That path goes through API Gateway into Lambda, then a Step Functions Express Workflow that completes UserID generation, IVS token generation, and the SQS enqueue. Everything that doesn't affect the user starting playback goes through SQS into the async path, consumed in the background by Lambda and ECS.
+The core idea: keep only what the user needs immediately on the synchronous path. That path goes through API Gateway into Lambda, then a Step Functions Express Workflow that completes UserID generation, IVS token generation, and the SQS enqueue. **Everything that doesn't affect the user starting playback goes through SQS into the async path**, consumed in the background by Lambda and ECS.
 
 This wasn't parameter tuning. It redefined what must complete synchronously. The user needs to enter the stream right away, so the UserID and IVS token must come back synchronously; registration records, associated state, and history writes can wait.
 
-IVS Real-Time token handling mattered too. The slide notes the IVS API call rate is **50 TPS and cannot be raised**: if 60,000 users pile in at once and each triggers an IVS API call, you hit the control-plane limit immediately. So tokens are signed and issued directly by Lambda. A token here is a JWT generated with a private key. The pattern replaces a rate-limited control-plane API call with a verifiable local cryptographic operation. S3 presigned URLs and CloudFront signed URLs / cookies follow the same idea.
+IVS Real-Time token handling mattered too. The slide notes the IVS API call rate is **50 TPS and cannot be raised**: if 60,000 users pile in at once and each triggers an IVS API call, you hit the control-plane limit immediately. **So tokens are signed and issued directly by Lambda.** A token here is a JWT generated with a private key. The pattern replaces a rate-limited control-plane API call with a verifiable local cryptographic operation. S3 presigned URLs and CloudFront signed URLs / cookies follow the same idea.
 
-Choosing Express Workflows for Step Functions also makes sense. The flow is high-frequency and short-lived, so it doesn't need Standard Workflow's long-duration persistence and full execution history; Express is cheaper and lower-latency for lightweight orchestration. The slide also mentioned implementing retries in the calling Lambda when the workflow concurrency limit is hit, a pragmatic line of defense in a managed-service architecture.
+**Choosing Express Workflows for Step Functions** also makes sense. The flow is high-frequency and short-lived, so it doesn't need Standard Workflow's long-duration persistence and full execution history; Express is cheaper and lower-latency for lightweight orchestration. The slide also mentioned implementing retries in the calling Lambda when the workflow concurrency limit is hit, a pragmatic line of defense in a managed-service architecture.
 
 ## AI Chat Moderation: Post-Moderation for a Real-Time Experience
 

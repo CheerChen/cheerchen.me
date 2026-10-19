@@ -137,19 +137,17 @@ Lambda 側にエラーが見られなかったので、問題は API Gateway 層
 
 ## 非同期化と 150ms
 
-{{< figure src="slide-09-async.svg" >}}
-
-{{< figure src="mermaid-09-async.svg" >}}
+{{< figure src="arch-09-async.svg" >}}
 
 最大の改善は非同期化だった。配信参加 API のレスポンスが最大 **12,000ms** から平均 **150ms** 前後に下がった。約 80 倍の改善だ。
 
-発想はシンプルで、「ユーザーがすぐ必要なものだけを同期パスに残す」。同期パスは API Gateway から Lambda に入り、Step Functions Express Workflow で UserID 生成・IVS Token 生成・SQS へのエンキューを完了させる。ユーザーがすぐ視聴を始めることに関係しない処理は、SQS 経由で非同期パスに流し、Lambda と ECS がバックグラウンドで消費する。
+発想はシンプルで、「ユーザーがすぐ必要なものだけを同期パスに残す」。同期パスは API Gateway から Lambda に入り、Step Functions Express Workflow で UserID 生成・IVS Token 生成・SQS へのエンキューを完了させる。**ユーザーがすぐ視聴を始めることに関係しない処理は、SQS 経由で非同期パスに流し**、Lambda と ECS がバックグラウンドで消費する。
 
 パラメータを調整したわけではなく、「何を同期完了させるべきか」を再定義した。ユーザーがすぐ配信に入るには UserID と IVS Token が必要なので同期で返す。登録レコード・関連状態・履歴の書き込みなどは後回しにできる。
 
-IVS Realtime Token の扱いも重要なポイントだ。スライドでは IVS の API call rate が **50 TPS で上限変更不可**と書いてあった。60,000 ユーザーが集中して入ってきたとき、一人ひとりが IVS API を直接呼ぶと即座にコントロールプレーンの制限に当たる。だからトークンは Lambda がローカルで署名発行する。秘密鍵で生成する JWT なので、rate limit のある API 呼び出しを検証可能なローカル暗号演算で置き換えるパターンだ。S3 presigned URL や CloudFront signed URL / cookies も同じ発想だ。
+IVS Realtime Token の扱いも重要なポイントだ。スライドでは IVS の API call rate が **50 TPS で上限変更不可**と書いてあった。60,000 ユーザーが集中して入ってきたとき、一人ひとりが IVS API を直接呼ぶと即座にコントロールプレーンの制限に当たる。**だからトークンは Lambda がローカルで署名発行する**。秘密鍵で生成する JWT なので、rate limit のある API 呼び出しを検証可能なローカル暗号演算で置き換えるパターンだ。S3 presigned URL や CloudFront signed URL / cookies も同じ発想だ。
 
-Step Functions で Express Workflow を選んだのも理にかなっている。このフローは高頻度・短時間なので、Standard Workflow のような長時間の持続化と完全な実行履歴は必要ない。コストと遅延の面で Express の方が軽量なオーケストレーションに向いている。ワークフローの並行上限に達したとき、呼び出し側の Lambda でリトライを実装しているというのも、マネージドサービスを使う構成ではよくある現実的な対処だ。
+**Step Functions で Express Workflow を選んだ**のも理にかなっている。このフローは高頻度・短時間なので、Standard Workflow のような長時間の持続化と完全な実行履歴は必要ない。コストと遅延の面で Express の方が軽量なオーケストレーションに向いている。ワークフローの並行上限に達したとき、呼び出し側の Lambda でリトライを実装しているというのも、マネージドサービスを使う構成ではよくある現実的な対処だ。
 
 ## AI チャットモデレーション
 
