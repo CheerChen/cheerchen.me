@@ -151,9 +151,7 @@ IVS Realtime Token の扱いも重要なポイントだ。スライドでは IVS
 
 ## AI チャットモデレーション
 
-{{< figure src="slide-10-ai-chat-moderation.svg" >}}
-
-{{< figure src="mermaid-10-chat-moderation.svg" >}}
+{{< figure src="arch-10-chat-moderation.svg" >}}
 
 Kustamie はチャットコンテンツのモデレーションに Amazon Nova Micro を使っている。フローはこうだ。ユーザーのメッセージが WebSocket 経由で IVS Chat に入ると同時に、Data Firehose 経由でバックエンドストレージに流れ、そこから Lambda がトリガーされて Bedrock を呼ぶ。モデルが違反と判定したらシステムが状態を更新し、IVS Chat に delete message リクエストを送る。
 

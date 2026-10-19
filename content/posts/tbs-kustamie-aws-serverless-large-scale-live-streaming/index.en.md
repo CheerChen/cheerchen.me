@@ -151,9 +151,7 @@ IVS Real-Time token handling mattered too. The slide notes the IVS API call rate
 
 ## AI Chat Moderation: Post-Moderation for a Real-Time Experience
 
-{{< figure src="slide-10-ai-chat-moderation.svg" >}}
-
-{{< figure src="mermaid-10-chat-moderation.svg" >}}
+{{< figure src="arch-10-chat-moderation.svg" >}}
 
 Kustamie also uses Amazon Nova Micro for chat moderation. The pipeline: a user message enters IVS Chat over WebSocket while also flowing through Data Firehose to backend storage; a stream then triggers a Lambda that calls Bedrock. If the model flags a violation, the system updates state and issues a delete-message request to IVS Chat.
 

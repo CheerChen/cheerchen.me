@@ -151,9 +151,7 @@ IVS Realtime Token 的处理也很关键。Slide 提到 IVS API call rate 是 **
 
 ## AI 聊天审核：后置审核换取实时体验
 
-{{< figure src="slide-10-ai-chat-moderation.svg" >}}
-
-{{< figure src="mermaid-10-chat-moderation.svg" >}}
+{{< figure src="arch-10-chat-moderation.svg" >}}
 
 Kustamie 还使用 Amazon Nova Micro 做聊天内容审核。整体链路是：用户消息先通过 WebSocket 进入 IVS Chat，同时消息经由 Data Firehose 落到后段存储，再通过 stream 触发 Lambda 调用 Bedrock。模型判定违规后，系统更新状态，并向 IVS Chat 发起 delete message request。
 

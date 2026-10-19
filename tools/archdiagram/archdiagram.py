@@ -49,6 +49,10 @@ ICONS = {
     "ivs": "Arch_Amazon-Interactive-Video-Service_48",
     "users": "Res_Users_48_Light",
     "stepfunctions": "Arch_AWS-Step-Functions_48",
+    "firehose": "Arch_Amazon-Data-Firehose_48",
+    "bedrock": "Arch_Amazon-Bedrock_48",
+    "mobile": "Res_Mobile-client_48_Light",
+    "user": "Res_User_48_Light",
 }
 
 STYLE = f"""
@@ -95,10 +99,10 @@ def group(x, y, w, h, kind, label):
 
 
 def service_box(x, y, w, h, key, label):
-    """A dashed box standing for one service's insides, its icon on the top-left corner."""
+    """A dashed box standing for one service's insides, its icon on the top-left corner (key=None: a plain group)."""
     return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="4" fill="none" stroke="{DIM}" stroke-width="1.5" stroke-dasharray="6,5"/>'
-            + icon(key, x, y, 36)
-            + f'<text x="{x + 30}" y="{y + 22}" class="grp">{label}</text>')
+            + (icon(key, x, y, 36) if key else "")
+            + f'<text x="{x + (30 if key else 16)}" y="{y + (22 if key else 26)}" class="grp">{label}</text>')
 
 
 def box(x, y, w, h, lines, fill="#ffffff"):
