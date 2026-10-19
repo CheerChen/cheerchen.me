@@ -1,35 +1,78 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
   <title id="title">API Gateway and Lambda load metrics</title>
-  <desc id="desc">Three load indicators: API Gateway throttle rate, Lambda concurrent executions, and Lambda scaling rate.</desc>
+  <desc id="desc">Three load indicators: API Gateway throttle rate (10,000 req/s by default), Lambda concurrent executions (1,000 by default; the number of running execution environments, requests per second times seconds per request), and Lambda scaling rate (1,000 instances or 10,000 req/s every 10 seconds). A timeline from the AWS documentation shows ten requests, some with an Init phase and some reusing an environment, and the concurrency at t1 to t6: 3, 5, 4, 6, 5, 2.</desc>
   <rect width="1200" height="675" fill="#fbfbf8"/>
   <text x="72" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="34" fill="#365f52">Amazon API Gateway + AWS Lambda の負荷指標</text>
   <text x="1070" y="78" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="40" font-weight="700" fill="#33426f">TBS</text>
   <line x1="72" y1="98" x2="1060" y2="98" stroke="#c8d0ca" stroke-width="3"/>
-  <g font-family="Avenir, Helvetica, Arial, sans-serif" font-size="21" fill="#4b5853">
-    <text x="95" y="150" text-decoration="underline">Amazon API Gateway</text>
-    <text x="116" y="192" fill="#d45542" font-weight="700">• Throttle Rate</text>
-    <text x="150" y="225">• 秒間リクエスト数の制限（リージョンレベル）</text>
-    <text x="150" y="258">• デフォルト: 10,000 req/s</text>
-    <text x="95" y="320" text-decoration="underline">AWS Lambda</text>
-    <text x="116" y="360" fill="#d45542" font-weight="700">• Concurrent executions（同時実行数）</text>
-    <text x="150" y="393">• 同時実行数 = 1 秒あたりのリクエスト数 × 1 リクエストの所要時間（秒）</text>
-    <text x="150" y="426">• デフォルト: 1,000</text>
-    <text x="116" y="486" fill="#d45542" font-weight="700">• Scaling Rate</text>
-    <text x="150" y="519">• コンピューティング環境が新規にデプロイされるレート</text>
-    <text x="150" y="552">• 10 秒ごとに 1,000 インスタンス（もしくは 10,000 req/s）</text>
+  <g font-family="Avenir, Helvetica, Arial, sans-serif" font-size="19" fill="#4b5853">
+    <text x="95" y="146" text-decoration="underline">Amazon API Gateway</text>
+    <text x="116" y="178" fill="#d45542" font-weight="700">• Throttle Rate</text>
+    <text x="150" y="208">• 秒間リクエスト数の制限（リージョンレベル）</text>
+    <text x="150" y="238">• デフォルト: 10,000 req/s</text>
+    <text x="95" y="286" text-decoration="underline">AWS Lambda</text>
+    <text x="116" y="318" fill="#d45542" font-weight="700">• Concurrent executions（同時実行数）</text>
+    <text x="150" y="348">• リクエスト数ではなく、実際に稼働しているコンピューティング環境数（関数ごと）</text>
+    <text x="170" y="376" text-decoration="underline">同時実行数 = 1 秒あたりのリクエスト数 × 1 リクエストの所要時間（秒）</text>
+    <text x="150" y="406">• デフォルト: 1,000</text>
+    <text x="116" y="448" fill="#d45542" font-weight="700">• Scaling Rate</text>
+    <text x="150" y="478" font-size="18">• コンピューティング環境が新規に</text>
+    <text x="166" y="503" font-size="18">デプロイされるレート</text>
+    <text x="150" y="533" font-size="18">• 10 秒ごとに 1,000 インスタンス</text>
+    <text x="166" y="558" font-size="18">（もしくは 10,000 req/s）</text>
+    <text x="166" y="583" font-size="18">同時実行数の 10 倍に自動設定</text>
   </g>
-  <g transform="translate(760 340)">
-    <text x="0" y="0" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="17" fill="#6c6c6c">Cold start と invoke は同時実行枠を占有する</text>
-    <line x1="0" y1="45" x2="340" y2="45" stroke="#999" stroke-width="2" marker-end="url(#arrow)"/>
-    <text x="312" y="36" font-family="Avenir" font-size="14" fill="#777">time</text>
-    <g font-family="Avenir" font-size="13" fill="#fff">
-      <rect x="22" y="70" width="62" height="24" fill="#b48aec"/><text x="53" y="87" text-anchor="middle">Init</text>
-      <rect x="84" y="70" width="142" height="24" fill="#7f7fe8"/><text x="155" y="87" text-anchor="middle">Invoke</text>
-      <rect x="62" y="118" width="62" height="24" fill="#b48aec"/><text x="93" y="135" text-anchor="middle">Init</text>
-      <rect x="124" y="118" width="142" height="24" fill="#7f7fe8"/><text x="195" y="135" text-anchor="middle">Invoke</text>
-      <rect x="150" y="166" width="62" height="24" fill="#b48aec"/><text x="181" y="183" text-anchor="middle">Init</text>
-      <rect x="212" y="166" width="118" height="24" fill="#7f7fe8"/><text x="271" y="183" text-anchor="middle">Invoke</text>
+  <text x="1140" y="420" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="12" fill="#8a8f8c" text-anchor="end">（AWS ドキュメントの図をもとに作成）</text>
+  <g font-family="Avenir, Helvetica, Arial, sans-serif">
+    <text x="596" y="456" font-size="14" font-style="italic" fill="#b55a4a" text-anchor="end">Time</text>
+    <line x1="604" y1="452" x2="1148" y2="452" stroke="#c46855" stroke-width="2" marker-end="url(#arrow)"/>
+    <line x1="628.5" y1="438" x2="628.5" y2="638" stroke="#5aa96b" stroke-width="1.6" stroke-dasharray="2,3"/>
+    <text x="631.5" y="440" font-size="13" font-style="italic" fill="#3f8a50">t1</text>
+    <text x="631.5" y="656" font-size="13" fill="#3f8a50">3</text>
+    <line x1="767.1" y1="438" x2="767.1" y2="638" stroke="#5aa96b" stroke-width="1.6" stroke-dasharray="2,3"/>
+    <text x="770.1" y="440" font-size="13" font-style="italic" fill="#3f8a50">t2</text>
+    <text x="770.1" y="656" font-size="13" fill="#3f8a50">5</text>
+    <line x1="820.2" y1="438" x2="820.2" y2="638" stroke="#5aa96b" stroke-width="1.6" stroke-dasharray="2,3"/>
+    <text x="823.2" y="440" font-size="13" font-style="italic" fill="#3f8a50">t3</text>
+    <text x="823.2" y="656" font-size="13" fill="#3f8a50">4</text>
+    <line x1="914.0" y1="438" x2="914.0" y2="638" stroke="#5aa96b" stroke-width="1.6" stroke-dasharray="2,3"/>
+    <text x="917.0" y="440" font-size="13" font-style="italic" fill="#3f8a50">t4</text>
+    <text x="917.0" y="656" font-size="13" fill="#3f8a50">6</text>
+    <line x1="982.0" y1="438" x2="982.0" y2="638" stroke="#5aa96b" stroke-width="1.6" stroke-dasharray="2,3"/>
+    <text x="985.0" y="440" font-size="13" font-style="italic" fill="#3f8a50">t5</text>
+    <text x="985.0" y="656" font-size="13" fill="#3f8a50">5</text>
+    <line x1="1119.7" y1="438" x2="1119.7" y2="638" stroke="#5aa96b" stroke-width="1.6" stroke-dasharray="2,3"/>
+    <text x="1122.7" y="440" font-size="13" font-style="italic" fill="#3f8a50">t6</text>
+    <text x="1122.7" y="656" font-size="13" fill="#3f8a50">2</text>
+    <rect x="610.0" y="470" width="43.9" height="21" fill="#c79bf2"/><text x="631.9" y="485" font-size="11.5" fill="#4a2d73" text-anchor="middle">Init</text>
+    <rect x="653.9" y="470" width="159.4" height="21" fill="#8b8cf0"/><text x="733.6" y="485" font-size="11.5" fill="#ffffff" text-anchor="middle">Invoke</text>
+    <circle cx="597.0" cy="480.5" r="9" fill="#f2b233"/><text x="597.0" y="484.5" font-size="11" font-weight="700" fill="#5a3b00" text-anchor="middle">1</text>
+    <rect x="624.8" y="497" width="41.6" height="21" fill="#c79bf2"/><text x="645.6" y="512" font-size="11.5" fill="#4a2d73" text-anchor="middle">Init</text>
+    <rect x="666.4" y="497" width="160.8" height="21" fill="#8b8cf0"/><text x="746.8" y="512" font-size="11.5" fill="#ffffff" text-anchor="middle">Invoke</text>
+    <circle cx="611.8" cy="507.5" r="9" fill="#f2b233"/><text x="611.8" y="511.5" font-size="11" font-weight="700" fill="#5a3b00" text-anchor="middle">2</text>
+    <rect x="624.8" y="524" width="41.6" height="21" fill="#c79bf2"/><text x="645.6" y="539" font-size="11.5" fill="#4a2d73" text-anchor="middle">Init</text>
+    <rect x="666.4" y="524" width="160.8" height="21" fill="#8b8cf0"/><text x="746.8" y="539" font-size="11.5" fill="#ffffff" text-anchor="middle">Invoke</text>
+    <circle cx="611.8" cy="534.5" r="9" fill="#f2b233"/><text x="611.8" y="538.5" font-size="11" font-weight="700" fill="#5a3b00" text-anchor="middle">3</text>
+    <rect x="714.0" y="551" width="43.0" height="21" fill="#c79bf2"/><text x="735.5" y="566" font-size="11.5" fill="#4a2d73" text-anchor="middle">Init</text>
+    <rect x="756.9" y="551" width="163.6" height="21" fill="#8b8cf0"/><text x="838.7" y="566" font-size="11.5" fill="#ffffff" text-anchor="middle">Invoke</text>
+    <circle cx="701.0" cy="561.5" r="9" fill="#f2b233"/><text x="701.0" y="565.5" font-size="11" font-weight="700" fill="#5a3b00" text-anchor="middle">4</text>
+    <rect x="756.9" y="578" width="43.4" height="21" fill="#c79bf2"/><text x="778.7" y="593" font-size="11.5" fill="#4a2d73" text-anchor="middle">Init</text>
+    <rect x="800.4" y="578" width="165.4" height="21" fill="#8b8cf0"/><text x="883.1" y="593" font-size="11.5" fill="#ffffff" text-anchor="middle">Invoke</text>
+    <circle cx="743.9" cy="588.5" r="9" fill="#f2b233"/><text x="743.9" y="592.5" font-size="11" font-weight="700" fill="#5a3b00" text-anchor="middle">5</text>
+    <rect x="871.1" y="470" width="166.3" height="21" fill="#8b8cf0"/><text x="954.2" y="485" font-size="11.5" fill="#ffffff" text-anchor="middle">Invoke</text>
+    <circle cx="858.1" cy="480.5" r="9" fill="#f2b233"/><text x="858.1" y="484.5" font-size="11" font-weight="700" fill="#5a3b00" text-anchor="middle">6</text>
+    <rect x="897.4" y="497" width="166.8" height="21" fill="#8b8cf0"/><text x="980.8" y="512" font-size="11.5" fill="#ffffff" text-anchor="middle">Invoke</text>
+    <circle cx="884.4" cy="507.5" r="9" fill="#f2b233"/><text x="884.4" y="511.5" font-size="11" font-weight="700" fill="#5a3b00" text-anchor="middle">7</text>
+    <rect x="902.5" y="524" width="167.3" height="21" fill="#8b8cf0"/><text x="986.1" y="539" font-size="11.5" fill="#ffffff" text-anchor="middle">Invoke</text>
+    <circle cx="889.5" cy="534.5" r="9" fill="#f2b233"/><text x="889.5" y="538.5" font-size="11" font-weight="700" fill="#5a3b00" text-anchor="middle">8</text>
+    <rect x="911.3" y="605" width="44.4" height="21" fill="#c79bf2"/><text x="933.5" y="620" font-size="11.5" fill="#4a2d73" text-anchor="middle">Init</text>
+    <rect x="955.6" y="605" width="168.7" height="21" fill="#8b8cf0"/><text x="1040.0" y="620" font-size="11.5" fill="#ffffff" text-anchor="middle">Invoke</text>
+    <circle cx="898.3" cy="615.5" r="9" fill="#f2b233"/><text x="898.3" y="619.5" font-size="11" font-weight="700" fill="#5a3b00" text-anchor="middle">9</text>
+    <rect x="971.3" y="551" width="168.7" height="21" fill="#8b8cf0"/><text x="1055.7" y="566" font-size="11.5" fill="#ffffff" text-anchor="middle">Invoke</text>
+    <circle cx="958.3" cy="561.5" r="9" fill="#f2b233"/><text x="958.3" y="565.5" font-size="11" font-weight="700" fill="#5a3b00" text-anchor="middle">10</text>
+    <line x1="604" y1="638" x2="1148" y2="638" stroke="#5aa96b" stroke-width="2"/>
+    <text x="596" y="636" font-size="13" font-style="italic" fill="#3f8a50" text-anchor="end">Concurrent</text>
+    <text x="596" y="652" font-size="13" font-style="italic" fill="#3f8a50" text-anchor="end">requests</text>
     </g>
-  </g>
-  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#999"/></marker></defs>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#c46855"/></marker></defs>
 </svg>
