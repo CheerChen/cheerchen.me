@@ -57,6 +57,8 @@ The second problem was more tangible: the stream-participation API took up to **
 
 {{< figure src="slide-03-lambda-load-metrics.svg" >}}
 
+{{< figure src="arch-03-lambda-concurrency.svg" >}}
+
 Capacity planning for API Gateway + Lambda has to watch at least three metrics at once.
 
 First, the **API Gateway throttle rate**. The default is **10,000 req/s** per region per account, and you can request an increase.

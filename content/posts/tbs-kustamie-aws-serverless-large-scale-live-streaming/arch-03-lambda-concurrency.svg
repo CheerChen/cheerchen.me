@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="510" viewBox="0 0 1200 510" role="img" aria-labelledby="title desc">
+  <title id="title">Lambda concurrency over time</title>
+  <desc id="desc">Ten requests over time from the AWS Lambda documentation. Requests 1 to 5 and 9 start with an Init phase, a cold start; requests 6, 7, 8 and 10 reuse an environment that just finished and only Invoke. Concurrency, the number of busy environments, is 3, 5, 4, 6, 5 and 2 at ticks t1 to t6.</desc>
+  <style>
+    text{font-family:'Amazon Ember',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif}
+    text:where(:not([fill])){fill:#232f3e}
+    .title{font-size:26px;font-weight:700}
+    .lbl{font-size:13px}
+    .grp{font-size:14px;font-weight:600}
+    .role{font-size:14px;font-weight:700}
+    .note{font-size:13px;fill:#5f6b7a}
+  </style>
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#232f3e"/></marker><marker id="ah-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#d13212"/></marker><marker id="ah-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1d8102"/></marker></defs>
+  <rect width="1200" height="510" fill="#ffffff"/>
+<text x="40" y="34" class="grp">Lambda concurrency over time</text>
+<text x="40" y="54" class="note" text-anchor="start">Illustration from the AWS Lambda documentation, as shown on the talk slide</text>
+<rect x="660" y="22" width="22" height="14" rx="2" fill="#c79bf2"/><text x="690" y="34" class="lbl">Init: a new execution environment starts (cold start)</text>
+<rect x="660" y="44" width="22" height="14" rx="2" fill="#8b8cf0"/><text x="690" y="56" class="lbl">Invoke: the function handles the request</text>
+<path d="M180,88 L1160,88" fill="none" stroke="#232f3e" stroke-width="1.6" marker-end="url(#ah)" stroke-linejoin="round"/>
+<text x="172" y="92" class="note" text-anchor="end">time</text>
+<line x1="222.8" y1="76" x2="222.8" y2="364" stroke="#3f8a50" stroke-width="1.5" stroke-dasharray="3,4"/>
+<text x="222.8" y="72" class="lbl" font-weight="700" text-anchor="middle" style="fill:#3f8a50">t1</text>
+<line x1="468.6" y1="76" x2="468.6" y2="364" stroke="#3f8a50" stroke-width="1.5" stroke-dasharray="3,4"/>
+<text x="468.6" y="72" class="lbl" font-weight="700" text-anchor="middle" style="fill:#3f8a50">t2</text>
+<line x1="562.9" y1="76" x2="562.9" y2="364" stroke="#3f8a50" stroke-width="1.5" stroke-dasharray="3,4"/>
+<text x="562.9" y="72" class="lbl" font-weight="700" text-anchor="middle" style="fill:#3f8a50">t3</text>
+<line x1="729.3" y1="76" x2="729.3" y2="364" stroke="#3f8a50" stroke-width="1.5" stroke-dasharray="3,4"/>
+<text x="729.3" y="72" class="lbl" font-weight="700" text-anchor="middle" style="fill:#3f8a50">t4</text>
+<line x1="849.7" y1="76" x2="849.7" y2="364" stroke="#3f8a50" stroke-width="1.5" stroke-dasharray="3,4"/>
+<text x="849.7" y="72" class="lbl" font-weight="700" text-anchor="middle" style="fill:#3f8a50">t5</text>
+<line x1="1093.9" y1="76" x2="1093.9" y2="364" stroke="#3f8a50" stroke-width="1.5" stroke-dasharray="3,4"/>
+<text x="1093.9" y="72" class="lbl" font-weight="700" text-anchor="middle" style="fill:#3f8a50">t6</text>
+<rect x="190.0" y="110" width="77.9" height="28" fill="#c79bf2"/><text x="228.9" y="129" class="lbl" text-anchor="middle" style="fill:#4a2d73">Init</text>
+<rect x="267.9" y="110" width="282.7" height="28" fill="#8b8cf0"/><text x="409.2" y="129" class="lbl" text-anchor="middle" style="fill:#ffffff">Invoke</text>
+<circle cx="174.0" cy="124.0" r="11" fill="#f2b233"/><text x="174.0" y="128.5" class="lbl" font-weight="700" text-anchor="middle" style="fill:#5a3b00">1</text>
+<rect x="216.2" y="150" width="73.8" height="28" fill="#c79bf2"/><text x="253.1" y="169" class="lbl" text-anchor="middle" style="fill:#4a2d73">Init</text>
+<rect x="290.0" y="150" width="285.2" height="28" fill="#8b8cf0"/><text x="432.6" y="169" class="lbl" text-anchor="middle" style="fill:#ffffff">Invoke</text>
+<circle cx="200.2" cy="164.0" r="11" fill="#f2b233"/><text x="200.2" y="168.5" class="lbl" font-weight="700" text-anchor="middle" style="fill:#5a3b00">2</text>
+<rect x="216.2" y="190" width="73.8" height="28" fill="#c79bf2"/><text x="253.1" y="209" class="lbl" text-anchor="middle" style="fill:#4a2d73">Init</text>
+<rect x="290.0" y="190" width="285.2" height="28" fill="#8b8cf0"/><text x="432.6" y="209" class="lbl" text-anchor="middle" style="fill:#ffffff">Invoke</text>
+<circle cx="200.2" cy="204.0" r="11" fill="#f2b233"/><text x="200.2" y="208.5" class="lbl" font-weight="700" text-anchor="middle" style="fill:#5a3b00">3</text>
+<rect x="374.4" y="230" width="76.2" height="28" fill="#c79bf2"/><text x="412.5" y="249" class="lbl" text-anchor="middle" style="fill:#4a2d73">Init</text>
+<rect x="450.6" y="230" width="290.1" height="28" fill="#8b8cf0"/><text x="595.7" y="249" class="lbl" text-anchor="middle" style="fill:#ffffff">Invoke</text>
+<circle cx="358.4" cy="244.0" r="11" fill="#f2b233"/><text x="358.4" y="248.5" class="lbl" font-weight="700" text-anchor="middle" style="fill:#5a3b00">4</text>
+<rect x="450.6" y="270" width="77.0" height="28" fill="#c79bf2"/><text x="489.1" y="289" class="lbl" text-anchor="middle" style="fill:#4a2d73">Init</text>
+<rect x="527.6" y="270" width="293.4" height="28" fill="#8b8cf0"/><text x="674.3" y="289" class="lbl" text-anchor="middle" style="fill:#ffffff">Invoke</text>
+<circle cx="434.6" cy="284.0" r="11" fill="#f2b233"/><text x="434.6" y="288.5" class="lbl" font-weight="700" text-anchor="middle" style="fill:#5a3b00">5</text>
+<rect x="653.0" y="110" width="295.0" height="28" fill="#8b8cf0"/><text x="800.5" y="129" class="lbl" text-anchor="middle" style="fill:#ffffff">Invoke</text>
+<circle cx="637.0" cy="124.0" r="11" fill="#f2b233"/><text x="637.0" y="128.5" class="lbl" font-weight="700" text-anchor="middle" style="fill:#5a3b00">6</text>
+<rect x="699.7" y="150" width="295.9" height="28" fill="#8b8cf0"/><text x="847.7" y="169" class="lbl" text-anchor="middle" style="fill:#ffffff">Invoke</text>
+<circle cx="683.7" cy="164.0" r="11" fill="#f2b233"/><text x="683.7" y="168.5" class="lbl" font-weight="700" text-anchor="middle" style="fill:#5a3b00">7</text>
+<rect x="708.8" y="190" width="296.7" height="28" fill="#8b8cf0"/><text x="857.1" y="209" class="lbl" text-anchor="middle" style="fill:#ffffff">Invoke</text>
+<circle cx="692.8" cy="204.0" r="11" fill="#f2b233"/><text x="692.8" y="208.5" class="lbl" font-weight="700" text-anchor="middle" style="fill:#5a3b00">8</text>
+<rect x="724.3" y="310" width="78.7" height="28" fill="#c79bf2"/><text x="763.7" y="329" class="lbl" text-anchor="middle" style="fill:#4a2d73">Init</text>
+<rect x="803.0" y="310" width="299.1" height="28" fill="#8b8cf0"/><text x="952.6" y="329" class="lbl" text-anchor="middle" style="fill:#ffffff">Invoke</text>
+<circle cx="708.3" cy="324.0" r="11" fill="#f2b233"/><text x="708.3" y="328.5" class="lbl" font-weight="700" text-anchor="middle" style="fill:#5a3b00">9</text>
+<rect x="830.9" y="230" width="299.1" height="28" fill="#8b8cf0"/><text x="980.4" y="249" class="lbl" text-anchor="middle" style="fill:#ffffff">Invoke</text>
+<circle cx="814.9" cy="244.0" r="11" fill="#f2b233"/><text x="814.9" y="248.5" class="lbl" font-weight="700" text-anchor="middle" style="fill:#5a3b00">10</text>
+<line x1="180" y1="364" x2="1160" y2="364" stroke="#3f8a50" stroke-width="2"/>
+<text x="172" y="394" class="lbl" font-weight="700" text-anchor="end" style="fill:#3f8a50">concurrency</text>
+<circle cx="222.8" cy="389" r="15" fill="#ffffff" stroke="#3f8a50" stroke-width="2"/><text x="222.8" y="395" class="role" text-anchor="middle" style="fill:#3f8a50">3</text>
+<circle cx="468.6" cy="389" r="15" fill="#ffffff" stroke="#3f8a50" stroke-width="2"/><text x="468.6" y="395" class="role" text-anchor="middle" style="fill:#3f8a50">5</text>
+<circle cx="562.9" cy="389" r="15" fill="#ffffff" stroke="#3f8a50" stroke-width="2"/><text x="562.9" y="395" class="role" text-anchor="middle" style="fill:#3f8a50">4</text>
+<circle cx="729.3" cy="389" r="15" fill="#ffffff" stroke="#3f8a50" stroke-width="2"/><text x="729.3" y="395" class="role" text-anchor="middle" style="fill:#3f8a50">6</text>
+<circle cx="849.7" cy="389" r="15" fill="#ffffff" stroke="#3f8a50" stroke-width="2"/><text x="849.7" y="395" class="role" text-anchor="middle" style="fill:#3f8a50">5</text>
+<circle cx="1093.9" cy="389" r="15" fill="#ffffff" stroke="#3f8a50" stroke-width="2"/><text x="1093.9" y="395" class="role" text-anchor="middle" style="fill:#3f8a50">2</text>
+<circle cx="54" cy="436" r="3" fill="#232f3e"/>
+<text x="66" y="441" class="lbl">Requests 6, 7, 8 and 10 arrive just after an environment frees up and reuse it, so they skip Init.</text>
+<circle cx="54" cy="460" r="3" fill="#232f3e"/>
+<text x="66" y="465" class="lbl">Request 9 finds no free environment and cold-starts a new one.</text>
+<circle cx="54" cy="484" r="3" fill="#232f3e"/>
+<text x="66" y="489" class="lbl">Concurrency is the number of environments busy at that instant (in Init or Invoke), not requests per second.</text>
+</svg>

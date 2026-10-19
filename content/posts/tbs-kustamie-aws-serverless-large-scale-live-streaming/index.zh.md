@@ -57,6 +57,8 @@ TBS 在大规模配信前遇到的第一个问题是：原有客户端 API 并�
 
 {{< figure src="slide-03-lambda-load-metrics.svg" >}}
 
+{{< figure src="arch-03-lambda-concurrency.svg" >}}
+
 API Gateway + Lambda 的容量规划至少要同时看三个指标。
 
 第一是 **API Gateway throttle rate**。默认是 region / account 级别的 **10,000 req/s**，可以申请提升。

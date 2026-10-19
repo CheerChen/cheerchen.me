@@ -57,6 +57,8 @@ Kustamie の通信は大きく 2 本に分けられている。
 
 {{< figure src="slide-03-lambda-load-metrics.svg" >}}
 
+{{< figure src="arch-03-lambda-concurrency.svg" >}}
+
 API Gateway + Lambda の容量を考えるときは、少なくとも 3 つの指標を同時に見る必要がある。
 
 ひとつは**API Gateway の throttle rate**。デフォルトは region / account レベルで **10,000 req/s** で、申請すれば引き上げられる。
