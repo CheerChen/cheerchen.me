@@ -31,9 +31,7 @@ Kustamie has to handle a set of behaviors happening all at once: viewers open th
 
 ## Architecture Overview: Separating Event Info from Real-Time Data
 
-{{< figure src="slide-01-architecture.svg" >}}
-
-{{< figure src="mermaid-01-architecture.svg" >}}
+{{< figure src="arch-01-architecture.svg" >}}
 
 Kustamie's traffic splits cleanly into two paths.
 

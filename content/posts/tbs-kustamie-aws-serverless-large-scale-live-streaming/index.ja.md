@@ -31,9 +31,7 @@ Kustamie が同時に捌かなければいけない行動は複数ある。視�
 
 ## アーキテクチャの全体像
 
-{{< figure src="slide-01-architecture.svg" >}}
-
-{{< figure src="mermaid-01-architecture.svg" >}}
+{{< figure src="arch-01-architecture.svg" >}}
 
 Kustamie の通信は大きく 2 本に分けられている。
 

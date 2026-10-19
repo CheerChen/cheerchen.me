@@ -13,6 +13,7 @@ REPO = HERE.parents[1]
 INK = "#232f3e"          # AWS squid ink: text, AWS Cloud border, arrows
 DIM = "#5f6b7a"
 REGION = "#00a4a6"       # AWS Region group colour
+VPC = "#8c4fff"          # AWS VPC group colour
 RED = "#d13212"          # highlights: the selected / synchronous path
 GREEN = "#1d8102"        # highlights: the asynchronous path
 FONT = "'Amazon Ember',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif"
@@ -38,6 +39,13 @@ ICONS = {
     "app": "Res_Generic-Application_48_Light",
     "aws-cloud": "AWS-Cloud-logo_32",
     "region": "Region_32",
+    "vpc": "Virtual-private-cloud-VPC_32",
+    "lambda": "Arch_AWS-Lambda_48",
+    "ecs": "Arch_Amazon-Elastic-Container-Service_48",
+    "elasticache": "Arch_Amazon-ElastiCache_48",
+    "rds": "Arch_Amazon-RDS_48",
+    "ivs": "Arch_Amazon-Interactive-Video-Service_48",
+    "users": "Res_Users_48_Light",
 }
 
 STYLE = f"""
@@ -74,15 +82,12 @@ def icon(key, cx, cy, size=48, label=None):
 
 
 def group(x, y, w, h, kind, label):
-    """AWS group box. kind: "cloud" (solid ink border) or "region" (dashed teal border)."""
-    if kind == "cloud":
-        border = f'stroke="{INK}" stroke-width="1.5"'
-        color = INK
-    else:
-        border = f'stroke="{REGION}" stroke-width="1.5" stroke-dasharray="6,4"'
-        color = REGION
+    """AWS group box. kind: "cloud" (solid ink), "region" (dashed teal) or "vpc" (solid purple)."""
+    color, dash, glyph = {"cloud": (INK, "", "aws-cloud"), "region": (REGION, ' stroke-dasharray="6,4"', "region"),
+                          "vpc": (VPC, "", "vpc")}[kind]
+    border = f'stroke="{color}" stroke-width="1.5"{dash}'
     return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="none" {border}/>'
-            + icon("aws-cloud" if kind == "cloud" else "region", x + 14, y + 14, 28)
+            + icon(glyph, x + 14, y + 14, 28)
             + f'<text x="{x + 36}" y="{y + 19}" class="grp" style="fill:{color}">{label}</text>')
 
 

@@ -31,9 +31,7 @@ Kustamie 要承接的是一组同时发生的行为：观众打开活动页、�
 
 ## 架构总览：事件信息与实时数据分离
 
-{{< figure src="slide-01-architecture.svg" >}}
-
-{{< figure src="mermaid-01-architecture.svg" >}}
+{{< figure src="arch-01-architecture.svg" >}}
 
 Kustamie 的通信被明确拆成两条链路。
 
