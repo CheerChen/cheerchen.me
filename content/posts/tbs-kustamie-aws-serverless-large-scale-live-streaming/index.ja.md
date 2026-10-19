@@ -87,11 +87,9 @@ $$
 
 ## 負荷テストの設計
 
-{{< figure src="slide-05-load-test-method.svg" >}}
+{{< figure src="arch-05-load-test.svg" >}}
 
-{{< figure src="mermaid-05-load-test.svg" >}}
-
-負荷テストツールは k6 を選んだ。スクリプトが JavaScript / TypeScript で書けるのでエンジニアがレビューしやすく、Go のランタイムなのでリソース効率も良い。AWS Prescriptive Guidance も k6 を負荷テストツールのひとつに挙げている。
+**負荷テストツールは k6 を選んだ**。スクリプトが JavaScript / TypeScript で書けるのでエンジニアがレビューしやすく、Go のランタイムなのでリソース効率も良い。AWS Prescriptive Guidance も k6 を負荷テストツールのひとつに挙げている。
 
 テストの構成は、プレッシャーをかけるアカウントと Kustamie のアカウントを分けた。管理ノードは `t3.medium`、大規模 worker は `c6i.2xlarge` を使用。100 から 5,000 VU の中規模テストはローカル PC で実行でき、5,000 から 60,000 VU の大規模テストは EC2 worker クラスタを起動する。
 

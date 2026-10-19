@@ -87,11 +87,9 @@ The slide's fix was to raise the concurrency quota to 2,000. That claim needs ca
 
 ## Load Testing: k6 and a Cross-Account Setup
 
-{{< figure src="slide-05-load-test-method.svg" >}}
+{{< figure src="arch-05-load-test.svg" >}}
 
-{{< figure src="mermaid-05-load-test.svg" >}}
-
-They picked k6 for load testing, a pragmatic choice: scenarios can be written in JavaScript / TypeScript so engineers can review them easily, the Go runtime is resource-efficient, and AWS Prescriptive Guidance also lists k6 as a load-testing tool.
+**They picked k6 for load testing**, a pragmatic choice: scenarios can be written in JavaScript / TypeScript so engineers can review them easily, the Go runtime is resource-efficient, and AWS Prescriptive Guidance also lists k6 as a load-testing tool.
 
 The test topology separated the load-generating account from the Kustamie account. The management node used a `t3.medium`; large-scale workers used `c6i.2xlarge`. Medium-scale tests (100 to 5,000 VU) could run on a local PC; large-scale tests (5,000 to 60,000 VU) spun up an EC2 worker cluster.
 

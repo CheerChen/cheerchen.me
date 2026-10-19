@@ -87,11 +87,9 @@ Slide 给出的解法是把并发 quota 放宽到 2,000。这个说法需要谨�
 
 ## 负荷测试：k6 与跨账号压测
 
-{{< figure src="slide-05-load-test-method.svg" >}}
+{{< figure src="arch-05-load-test.svg" >}}
 
-{{< figure src="mermaid-05-load-test.svg" >}}
-
-负荷测试工具选的是 k6。这个选择很务实：场景脚本可以用 JavaScript / TypeScript 描述，工程师容易 review；Go runtime 资源效率高；AWS Prescriptive Guidance 也把 k6 作为负荷测试工具之一。
+**负荷测试工具选的是 k6**。这个选择很务实：场景脚本可以用 JavaScript / TypeScript 描述，工程师容易 review；Go runtime 资源效率高；AWS Prescriptive Guidance 也把 k6 作为负荷测试工具之一。
 
 测试拓扑采用了压测账号和 Kustamie 账号分离的方式。管理节点使用 `t3.medium`，大规模 worker 使用 `c6i.2xlarge`。中规模测试，也就是 100 到 5,000 VU，可以在本地 PC 上执行；大规模测试，也就是 5,000 到 60,000 VU，则启动 EC2 worker 集群。
 

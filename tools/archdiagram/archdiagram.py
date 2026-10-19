@@ -14,6 +14,7 @@ INK = "#232f3e"          # AWS squid ink: text, AWS Cloud border, arrows
 DIM = "#5f6b7a"
 REGION = "#00a4a6"       # AWS Region group colour
 VPC = "#8c4fff"          # AWS VPC group colour
+ACCOUNT = "#e7157b"      # AWS Account group colour
 RED = "#d13212"          # highlights: the selected / synchronous path
 GREEN = "#1d8102"        # highlights: the asynchronous path
 FONT = "'Amazon Ember',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif"
@@ -40,6 +41,7 @@ ICONS = {
     "aws-cloud": "AWS-Cloud-logo_32",
     "region": "Region_32",
     "vpc": "Virtual-private-cloud-VPC_32",
+    "account": "AWS-Account_32",
     "lambda": "Arch_AWS-Lambda_48",
     "ecs": "Arch_Amazon-Elastic-Container-Service_48",
     "elasticache": "Arch_Amazon-ElastiCache_48",
@@ -82,9 +84,9 @@ def icon(key, cx, cy, size=48, label=None):
 
 
 def group(x, y, w, h, kind, label):
-    """AWS group box. kind: "cloud" (solid ink), "region" (dashed teal) or "vpc" (solid purple)."""
+    """AWS group box. kind: "cloud" (solid ink), "region" (dashed teal), "vpc" (solid purple) or "account" (solid pink)."""
     color, dash, glyph = {"cloud": (INK, "", "aws-cloud"), "region": (REGION, ' stroke-dasharray="6,4"', "region"),
-                          "vpc": (VPC, "", "vpc")}[kind]
+                          "vpc": (VPC, "", "vpc"), "account": (ACCOUNT, "", "account")}[kind]
     border = f'stroke="{color}" stroke-width="1.5"{dash}'
     return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="none" {border}/>'
             + icon(glyph, x + 14, y + 14, 28)
