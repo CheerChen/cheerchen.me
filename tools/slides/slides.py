@@ -258,3 +258,32 @@ def check(rel_path):
     Path(f.name).unlink()
     raw = dom.split('<pre id="out">', 1)[1].split("</pre>", 1)[0]
     return json.loads(html.unescape(raw))
+
+
+def render(rel_path, out_png):
+    """Screenshot an SVG at its own size in headless Chrome, for reviewing what check() cannot see."""
+    content = (REPO / rel_path).read_text()
+    w, h = (int(float(v)) for v in content.split('viewBox="', 1)[1].split('"', 1)[0].split()[2:4])
+    subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--hide-scrollbars", f"--window-size={w},{h}",
+                    f"--screenshot={out_png}", f"file://{(REPO / rel_path).resolve()}"],
+                   capture_output=True, timeout=60)
+
+
+if __name__ == "__main__":
+    # python3 tools/slides/slides.py <svg>... [--png <dir>]: check any slide or diagram, optionally screenshot it
+    import sys
+    args, png_dir = sys.argv[1:], None
+    if "--png" in args:
+        i = args.index("--png")
+        png_dir, args = Path(args[i + 1]), args[:i] + args[i + 2:]
+        png_dir.mkdir(parents=True, exist_ok=True)
+    failed = False
+    for p in args:
+        problems = check(p)
+        print(f"{p}: {'ok' if not problems else ''}")
+        for q in problems:
+            print(f"  {q}")
+        failed |= bool(problems)
+        if png_dir:
+            render(p, png_dir / (Path(p).stem + ".png"))
+    sys.exit(1 if failed else 0)
