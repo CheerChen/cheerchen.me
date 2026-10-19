@@ -46,11 +46,12 @@ Keep categories broad and stable. A new category should usually be useful for mo
 | `toolchain` | 工具链 | ツールチェーン | Toolchain |
 | `frontend` | 前端 | フロントエンド | Frontend |
 | `options` | 期权 | オプション取引 | Options Trading |
+| `security` | 安全 | セキュリティ | Security |
 
 ### Language-neutral tags (write directly)
 
 - Cloud / infra: `AWS`, `Kubernetes`, `Serverless`, `DynamoDB`, `Amazon IVS`, `WebRTC`
-- AI / agents: `AI`, `Claude`, `Claude Code`, `Codex`, `Gemini`
+- AI / agents: `AI`, `Claude`, `Claude Code`, `Codex`, `Gemini`, `Grok Bot`
 - Tools: `Git`, `GitHub`, `Docker`, `Homelab`, `Syncthing`
 - Languages / frontend: `JavaScript`, `TypeScript`, `Go`, `Rust`, `Bun`, `Vite`, `Three.js`, `WebGL`
 - Platforms / hardware: `macOS`, `Apple Silicon`, `Linux`, `webOS`, `LG`, `Chrome`, `XPC`, `Jellyfin`, `Syncthing`, `Docker`, `GBA`
