@@ -187,8 +187,6 @@ This slide also reflects the venue effect of AWS Summit. The whole system runs o
 
 {{< figure src="slide-13-video-moderation.svg" >}}
 
-{{< figure src="mermaid-13-video-moderation.svg" >}}
-
 The video moderation section used the word "構想" (concept), meaning it is not a shipped feature yet. The idea: periodically take snapshots from the IVS video stream, hand the images to a multimodal model like Nova Lite for judgment, and notify the organizers based on the result.
 
 Video moderation is much harder than chat moderation. Chat produces discrete events, so every message can be checked. Video is a continuous stream, so you can only sample. Higher sampling frequency means higher cost; lower frequency means brief violations slip through. One frame per second misses almost nothing persistent, but a 3-hour stream is 10,800 frames; one frame per 30 seconds is far cheaper but only catches problems that persist.
