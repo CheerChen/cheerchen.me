@@ -8,14 +8,15 @@
   <g font-family="Avenir, Helvetica, Arial, sans-serif" font-size="21" fill="#4b5853">
     <text x="92" y="150">大規模配信を行う上で、クライアント API の従来構成には以下の問題があった</text>
     <text x="102" y="210" fill="#d45542" font-weight="700">• キャッシュを前提とした構成となっていないため、高負荷に耐えられない</text>
-    <text x="130" y="244">• Amazon API Gateway のエンドポイントタイプは</text>
-    <rect x="610" y="221" width="170" height="30" fill="#fff06a"/>
-    <text x="620" y="244" font-weight="700">リージョンタイプ</text>
+    <rect x="602.2" y="226.0" width="176.0" height="23.0" data-mark="m02-region" fill="#fff06a"/>
+    <text x="130" y="244">• Amazon API Gateway のエンドポイントタイプは<tspan id="m02-region" font-weight="700">リージョンタイプ</tspan></text>
     <text x="130" y="276">• 本来はエッジ最適化タイプの方がベター</text>
     <text x="102" y="342" fill="#d45542" font-weight="700">• 配信参加時の API レスポンスに最長で 12 秒程度かかっていた</text>
-    <text x="130" y="376">• 多数の内部 API コールがあり、サーバー間通信のオーバーヘッドが大きかった</text>
+    <rect x="438.0" y="358.0" width="323.0" height="23.0" data-mark="m02-overhead" fill="#fff06a"/>
+    <text x="130" y="376">• 多数の内部 API コールがあり、<tspan id="m02-overhead" font-weight="700">サーバー間通信のオーバーヘッド</tspan>が大きかった</text>
     <text x="130" y="408">• 今まで負荷テストを実施していなかったので、高負荷時の挙動が不明だった</text>
   </g>
+  <text x="150" y="462" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="16" fill="#6b716d">（参考）Amazon API Gateway のエンドポイントタイプ（パブリックアクセスのみ）</text>
   <rect x="150" y="475" width="900" height="120" rx="6" fill="#f0f1ee" stroke="#c8c8c0"/>
   <line x1="600" y1="485" x2="600" y2="585" stroke="#d0d0c8" stroke-width="2"/>
   <text x="300" y="510" text-anchor="middle" font-family="Avenir, Helvetica, Arial, sans-serif" font-size="22" fill="#5c6b63">エッジ最適化タイプ</text>
