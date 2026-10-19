@@ -116,7 +116,8 @@ def step(cx, cy, n, color=INK):
 
 
 def note(x, y, text, anchor="start", color=None, bold=False):
-    fill = f' fill="{color}"' if color else ""
+    # inline style: a fill attribute would lose to the .note class rule
+    fill = f' style="fill:{color}"' if color else ""
     weight = ' font-weight="700"' if bold else ""
     return f'<text x="{x}" y="{y}" class="note"{fill}{weight} text-anchor="{anchor}">{text}</text>'
 
