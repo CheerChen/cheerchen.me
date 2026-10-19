@@ -121,9 +121,7 @@ E2E 压测的结果很直接：当请求量超过 **每分钟 600,000 次**，�
 
 ## 多段缓存：让请求尽量停在外层
 
-{{< figure src="slide-08-multi-tier-cache.svg" >}}
-
-{{< figure src="mermaid-08-cache.svg" >}}
+{{< figure src="arch-08-cache.svg" >}}
 
 性能改善的第一步是多段缓存。
 
@@ -133,7 +131,7 @@ E2E 压测的结果很直接：当请求量超过 **每分钟 600,000 次**，�
 
 第三层是 **ECS + ElastiCache for Valkey**。这层在应用服务侧挡住 RDS 查询。Valkey 与 Redis 7.2 基本兼容，AWS 在 Redis license 变化后明显加大了对 Valkey 的推动，选它既是性能选择，也有 license 和成本上的考量。
 
-从方法论上看，多段缓存的原则很简单：缓存越靠近请求源，命中时省掉的后端工作越多。API Gateway stage cache 省掉 Lambda、ECS 和数据库；Lambda global cache 省掉后段服务调用；ElastiCache 省掉 RDS 查询。
+从方法论上看，多段缓存的原则很简单：**缓存越靠近请求源，命中时省掉的后端工作越多**。API Gateway stage cache 省掉 Lambda、ECS 和数据库；Lambda global cache 省掉后段服务调用；ElastiCache 省掉 RDS 查询。
 
 这里的 cache invalidation 并不是特别难，因为架构在一开始已经把实时用户产生数据分流给 IVS Chat。留在 API 路径上的数据大多是预先安排或变化可控的内容，TTL-based 失效就足够覆盖多数场景。
 

@@ -121,9 +121,7 @@ That's a reminder that large-scale serverless systems can't treat service quotas
 
 ## Multi-Tier Caching: Stop Requests as Early as Possible
 
-{{< figure src="slide-08-multi-tier-cache.svg" >}}
-
-{{< figure src="mermaid-08-cache.svg" >}}
+{{< figure src="arch-08-cache.svg" >}}
 
 The first step in the performance work was multi-tier caching.
 
@@ -133,7 +131,7 @@ Tier two: **Lambda global variables**. When the Lambda execution environment is 
 
 Tier three: **ECS + ElastiCache for Valkey**, shielding RDS at the application-service layer. Valkey is largely compatible with Redis 7.2, and AWS has pushed Valkey hard since the Redis license change; choosing it is as much about licensing and cost as performance.
 
-Methodologically, the principle is simple: the closer a cache sits to the request source, the more backend work a hit saves. The API Gateway stage cache skips Lambda, ECS, and the database entirely; the Lambda global cache skips downstream service calls; ElastiCache skips RDS queries.
+Methodologically, the principle is simple: **the closer a cache sits to the request source, the more backend work a hit saves.** The API Gateway stage cache skips Lambda, ECS, and the database entirely; the Lambda global cache skips downstream service calls; ElastiCache skips RDS queries.
 
 Cache invalidation is not that hard here, since the architecture routed real-time user-generated data to IVS Chat from the start. Most of what remains on the API path is pre-arranged or changes predictably, so TTL-based expiry covers the majority of cases.
 

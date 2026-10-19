@@ -93,6 +93,23 @@ def group(x, y, w, h, kind, label):
             + f'<text x="{x + 36}" y="{y + 19}" class="grp" style="fill:{color}">{label}</text>')
 
 
+def service_box(x, y, w, h, key, label):
+    """A dashed box standing for one service's insides, its icon on the top-left corner."""
+    return (f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="4" fill="none" stroke="{DIM}" stroke-width="1.5" stroke-dasharray="6,5"/>'
+            + icon(key, x, y, 36)
+            + f'<text x="{x + 30}" y="{y + 22}" class="grp">{label}</text>')
+
+
+def box(x, y, w, h, lines, fill="#ffffff"):
+    """A plain labelled rectangle for something that has no AWS icon (a stage, an environment)."""
+    s = f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="6" fill="{fill}" stroke="{INK}" stroke-width="1.5"/>'
+    lines = [lines] if isinstance(lines, str) else lines
+    top = y + h / 2 - (len(lines) - 1) * 9 + 5
+    for i, line in enumerate(lines):
+        s += f'<text x="{x + w / 2}" y="{top + i * 18:.0f}" class="lbl" text-anchor="middle">{line}</text>'
+    return s
+
+
 def band(x, y, w, h, color):
     return f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="6" fill="{BAND[color]}"/>'
 

@@ -121,9 +121,7 @@ Lambda 側にエラーが見られなかったので、問題は API Gateway 層
 
 ## 多段キャッシュ
 
-{{< figure src="slide-08-multi-tier-cache.svg" >}}
-
-{{< figure src="mermaid-08-cache.svg" >}}
+{{< figure src="arch-08-cache.svg" >}}
 
 パフォーマンス改善の最初の手は多段キャッシュだった。
 
@@ -133,7 +131,7 @@ Lambda 側にエラーが見られなかったので、問題は API Gateway 層
 
 3 段目は**ECS + ElastiCache for Valkey**。アプリケーションサービス側で RDS クエリを遮断する。Valkey は Redis 7.2 とほぼ互換で、AWS は Redis のライセンス変更を受けて Valkey への推進を強めている。性能面での選択でもあるが、ライセンスとコストの要因もある。
 
-多段キャッシュの原則はシンプルで、リクエスト元に近いほどヒット時のバックエンド節約が大きい。API Gateway stage cache は Lambda・ECS・DB をまるごとスキップする。Lambda global cache は後段サービス呼び出しを省く。ElastiCache は RDS クエリを省く。
+多段キャッシュの原則はシンプルで、**リクエスト元に近いほどヒット時のバックエンド節約が大きい**。API Gateway stage cache は Lambda・ECS・DB をまるごとスキップする。Lambda global cache は後段サービス呼び出しを省く。ElastiCache は RDS クエリを省く。
 
 キャッシュの無効化がそれほど難しくないのは、最初から高頻度リアルタイムデータを IVS Chat に逃しているからだ。API パスに残るデータは大半があらかじめ用意されているか、変化が予測可能なもの。TTL ベースの失効で大半のシナリオはカバーできる。
 
