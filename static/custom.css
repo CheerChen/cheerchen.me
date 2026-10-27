@@ -559,14 +559,8 @@
         grid-column: span 3 / span 3;
     }
 
-    /*
-     * The theme makes #TableOfContents sticky, but the column's lg:self-start
-     * shrinks it to the TOC's own height, leaving the sticky child no room to
-     * travel. Stretch the column to the full row so the TOC follows the scroll.
-     */
-    .dream-single-post-layout .dream-single-post-toc {
+    .dream-single-post-toc {
         min-width: 0;
-        align-self: stretch;
     }
 
     /* The theme's 6rem offset assumes a sticky nav, which this site does not enable. */
