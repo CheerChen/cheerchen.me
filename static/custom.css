@@ -563,9 +563,12 @@
         min-width: 0;
     }
 
+    /* The theme's 6rem offset assumes a sticky nav, which this site does not enable. */
     #TableOfContents {
         width: 100%;
         max-width: 18rem;
+        top: 2rem;
+        max-height: calc(100vh - 4rem);
     }
 
     #TableOfContents a {

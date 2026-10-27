@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ site.Language.Locale }}"
   x-data
-  :class="$store.darkMode.class()"
+  :class="$store.darkMode.isDark() ? 'dark' : 'light'"
   :data-theme="$store.darkMode.theme()">
   <head>
     <meta charset="UTF-8">
@@ -17,15 +17,28 @@
     <link rel="stylesheet" href="{{ . | relURL }}" />
     {{ end }}
 
-    {{/* 使用本地 AlpineJS 文件，避免 CDN 版本不匹配问题 */}}
-    <script defer src="{{ "js/alpine.min.js" | relURL }}"></script>
+    <script>
+      window.lightTheme = '{{ site.Params.lightTheme }}'
+      window.darkTheme = '{{ site.Params.darkTheme }}'
+
+      ;(function() {
+        const isDark = ('hugo-theme-dream-is-dark' in localStorage)
+          ? window.localStorage.getItem('hugo-theme-dream-is-dark') === 'y'
+          : window.matchMedia('(prefers-color-scheme: dark)').matches
+        const theme = isDark ? window.darkTheme : window.lightTheme
+
+        document.documentElement.setAttribute('data-theme', theme)
+      })()
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.12/dist/cdn.min.js" integrity="sha256-V7N9fK6aJ9ll/a5K3MhEJF39xAfmVa7oXc//OggDaj8=" crossorigin="anonymous"></script>
   </head>
 
   <body x-data="{
     flip: false,
   }">
-    <!-- If backgroundImage defined -->
-    <div id="dream-global-bg"></div>
+    {{ with or site.Params.backgroundImage site.Params.backgroundImageDark }}
+      <div id="dream-global-bg"></div>
+    {{ end }}
 
     {{ partial "nav.html" . }}
 
@@ -38,12 +51,16 @@
             {{ partial "footer.html" . }}
           </div>
         </div>
+        {{ if .IsHome }}
         <div class="back">
+        {{ else }}
+        <div class="back" data-nosnippet>
+        {{ end }}
           <div class="container">
             {{ if site.Params.zenMode }}
-            {{ partial "zen-back.html" . }}
+              {{ partial "zen-back.html" . }}
             {{ else }}
-            {{ partial "back.html" . }}
+              {{ partial "back.html" . }}
             {{ end }}
 
             {{ partial "footer.html" . }}
@@ -56,10 +73,23 @@
     {{ block "js" . }} {{ end }}
 
     {{ if .Store.Get "hasMermaid" }}
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
+      <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.16.0/dist/mermaid.esm.min.mjs';
+
+        mermaid.initialize({ startOnLoad: false });
+        await mermaid.run({ querySelector: '.mermaid' });
+
+        document.querySelectorAll('.mermaid-panzoom').forEach((container) => {
+          const mermaid = container.firstElementChild;
+          const diagram = mermaid.querySelector('svg');
+          const panzoom = window.Panzoom(diagram, { maxScale: 5 });
+          const resetButton = container.querySelector('.mermaid-panzoom-reset');
+
+          mermaid.addEventListener('wheel', panzoom.zoomWithWheel);
+          resetButton.addEventListener('click', () => panzoom.reset());
+        });
       </script>
+      <script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@4.6.2/dist/panzoom.min.js" integrity="sha256-PONU73tJPvtipNSsqvhvotYCfrYphXpOFEBB3hoRLB4=" crossorigin="anonymous"></script>
     {{ end }}
 
     {{ if .Store.Get "hasECharts" }}
@@ -76,20 +106,13 @@
     {{ end }}
 
     {{ range site.Params.Advanced.customJS }}
-    <script src="{{ . | relURL }}"></script>
+      <script src="{{ . | relURL }}"></script>
     {{ end }}
 
-    {{ if site.Config.Services.GoogleAnalytics.ID }}
-    {{ template "_internal/google_analytics.html" . }}
+    {{ if and hugo.IsProduction site.Config.Services.GoogleAnalytics.ID }}
+      {{ template "_internal/google_analytics.html" . }}
     {{ end }}
 
-    <script type="module"
-      src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.esm.js"
-      integrity="sha256-/IFmi82bIhdYWctu0UddSlJqpnzWm7Vh2C4CM32wF/k="
-      crossorigin="anonymous"></script>
-    <script nomodule
-      src="https://cdn.jsdelivr.net/npm/ionicons@7.4.0/dist/ionicons/ionicons.js"
-      integrity="sha256-mr7eJMX3VC3F7G32mk4oWp1C6a2tlMYxUdptfT7uKI8="
-      crossorigin="anonymous"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@8.0.13/dist/ionicons/ionicons.esm.js" integrity="sha256-46Vf2l/aX0tBSf2YXcaYMxF7JVJl30zn8Y9L9zZNXMA=" crossorigin="anonymous"></script>
   </body>
 </html>
