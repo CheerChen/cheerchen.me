@@ -478,6 +478,29 @@
     display: none !important;
 }
 
+/* === Wide about cards ===
+ * Two base columns wide (base: md 1/2, lg 1/3, xl 1/4) so Masonry spans
+ * whole columns. The md:/lg:/xl: utilities for these widths are not in the
+ * prebuilt theme CSS, so they are spelled out here.
+ */
+@media (min-width: 48rem) {
+    .dream-column-wide {
+        width: 100%;
+    }
+}
+
+@media (min-width: 64rem) {
+    .dream-column-wide {
+        width: 66.666667%;
+    }
+}
+
+@media (min-width: 80rem) {
+    .dream-column-wide {
+        width: 50%;
+    }
+}
+
 /* === Language switcher in nav === */
 .lang-switcher {
     display: flex;
