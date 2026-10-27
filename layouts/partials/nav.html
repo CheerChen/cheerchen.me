@@ -49,7 +49,7 @@
         </li>
         {{ range $.Site.Home.AllTranslations }}
         <li>
-          <a href="{{ .RelPermalink }}" {{ if eq .Language.Lang $.Site.Language.Lang }}class="active"{{ end }}>
+          <a href="{{ .RelPermalink }}" {{ if eq .Language.Lang $.Site.Language.Lang }}class="menu-active"{{ end }}>
             {{ .Language.Label }}
           </a>
         </li>

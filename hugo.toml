@@ -81,6 +81,7 @@ showTableOfContents = true
 showSummaryCoverInPost = true
 imageZoomableInPost = true
 showPrevNextPost = true
+rss = true
 favicon = "favicon.ico"
 
 # -- 开启禅定模式 --
