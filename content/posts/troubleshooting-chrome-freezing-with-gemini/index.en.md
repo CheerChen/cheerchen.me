@@ -365,4 +365,4 @@ I had discovered a bug in Chrome itself! That's not something you stumble across
 
 I never imagined I'd be submitting a bug report to Google. In over a decade of programming, this is the kind of bragging right up there with committing code to NVIDIA. So I saw it through to the end, had Gemini generate a bug report for me, and finally submitted it here:
 
-[https://bugs.chromium.org/p/chromium/issues/detail?id=123456](https://issues.chromium.org/issues/431111162)
+[https://issues.chromium.org/issues/431111162](https://issues.chromium.org/issues/431111162)

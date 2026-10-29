@@ -368,4 +368,4 @@ srv*C:\symbols\*https://chromium-browser-symsrv.commondatastorage.googleapis.com
 
 没有想到我也有能给谷歌提 Bug 的时候，在我十多年的编程生涯中，这简直是堪比给 NVIDIA 提交代码一样可以吹一辈子的事情，所以我好事做到底，叫 Gemini 给我做了一个报告。
 
-最后提交到了这个地址：[https://bugs.chromium.org/p/chromium/issues/detail?id=123456](https://issues.chromium.org/issues/431111162)
+最后提交到了这个地址：[https://issues.chromium.org/issues/431111162](https://issues.chromium.org/issues/431111162)
