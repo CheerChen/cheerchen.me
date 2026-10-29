@@ -12,7 +12,7 @@ nolastmod = true
 
 ### 背景
 
-从入职以后虽然参加了几次 Grow with Google - 10X Innovation Culture Program，基本都是看视频做一些头脑风暴，感觉不到什么具体的能运用的点，感觉纯纯浪费开发时间。
+从入职以后虽然参加了几次 Grow with Google - 10X Innovation Culture Program，基本都是看视频做一些头脑风暴，感觉不到什么具体的能运用的点。
 
 后面也许会这样不了了之？正当我这样想的时候，没想到人事挺给力，直接找了 Googler 来亲自答疑解惑，让我们提前准备问题。
 

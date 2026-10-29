@@ -14,7 +14,7 @@ images = ['cover.jpg']
 
 ## 背景
 
-痛点很简单，我有两台 MacBook（A 和 B），两边都在高强度使用 Claude Code 和 Codex 进行工作或者 Side Project，我希望在两台机器之间无缝切换，随时 resume 之前的会话。
+痛点很简单，我有两台 MacBook（A 和 B），两边都在高强度使用 Claude Code 和 Codex 做 Side Project，我希望在两台机器之间无缝切换，随时 resume 之前的会话。
 
 既然他们的真实会话都在远端存着，索引的会话文件在本地保存。那么只要两边的 session 文件能互相同步，从任意一台电脑直接 resume 就可以随时从中断的地方继续。首先解决同步的问题，这是第一层想法。
 
