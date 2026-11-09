@@ -409,10 +409,10 @@ For the second pattern:
 
 | Level | Blocks | Total chars |
 |---|---|---|
-| warn | 50+ | or 50,000+ |
-| alert | 80+ | or 100,000+ |
+| warn | not used | 50,000+ |
+| alert | 80+ (with 50,000+) | or 100,000+ |
 
-50 blocks / 50k chars is the upper bound of normal models; 80 blocks / 100k chars is already inside problem-model territory. Either metric hitting the line triggers a warning. Long healthy sessions can also accumulate to this, so the cumulative side only has warn and alert — no critical.
+50k chars is the upper bound of normal models; 100k chars is already inside problem-model territory. Block count never fires on its own: it grows mostly with session length, and a long healthy session with a few hundred chars per block reaches 50 blocks too. So block count only escalates a session that is already past 50k chars to alert. Replaying my local sessions, every Flash-model hit stayed; the 8 sessions that dropped out were all long ones with many blocks but under 50k chars in total. Long healthy sessions can also accumulate to this, so the cumulative side only has warn and alert — no critical.
 
 ### As a Plugin
 
